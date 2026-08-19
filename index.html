@@ -324,7 +324,9 @@ footer{
 
 <main class="container">
 
-    <!-- TIENDA -->
+    <!-- =========================================
+         TIENDA
+    ========================================== -->
 
     <section class="store-card">
 
@@ -371,7 +373,9 @@ footer{
     </section>
 
 
-    <!-- FORMULARIO -->
+    <!-- =========================================
+         FORMULARIO
+    ========================================== -->
 
     <section class="form-card">
 
@@ -450,7 +454,9 @@ footer{
     </section>
 
 
-    <!-- RESEÑAS -->
+    <!-- =========================================
+         RESEÑAS
+    ========================================== -->
 
     <section class="reviews">
 
@@ -483,7 +489,11 @@ footer{
 
 /* =========================================================
    CONFIGURACIÓN SUPABASE
-   YA ESTÁ COMPLETA
+   ================================================
+
+   PEGA AQUÍ TU URL Y TU PUBLISHABLE KEY.
+
+   NO CAMBIES NADA MÁS.
 ========================================================= */
 
 const SUPABASE_URL =
@@ -495,15 +505,14 @@ const SUPABASE_KEY =
 
 /* =========================================================
    TIENDA
+   =========================================================
+
+   ESTA ES LA TIENDA QUE YA EXISTE EN SUPABASE.
+
+   No dependemos de ?store= para identificarla.
 ========================================================= */
 
-const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
-const storeSlug =
-    params.get("store") ||
+const STORE_SLUG =
     "samsung-store-ambar";
 
 
@@ -587,7 +596,10 @@ async function supabaseRequest(
             "application/json",
 
         "Accept":
-            "application/json"
+            "application/json",
+
+        "Prefer":
+            "return=representation"
 
     };
 
@@ -620,7 +632,8 @@ async function supabaseRequest(
             ? JSON.parse(text)
             : null;
 
-    }catch{
+    }
+    catch{
 
         data = text;
 
@@ -637,8 +650,9 @@ async function supabaseRequest(
                 data.error_description ||
                 data.hint ||
                 JSON.stringify(data)
-              )
+            )
             : text;
+
 
         throw new Error(
             "Supabase " +
@@ -678,6 +692,7 @@ stars.forEach(
                             Number(
                                 s.dataset.value
                             );
+
 
                         s.classList.toggle(
                             "active",
@@ -753,17 +768,19 @@ async function loadStore(){
     try{
 
         /*
-         Primero buscamos por slug.
+         BUSCAMOS DIRECTAMENTE POR SLUG.
+
+         Esto evita depender de la URL del navegador.
         */
 
         const query =
             "?select=*" +
             "&slug=eq." +
-            encodeURIComponent(storeSlug) +
+            encodeURIComponent(STORE_SLUG) +
             "&limit=1";
 
 
-        let data =
+        const data =
             await supabaseRequest(
                 "stores",
                 {
@@ -772,44 +789,23 @@ async function loadStore(){
             );
 
 
-        /*
-         Si no encuentra por slug,
-         buscamos por nombre.
-        */
-
-        if(
-            !Array.isArray(data) ||
-            data.length === 0
-        ){
-
-            data =
-                await supabaseRequest(
-                    "stores",
-                    {
-                        query:
-                            "?select=*" +
-                            "&name=ilike." +
-                            encodeURIComponent(
-                                "*Samsung Store Ámbar*"
-                            ) +
-                            "&limit=1"
-                    }
-                );
-
-        }
-
-
         if(
             !Array.isArray(data) ||
             data.length === 0
         ){
 
             throw new Error(
-                "La conexión funciona, pero no se encontró Samsung Store Ámbar en la tabla stores."
+                "No se encontró la tienda con el slug: " +
+                STORE_SLUG
             );
 
         }
 
+
+        /*
+         AQUÍ GUARDAMOS EL ID REAL
+         DE LA TIENDA.
+        */
 
         const store =
             data[0];
@@ -818,6 +814,11 @@ async function loadStore(){
         storeId =
             store.id;
 
+
+        /*
+         MOSTRAR INFORMACIÓN
+         DE LA TIENDA
+        */
 
         storeNameElement.textContent =
             store.name ||
@@ -850,11 +851,12 @@ async function loadStore(){
 
 
         debugMessage.textContent =
-            "ID de tienda conectado correctamente.";
+            "Tienda identificada correctamente.";
 
 
         /*
-         Ahora cargamos las reseñas.
+         AHORA CARGAMOS LAS RESEÑAS
+         USANDO EL ID REAL.
         */
 
         await loadReviews();
@@ -863,7 +865,7 @@ async function loadStore(){
     catch(error){
 
         console.error(
-            "ERROR:",
+            "ERROR AL CARGAR TIENDA:",
             error
         );
 
@@ -1176,6 +1178,4 @@ function formatDate(dateString){
 
 /* =========================================================
    ENVIAR RESEÑA
-========================================================= */
-
-submitButton.addEventListener(
+===
