@@ -7,413 +7,291 @@
 <title>Samsung Experience Store - Opiniones</title>
 
 <style>
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
-body {
-    background: #f5f7fa;
-    color: #111827;
+body{
+    background:#f5f7fa;
+    color:#111827;
 }
 
-/* =========================
-   HEADER
-========================= */
-
-header {
-    background: #000;
-    color: #fff;
-    padding: 18px 22px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+header{
+    background:#000;
+    color:#fff;
+    padding:18px 22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.logo {
-    font-size: 20px;
-    font-weight: bold;
+.logo{
+    font-size:20px;
+    font-weight:bold;
 }
 
-.admin {
-    background: #fff;
-    color: #000;
-
-    border: none;
-    padding: 9px 16px;
-
-    border-radius: 20px;
-
-    font-weight: bold;
+.admin{
+    background:#fff;
+    color:#000;
+    border:0;
+    padding:10px 18px;
+    border-radius:22px;
+    font-weight:bold;
 }
 
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    background: linear-gradient(135deg, #000, #202020);
-
-    color: #fff;
-
-    text-align: center;
-
-    padding: 55px 20px;
+.hero{
+    background:linear-gradient(135deg,#000,#202020);
+    color:#fff;
+    text-align:center;
+    padding:55px 20px;
 }
 
-.hero h1 {
-    font-size: 32px;
-    margin-bottom: 14px;
+.hero h1{
+    font-size:32px;
+    margin-bottom:14px;
 }
 
-.hero p {
-    font-size: 16px;
-    color: #d1d5db;
-
-    max-width: 650px;
-    margin: auto;
-
-    line-height: 1.5;
+.hero p{
+    font-size:16px;
+    color:#d1d5db;
+    max-width:650px;
+    margin:auto;
+    line-height:1.5;
 }
 
-/* =========================
-   CONTENEDOR
-========================= */
-
-.container {
-    max-width: 900px;
-
-    margin: 30px auto;
-
-    padding: 0 18px;
+.container{
+    max-width:900px;
+    margin:30px auto;
+    padding:0 18px;
 }
 
-/* =========================
-   TARJETA TIENDA
-========================= */
-
-.store-card {
-    background: #fff;
-
-    border-radius: 18px;
-
-    padding: 25px;
-
-    box-shadow:
-        0 5px 25px rgba(0,0,0,.08);
-
-    margin-bottom: 30px;
+.store-card,
+.form-card,
+.review{
+    background:#fff;
+    border-radius:18px;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
 }
 
-.store-name {
-    font-size: 24px;
-
-    font-weight: bold;
-
-    margin-bottom: 8px;
+.store-card{
+    padding:25px;
+    margin-bottom:30px;
 }
 
-.store-location {
-    color: #6b7280;
-
-    margin-bottom: 20px;
+.store-name{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:8px;
 }
 
-.rating {
-    font-size: 26px;
-
-    font-weight: bold;
+.store-location{
+    color:#6b7280;
+    margin-bottom:20px;
 }
 
-.stars {
-    color: #f59e0b;
-
-    font-size: 25px;
-
-    margin-top: 5px;
+.rating{
+    font-size:28px;
+    font-weight:bold;
 }
 
-/* =========================
-   FORMULARIO
-========================= */
-
-.form-card {
-    background: #fff;
-
-    border-radius: 18px;
-
-    padding: 25px;
-
-    box-shadow:
-        0 5px 25px rgba(0,0,0,.08);
+.stars{
+    color:#f59e0b;
+    font-size:28px;
+    margin-top:5px;
+    letter-spacing:2px;
 }
 
-.form-card h2 {
-    margin-bottom: 8px;
+.connection{
+    margin-top:15px;
+    font-size:14px;
+    color:#6b7280;
 }
 
-.form-card p {
-    color: #6b7280;
-
-    margin-bottom: 22px;
-
-    line-height: 1.5;
+.connection.ok{
+    color:#15803d;
 }
 
-label {
-    display: block;
+.connection.error{
+    color:#b91c1c;
+    background:#fee2e2;
+    padding:12px;
+    border-radius:10px;
+}
 
-    font-weight: bold;
+.form-card{
+    padding:25px;
+}
 
-    margin: 15px 0 7px;
+.form-card h2{
+    margin-bottom:8px;
+}
+
+.form-card p{
+    color:#6b7280;
+    margin-bottom:22px;
+    line-height:1.5;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:15px 0 7px;
 }
 
 input,
-textarea {
-    width: 100%;
-
-    padding: 13px;
-
-    border: 1px solid #d1d5db;
-
-    border-radius: 10px;
-
-    font-size: 16px;
-
-    outline: none;
+textarea{
+    width:100%;
+    padding:13px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:16px;
+    outline:none;
 }
 
 input:focus,
-textarea:focus {
-    border-color: #000;
+textarea:focus{
+    border-color:#000;
 }
 
-textarea {
-    min-height: 130px;
-
-    resize: vertical;
+textarea{
+    min-height:130px;
+    resize:vertical;
 }
 
-/* =========================
-   ESTRELLAS
-========================= */
-
-.star-selector {
-    display: flex;
-
-    gap: 7px;
-
-    margin: 10px 0;
+.star-selector{
+    display:flex;
+    gap:7px;
+    margin:10px 0;
 }
 
-.star {
-    font-size: 38px;
-
-    color: #d1d5db;
-
-    cursor: pointer;
-
-    transition: .15s;
+.star{
+    font-size:38px;
+    color:#d1d5db;
+    cursor:pointer;
+    transition:.15s;
 }
 
-.star:hover {
-    transform: scale(1.08);
+.star:hover{
+    transform:scale(1.08);
 }
 
-.star.active {
-    color: #f59e0b;
+.star.active{
+    color:#f59e0b;
 }
 
-/* =========================
-   BOTÓN
-========================= */
-
-.submit {
-    width: 100%;
-
-    margin-top: 22px;
-
-    padding: 15px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: #000;
-
-    color: #fff;
-
-    font-size: 17px;
-
-    font-weight: bold;
-
-    cursor: pointer;
+.submit{
+    width:100%;
+    margin-top:22px;
+    padding:15px;
+    border:0;
+    border-radius:12px;
+    background:#000;
+    color:#fff;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.submit:disabled {
-    opacity: .5;
-
-    cursor: not-allowed;
+.submit:disabled{
+    opacity:.5;
+    cursor:not-allowed;
 }
 
-/* =========================
-   MENSAJES
-========================= */
-
-.message {
-    margin-top: 18px;
-
-    padding: 14px;
-
-    border-radius: 10px;
-
-    display: none;
-
-    line-height: 1.4;
+.message{
+    margin-top:18px;
+    padding:14px;
+    border-radius:10px;
+    display:none;
+    line-height:1.4;
 }
 
-.success {
-    background: #dcfce7;
-
-    color: #166534;
+.success{
+    background:#dcfce7;
+    color:#166534;
 }
 
-.error {
-    background: #fee2e2;
-
-    color: #991b1b;
+.error-message{
+    background:#fee2e2;
+    color:#991b1b;
 }
 
-/* =========================
-   RESEÑAS
-========================= */
-
-.reviews {
-    margin-top: 35px;
+.reviews{
+    margin-top:35px;
 }
 
-.reviews h2 {
-    margin-bottom: 18px;
+.reviews h2{
+    margin-bottom:18px;
 }
 
-.review {
-    background: #fff;
-
-    padding: 20px;
-
-    border-radius: 15px;
-
-    margin-bottom: 15px;
-
-    box-shadow:
-        0 3px 15px rgba(0,0,0,.06);
+.review{
+    padding:20px;
+    margin-bottom:15px;
 }
 
-.review-name {
-    font-weight: bold;
-
-    margin-bottom: 5px;
+.review-name{
+    font-weight:bold;
+    margin-bottom:5px;
 }
 
-.review-stars {
-    color: #f59e0b;
-
-    margin-bottom: 10px;
-
-    font-size: 20px;
+.review-stars{
+    color:#f59e0b;
+    margin-bottom:10px;
+    font-size:20px;
 }
 
-.review-comment {
-    line-height: 1.5;
-
-    white-space: pre-wrap;
+.review-comment{
+    line-height:1.5;
+    white-space:pre-wrap;
 }
 
-.review-date {
-    font-size: 12px;
-
-    color: #9ca3af;
-
-    margin-top: 12px;
+.review-date{
+    font-size:12px;
+    color:#9ca3af;
+    margin-top:12px;
 }
 
-.loading {
-    text-align: center;
-
-    color: #6b7280;
-
-    padding: 20px;
+.loading{
+    text-align:center;
+    color:#6b7280;
+    padding:20px;
 }
 
-/* =========================
-   ESTADO DE CONEXIÓN
-========================= */
-
-.connection {
-    margin-top: 15px;
-
-    font-size: 13px;
-
-    color: #6b7280;
+.debug{
+    margin-top:12px;
+    font-size:12px;
+    word-break:break-word;
 }
 
-.connection.ok {
-    color: #15803d;
+footer{
+    text-align:center;
+    padding:35px 15px;
+    color:#6b7280;
+    font-size:13px;
 }
 
-.connection.error {
-    color: #b91c1c;
+@media(max-width:600px){
 
-    background: transparent;
-
-    padding: 0;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-    text-align: center;
-
-    padding: 35px 15px;
-
-    color: #6b7280;
-
-    font-size: 13px;
-}
-
-/* =========================
-   CELULAR
-========================= */
-
-@media(max-width:600px) {
-
-    .hero h1 {
-        font-size: 27px;
+    .hero h1{
+        font-size:27px;
     }
 
-    .store-name {
-        font-size: 21px;
+    .store-name{
+        font-size:21px;
     }
 
-    .star {
-        font-size: 34px;
+    .star{
+        font-size:34px;
     }
 
-    .container {
-        padding: 0 12px;
+    .container{
+        padding:0 12px;
     }
-
 }
-
 </style>
 </head>
-
 
 <body>
 
@@ -446,10 +324,7 @@ footer {
 
 <main class="container">
 
-
-    <!-- =========================
-         INFORMACIÓN DE LA TIENDA
-    ========================== -->
+    <!-- TIENDA -->
 
     <section class="store-card">
 
@@ -460,14 +335,12 @@ footer {
             Samsung Store Ámbar
         </div>
 
-
         <div
             class="store-location"
             id="storeLocation"
         >
             Tuxtla Gutiérrez, Chiapas
         </div>
-
 
         <div
             class="rating"
@@ -476,14 +349,12 @@ footer {
             0.0
         </div>
 
-
         <div
             class="stars"
             id="averageStars"
         >
             ☆☆☆☆☆
         </div>
-
 
         <div
             class="connection"
@@ -492,12 +363,15 @@ footer {
             Conectando con la tienda...
         </div>
 
+        <div
+            class="debug"
+            id="debugMessage"
+        ></div>
+
     </section>
 
 
-    <!-- =========================
-         FORMULARIO
-    ========================== -->
+    <!-- FORMULARIO -->
 
     <section class="form-card">
 
@@ -527,43 +401,13 @@ footer {
             Tu calificación
         </label>
 
-
         <div class="star-selector">
 
-            <span
-                class="star"
-                data-value="1"
-            >
-                ★
-            </span>
-
-            <span
-                class="star"
-                data-value="2"
-            >
-                ★
-            </span>
-
-            <span
-                class="star"
-                data-value="3"
-            >
-                ★
-            </span>
-
-            <span
-                class="star"
-                data-value="4"
-            >
-                ★
-            </span>
-
-            <span
-                class="star"
-                data-value="5"
-            >
-                ★
-            </span>
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
 
         </div>
 
@@ -571,7 +415,6 @@ footer {
         <label for="comment">
             Tu opinión
         </label>
-
 
         <textarea
             id="comment"
@@ -598,25 +441,22 @@ footer {
 
 
         <div
-            class="message error"
+            class="message error-message"
             id="errorMessage"
         >
-            Ocurrió un problema. Inténtalo nuevamente.
+            Ocurrió un problema.
         </div>
 
     </section>
 
 
-    <!-- =========================
-         RESEÑAS
-    ========================== -->
+    <!-- RESEÑAS -->
 
     <section class="reviews">
 
         <h2>
             Opiniones de clientes
         </h2>
-
 
         <div
             id="reviewsList"
@@ -627,7 +467,6 @@ footer {
 
     </section>
 
-
 </main>
 
 
@@ -635,47 +474,27 @@ footer {
 
     Samsung Experience Store
     <br>
-
     Tu opinión nos ayuda a mejorar.
 
 </footer>
 
 
-<!-- =========================================================
-     SUPABASE
-========================================================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
 <script>
 
 /* =========================================================
-   CONFIGURACIÓN DE SUPABASE
-
-   ESTA PARTE YA ESTÁ COMPLETA.
-   NO NECESITAS PONER NADA.
+   CONFIGURACIÓN SUPABASE
+   YA ESTÁ COMPLETA
 ========================================================= */
 
 const SUPABASE_URL =
     "https://lxmjfsdmbwgqxtovtxyn.supabase.co";
 
-
-const SUPABASE_PUBLISHABLE_KEY =
+const SUPABASE_KEY =
     "sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
 
 
-/* Crear cliente Supabase */
-
-const supabaseClient =
-    supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
-
-
 /* =========================================================
-   CONFIGURACIÓN DE LA TIENDA
+   TIENDA
 ========================================================= */
 
 const params =
@@ -683,25 +502,12 @@ const params =
         window.location.search
     );
 
-
-/*
-   Si el QR trae:
-
-   ?store=samsung-store-ambar
-
-   lo utiliza.
-
-   Si no trae nada,
-   automáticamente utiliza Samsung Store Ámbar.
-*/
-
 const storeSlug =
     params.get("store") ||
     "samsung-store-ambar";
 
 
 let storeId = null;
-
 let selectedRating = 0;
 
 
@@ -712,85 +518,187 @@ let selectedRating = 0;
 const stars =
     document.querySelectorAll(".star");
 
-
 const storeNameElement =
     document.getElementById("storeName");
-
 
 const storeLocationElement =
     document.getElementById("storeLocation");
 
-
 const connectionStatus =
     document.getElementById("connectionStatus");
 
+const debugMessage =
+    document.getElementById("debugMessage");
 
 const reviewsList =
     document.getElementById("reviewsList");
 
-
 const averageRating =
     document.getElementById("averageRating");
-
 
 const averageStars =
     document.getElementById("averageStars");
 
-
 const submitButton =
     document.getElementById("submitButton");
 
-
 const successMessage =
     document.getElementById("successMessage");
-
 
 const errorMessage =
     document.getElementById("errorMessage");
 
 
 /* =========================================================
-   ESTRELLAS
+   FUNCIÓN API SUPABASE
 ========================================================= */
 
-stars.forEach(star => {
+async function supabaseRequest(
+    table,
+    options = {}
+){
 
-    star.addEventListener(
-        "click",
-        () => {
+    const method =
+        options.method || "GET";
 
-            selectedRating =
-                Number(
-                    star.dataset.value
-                );
+    const query =
+        options.query || "";
+
+    const body =
+        options.body || null;
 
 
-            stars.forEach(s => {
+    const url =
+        SUPABASE_URL +
+        "/rest/v1/" +
+        table +
+        query;
 
-                const value =
+
+    const headers = {
+
+        "apikey":
+            SUPABASE_KEY,
+
+        "Authorization":
+            "Bearer " + SUPABASE_KEY,
+
+        "Content-Type":
+            "application/json",
+
+        "Accept":
+            "application/json"
+
+    };
+
+
+    const response =
+        await fetch(
+            url,
+            {
+                method:method,
+                headers:headers,
+                body:
+                    body
+                    ? JSON.stringify(body)
+                    : undefined
+            }
+        );
+
+
+    const text =
+        await response.text();
+
+
+    let data = null;
+
+
+    try{
+
+        data =
+            text
+            ? JSON.parse(text)
+            : null;
+
+    }catch{
+
+        data = text;
+
+    }
+
+
+    if(!response.ok){
+
+        const message =
+            typeof data === "object" &&
+            data !== null
+            ? (
+                data.message ||
+                data.error_description ||
+                data.hint ||
+                JSON.stringify(data)
+              )
+            : text;
+
+        throw new Error(
+            "Supabase " +
+            response.status +
+            ": " +
+            message
+        );
+
+    }
+
+
+    return data;
+}
+
+
+/* =========================================================
+   ESTRELLAS DEL FORMULARIO
+========================================================= */
+
+stars.forEach(
+    star => {
+
+        star.addEventListener(
+            "click",
+            () => {
+
+                selectedRating =
                     Number(
-                        s.dataset.value
+                        star.dataset.value
                     );
 
 
-                s.classList.toggle(
-                    "active",
-                    value <= selectedRating
+                stars.forEach(
+                    s => {
+
+                        const value =
+                            Number(
+                                s.dataset.value
+                            );
+
+                        s.classList.toggle(
+                            "active",
+                            value <= selectedRating
+                        );
+
+                    }
                 );
 
-            });
+            }
+        );
 
-        }
-    );
-
-});
+    }
+);
 
 
 /* =========================================================
    MENSAJES
 ========================================================= */
 
-function showError(message) {
+function showError(message){
 
     errorMessage.textContent =
         message;
@@ -798,17 +706,31 @@ function showError(message) {
     errorMessage.style.display =
         "block";
 
+    successMessage.style.display =
+        "none";
 }
 
 
-function hideMessages() {
+function showSuccess(message){
+
+    successMessage.textContent =
+        message;
+
+    successMessage.style.display =
+        "block";
+
+    errorMessage.style.display =
+        "none";
+}
+
+
+function hideMessages(){
 
     successMessage.style.display =
         "none";
 
     errorMessage.style.display =
         "none";
-
 }
 
 
@@ -816,132 +738,78 @@ function hideMessages() {
    CARGAR TIENDA
 ========================================================= */
 
-async function loadStore() {
+async function loadStore(){
 
     connectionStatus.textContent =
-        "Buscando Samsung Store Ámbar...";
-
+        "Conectando con Supabase...";
 
     connectionStatus.className =
         "connection";
 
+    debugMessage.textContent =
+        "";
 
-    try {
+
+    try{
 
         /*
-           Primero buscamos por slug.
-
-           NO dependemos de que venga
-           el parámetro ?store=...
+         Primero buscamos por slug.
         */
 
-        let result =
-            await supabaseClient
-                .from("stores")
-                .select("*")
-                .eq("slug", storeSlug)
-                .limit(1);
+        const query =
+            "?select=*" +
+            "&slug=eq." +
+            encodeURIComponent(storeSlug) +
+            "&limit=1";
 
 
         let data =
-            result.data;
-
-
-        let error =
-            result.error;
+            await supabaseRequest(
+                "stores",
+                {
+                    query:query
+                }
+            );
 
 
         /*
-           Si no encontró nada con el slug,
-           hacemos una segunda búsqueda
-           solamente por nombre.
-
-           Esto ayuda si el slug de la tabla
-           no coincide exactamente.
+         Si no encuentra por slug,
+         buscamos por nombre.
         */
 
-        if (
-            (!data || data.length === 0) &&
-            !error
-        ) {
-
-            result =
-                await supabaseClient
-                    .from("stores")
-                    .select("*")
-                    .ilike(
-                        "name",
-                        "%Samsung Store Ámbar%"
-                    )
-                    .limit(1);
-
+        if(
+            !Array.isArray(data) ||
+            data.length === 0
+        ){
 
             data =
-                result.data;
-
-
-            error =
-                result.error;
-
-        }
-
-
-        if (error) {
-
-            console.error(
-                "Error Supabase:",
-                error
-            );
-
-
-            connectionStatus.textContent =
-                "Error al conectar con la tienda.";
-
-
-            connectionStatus.className =
-                "connection error";
-
-
-            reviewsList.innerHTML =
-                "<p>No se pudo conectar con la base de datos.</p>";
-
-
-            return;
+                await supabaseRequest(
+                    "stores",
+                    {
+                        query:
+                            "?select=*" +
+                            "&name=ilike." +
+                            encodeURIComponent(
+                                "*Samsung Store Ámbar*"
+                            ) +
+                            "&limit=1"
+                    }
+                );
 
         }
 
 
-        if (
-            !data ||
+        if(
+            !Array.isArray(data) ||
             data.length === 0
-        ) {
+        ){
 
-            console.error(
-                "No se encontró la tienda:",
-                storeSlug
+            throw new Error(
+                "La conexión funciona, pero no se encontró Samsung Store Ámbar en la tabla stores."
             );
-
-
-            connectionStatus.textContent =
-                "No se encontró Samsung Store Ámbar en la base de datos.";
-
-
-            connectionStatus.className =
-                "connection error";
-
-
-            reviewsList.innerHTML =
-                "<p>No se encontró la tienda registrada.</p>";
-
-
-            return;
 
         }
 
-
-        /*
-           Aquí obtenemos la tienda.
-        */
 
         const store =
             data[0];
@@ -951,29 +819,20 @@ async function loadStore() {
             store.id;
 
 
-        /*
-           Mostrar nombre.
-        */
-
         storeNameElement.textContent =
             store.name ||
             "Samsung Store Ámbar";
 
 
-        /*
-           Mostrar ubicación.
-        */
-
         const city =
             store.city || "";
-
 
         const state =
             store.state || "";
 
 
         const location =
-            [city, state]
+            [city,state]
                 .filter(Boolean)
                 .join(", ");
 
@@ -983,40 +842,45 @@ async function loadStore() {
             "Tuxtla Gutiérrez, Chiapas";
 
 
-        /*
-           Confirmación visual.
-        */
-
         connectionStatus.textContent =
             "✓ Tienda conectada correctamente";
-
 
         connectionStatus.className =
             "connection ok";
 
 
+        debugMessage.textContent =
+            "ID de tienda conectado correctamente.";
+
+
         /*
-           Ahora cargamos las reseñas.
+         Ahora cargamos las reseñas.
         */
 
         await loadReviews();
 
     }
-
-    catch (error) {
+    catch(error){
 
         console.error(
-            "Error general:",
+            "ERROR:",
             error
         );
 
 
         connectionStatus.textContent =
-            "Ocurrió un error al cargar la tienda.";
-
+            "Error al conectar con la tienda.";
 
         connectionStatus.className =
             "connection error";
+
+
+        debugMessage.textContent =
+            error.message;
+
+
+        reviewsList.innerHTML =
+            "<p>No se pudieron cargar las opiniones.</p>";
 
     }
 
@@ -1027,9 +891,9 @@ async function loadStore() {
    CARGAR RESEÑAS
 ========================================================= */
 
-async function loadReviews() {
+async function loadReviews(){
 
-    if (!storeId) {
+    if(!storeId){
 
         reviewsList.innerHTML =
             "<p>No se pudo identificar la tienda.</p>";
@@ -1043,59 +907,34 @@ async function loadReviews() {
         "<p class='loading'>Cargando opiniones...</p>";
 
 
-    try {
+    try{
 
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("reviews")
-                .select("*")
-                .eq(
-                    "store_id",
-                    storeId
-                )
-                .eq(
-                    "approved",
-                    true
-                )
-                .order(
-                    "created_at",
-                    {
-                        ascending: false
-                    }
-                );
+        const query =
+            "?select=*" +
+            "&store_id=eq." +
+            encodeURIComponent(storeId) +
+            "&approved=eq.true" +
+            "&order=created_at.desc";
 
 
-        if (error) {
-
-            console.error(
-                "Error cargando reseñas:",
-                error
+        const data =
+            await supabaseRequest(
+                "reviews",
+                {
+                    query:query
+                }
             );
 
 
-            reviewsList.innerHTML =
-                "<p>No se pudieron cargar las opiniones.</p>";
-
-
-            return;
-
-        }
-
-
-        if (
-            !data ||
+        if(
+            !Array.isArray(data) ||
             data.length === 0
-        ) {
+        ){
 
             reviewsList.innerHTML =
                 "<p class='loading'>Sé el primero en dejar una opinión.</p>";
 
-
             updateAverage([]);
-
 
             return;
 
@@ -1114,39 +953,27 @@ async function loadReviews() {
                         "div"
                     );
 
-
                 item.className =
                     "review";
 
-
-                /*
-                   Nombre
-                */
 
                 const name =
                     document.createElement(
                         "div"
                     );
 
-
                 name.className =
                     "review-name";
-
 
                 name.textContent =
                     review.name ||
                     "Cliente";
 
 
-                /*
-                   Estrellas
-                */
-
                 const starsElement =
                     document.createElement(
                         "div"
                     );
-
 
                 starsElement.className =
                     "review-stars";
@@ -1169,38 +996,26 @@ async function loadReviews() {
                     "☆".repeat(5 - rating);
 
 
-                /*
-                   Comentario
-                */
-
                 const comment =
                     document.createElement(
                         "div"
                     );
 
-
                 comment.className =
                     "review-comment";
-
 
                 comment.textContent =
                     review.comment ||
                     "";
 
 
-                /*
-                   Fecha
-                */
-
                 const date =
                     document.createElement(
                         "div"
                     );
 
-
                 date.className =
                     "review-date";
-
 
                 date.textContent =
                     formatDate(
@@ -1208,28 +1023,15 @@ async function loadReviews() {
                     );
 
 
-                /*
-                   Agregar todo
-                */
-
-                item.appendChild(
-                    name
-                );
-
+                item.appendChild(name);
 
                 item.appendChild(
                     starsElement
                 );
 
+                item.appendChild(comment);
 
-                item.appendChild(
-                    comment
-                );
-
-
-                item.appendChild(
-                    date
-                );
+                item.appendChild(date);
 
 
                 reviewsList.appendChild(
@@ -1243,10 +1045,10 @@ async function loadReviews() {
         updateAverage(data);
 
     }
-
-    catch (error) {
+    catch(error){
 
         console.error(
+            "ERROR RESEÑAS:",
             error
         );
 
@@ -1263,4 +1065,117 @@ async function loadReviews() {
    PROMEDIO
 ========================================================= */
 
-function upda
+function updateAverage(data){
+
+    if(
+        !Array.isArray(data) ||
+        data.length === 0
+    ){
+
+        averageRating.textContent =
+            "0.0";
+
+        averageStars.textContent =
+            "☆☆☆☆☆";
+
+        return;
+
+    }
+
+
+    const ratings =
+        data
+            .map(
+                review =>
+                    Number(
+                        review.rating || 0
+                    )
+            )
+            .filter(
+                rating =>
+                    rating >= 1 &&
+                    rating <= 5
+            );
+
+
+    if(ratings.length === 0){
+
+        averageRating.textContent =
+            "0.0";
+
+        averageStars.textContent =
+            "☆☆☆☆☆";
+
+        return;
+
+    }
+
+
+    const total =
+        ratings.reduce(
+            (sum,rating) =>
+                sum + rating,
+            0
+        );
+
+
+    const average =
+        total / ratings.length;
+
+
+    averageRating.textContent =
+        average.toFixed(1);
+
+
+    const rounded =
+        Math.round(average);
+
+
+    averageStars.textContent =
+        "★".repeat(rounded) +
+        "☆".repeat(5 - rounded);
+
+}
+
+
+/* =========================================================
+   FECHA
+========================================================= */
+
+function formatDate(dateString){
+
+    if(!dateString){
+
+        return "";
+
+    }
+
+
+    try{
+
+        return new Date(
+            dateString
+        ).toLocaleDateString(
+            "es-MX",
+            {
+                year:"numeric",
+                month:"long",
+                day:"numeric"
+            }
+        );
+
+    }
+    catch{
+
+        return "";
+
+    }
+
+}
+
+
+/* =========================================================
+   ENVIAR RESEÑA
+========================================================= */
+
+submitButton.addEventListener(
