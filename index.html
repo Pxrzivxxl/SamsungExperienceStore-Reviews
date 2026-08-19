@@ -495,10 +495,14 @@ async function loadReviews() {
 
     if (error) {
 
-        console.error(error);
+        console.error("ERROR AL CARGAR REVIEWS:", error);
 
         list.innerHTML =
-            "<p>No se pudieron cargar las opiniones.</p>";
+            `<p style="color:#991b1b">
+                Error Supabase: ${escapeHTML(
+                    error.message || JSON.stringify(error)
+                )}
+            </p>`;
 
         return;
 
@@ -712,10 +716,11 @@ document
 
         if (error) {
 
-            console.error(error);
+            console.error("ERROR AL INSERTAR REVIEW:", error);
 
             errorMessage.textContent =
-                "No se pudo enviar la opinión. Inténtalo nuevamente.";
+                "ERROR SUPABASE: " +
+                (error.message || JSON.stringify(error));
 
             errorMessage.style.display =
                 "block";
