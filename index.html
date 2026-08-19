@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Samsung Experience Store - Opiniones</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #f5f7fa;
+      color: #111827;
+    }
+
+    header {
+      background: #000;
+      color: white;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .admin-button {
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #000, #202020);
+      color: white;
+      text-align: center;
+      padding: 55px 20px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: #d1d5db;
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    .store-card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.08);
+      margin-bottom: 30px;
+    }
+
+    .store-card h2 {
+      margin-bottom: 8px;
+    }
+
+    .store-location {
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .stars {
+      color: #f5b301;
+      font-size: 27px;
+      letter-spacing: 2px;
+    }
+
+    .rating-number {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .review-section {
+      background: white;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.08);
+    }
+
+    .review-section h2 {
+      margin-bottom: 10px;
+    }
+
+    .review-section p {
+      color: #6b7280;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #000;
+    }
+
+    .star-selector {
+      display: flex;
+      gap: 5px;
+      margin-top: 5px;
+    }
+
+    .star-selector button {
+      background: none;
+      border: none;
+      font-size: 35px;
+      color: #d1d5db;
+      cursor: pointer;
+    }
+
+    .star-selector button.active {
+      color: #f5b301;
+    }
+
+    .submit-button {
+      width: 100%;
+      background: #000;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit-button:hover {
+      background: #222;
+    }
+
+    .reviews {
+      margin-top: 35px;
+    }
+
+    .reviews h2 {
+      margin-bottom: 20px;
+    }
+
+    .review {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 15px rgba(0,0,0,.06);
+    }
+
+    .review-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .review-name {
+      font-weight: bold;
+    }
+
+    .review-stars {
+      color: #f5b301;
+    }
+
+    .review-date {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 10px;
+    }
+
+    .response {
+      background: #f3f4f6;
+      border-left: 4px solid #000;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 5px;
+    }
+
+    .response strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    footer {
+      margin-top: 50px;
+      background: #000;
+      color: #aaa;
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      header {
+        padding: 15px;
+      }
+
+      .logo {
+        font-size: 16px;
+      }
+
+      .container {
+        padding: 0 15px;
+      }
+
+      .store-card,
+      .review-section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">
+      Samsung Experience Store
+    </div>
+
+    <button class="admin-button" onclick="alert('Panel administrativo próximamente')">
+      Acceso
+    </button>
+  </header>
+
+
+  <section class="hero">
+
+    <h1>¿Cómo fue tu experiencia?</h1>
+
+    <p>
+      Tu opinión nos ayuda a mejorar nuestro servicio.
+      Califica la atención que recibiste en nuestra tienda.
+    </p>
+
+  </section>
+
+
+  <main class="container">
+
+    <div class="store-card">
+
+      <h2>Samsung Store Ámbar</h2>
+
+      <div class="store-location">
+        Tuxtla Gutiérrez, Chiapas
+      </div>
+
+      <div class="rating">
+
+        <div class="stars">
+          ★★★★★
+        </div>
+
+        <div class="rating-number">
+          5.0
+        </div>
+
+        <div>
+          1 reseña
+        </div>
+
+      </div>
+
+      <p>
+        Comparte cómo fue la atención que recibiste
+        durante tu visita.
+      </p>
+
+    </div>
+
+
+    <section class="review-section">
+
+      <h2>Deja tu reseña</h2>
+
+      <p>
+        Cuéntanos cómo fue tu experiencia con nuestro equipo.
+      </p>
+
+
+      <div class="form-group">
+
+        <label>
+          Tu nombre
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          placeholder="Escribe tu nombre"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          ¿Qué vendedor te atendió?
+        </label>
+
+        <input
+          type="text"
+          id="seller"
+          placeholder="Nombre del vendedor"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Calificación
+        </label>
+
+        <div class="star-selector">
+
+          <button onclick="selectStar(1)">★</button>
+          <button onclick="selectStar(2)">★</button>
+          <button onclick="selectStar(3)">★</button>
+          <button onclick="selectStar(4)">★</button>
+          <button onclick="selectStar(5)">★</button>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          ¿Cómo fue tu experiencia?
+        </label>
+
+        <textarea
+          id="comment"
+          placeholder="Escribe aquí tu opinión sobre la atención que recibiste..."
+        ></textarea>
+
+      </div>
+
+
+      <button
+        class="submit-button"
+        onclick="submitReview()"
+      >
+        Publicar reseña
+      </button>
+
+    </section>
+
+
+    <section class="reviews">
+
+      <h2>Opiniones de clientes</h2>
+
+
+      <div class="review">
+
+        <div class="review-top">
+
+          <div class="review-name">
+            Cliente de ejemplo
+          </div>
+
+          <div class="review-stars">
+            ★★★★★
+          </div>
+
+        </div>
+
+        <p>
+          Excelente atención. Me explicaron muy bien
+          las características del equipo y resolvieron
+          todas mis dudas.
+        </p>
+
+        <div class="review-date">
+          Hoy · Atención de ejemplo
+        </div>
+
+
+        <div class="response">
+
+          <strong>
+            Respuesta de la tienda
+          </strong>
+
+          Gracias por visitarnos y por compartir
+          tu experiencia. ¡Esperamos verte nuevamente!
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    Samsung Experience Store · Sistema de opiniones de clientes
+
+  </footer>
+
+
+  <script>
+
+    let selectedRating = 0;
+
+
+    function selectStar(number) {
+
+      selectedRating = number;
+
+      const stars =
+        document.querySelectorAll('.star-selector button');
+
+      stars.forEach((star, index) => {
+
+        if (index < number) {
+
+          star.classList.add('active');
+
+        } else {
+
+          star.classList.remove('active');
+
+        }
+
+      });
+
+    }
+
+
+    function submitReview() {
+
+      const name =
+        document.getElementById('name').value;
+
+      const seller =
+        document.getElementById('seller').value;
+
+      const comment =
+        document.getElementById('comment').value;
+
+
+      if (!name || !seller || !comment || selectedRating === 0) {
+
+        alert(
+          'Por favor completa todos los campos y selecciona una calificación.'
+        );
+
+        return;
+
+      }
+
+
+      alert(
+        '¡Gracias por tu opinión! En la versión final tu reseña se guardará automáticamente.'
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
