@@ -7,7 +7,6 @@
 <title>Administrador - Reseñas</title>
 
 <style>
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -31,16 +30,6 @@ header {
 
 header h1 {
     font-size: 20px;
-}
-
-.logout {
-    background: white;
-    color: #000;
-    border: none;
-    padding: 9px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
 }
 
 .container {
@@ -79,12 +68,6 @@ textarea {
     border: 1px solid #d1d5db;
     border-radius: 10px;
     font-size: 16px;
-    outline: none;
-}
-
-input:focus,
-textarea:focus {
-    border-color: #000;
 }
 
 textarea {
@@ -110,7 +93,6 @@ button {
 
 .login-button:disabled {
     opacity: .6;
-    cursor: not-allowed;
 }
 
 .message {
@@ -118,7 +100,6 @@ button {
     margin-top: 15px;
     padding: 12px;
     border-radius: 10px;
-    line-height: 1.4;
 }
 
 .error {
@@ -129,6 +110,19 @@ button {
 .success {
     background: #dcfce7;
     color: #166534;
+}
+
+.admin-panel {
+    display: none;
+}
+
+.logout {
+    background: white;
+    color: #000;
+    border: none;
+    padding: 9px 15px;
+    border-radius: 20px;
+    font-weight: bold;
 }
 
 .review {
@@ -156,11 +150,6 @@ button {
     margin: 8px 0;
 }
 
-.review-comment {
-    line-height: 1.5;
-    white-space: pre-wrap;
-}
-
 .review-date {
     color: #9ca3af;
     font-size: 12px;
@@ -175,12 +164,12 @@ button {
     font-weight: bold;
 }
 
-.status-visible {
+.visible {
     background: #dcfce7;
     color: #166534;
 }
 
-.status-hidden {
+.hidden-status {
     background: #fee2e2;
     color: #991b1b;
 }
@@ -191,7 +180,6 @@ button {
     padding: 12px;
     margin-top: 15px;
     border-radius: 8px;
-    line-height: 1.5;
 }
 
 .admin-response strong {
@@ -265,18 +253,13 @@ button {
     border: none;
     padding: 10px 15px;
     border-radius: 9px;
-    margin-left: 5px;
-    padding: 10px 15px;
+    font-weight: bold;
 }
 
 .empty {
     text-align: center;
     color: #6b7280;
     padding: 30px;
-}
-
-.hidden {
-    display: none !important;
 }
 
 .loading {
@@ -295,10 +278,6 @@ button {
         padding: 0 12px;
     }
 
-    .login-card {
-        margin-top: 30px;
-    }
-
     .actions {
         flex-direction: column;
     }
@@ -306,27 +285,17 @@ button {
     .action {
         width: 100%;
     }
-
 }
-
 </style>
 </head>
 
 <body>
 
-
-<!-- =========================================
-     CABECERA
-========================================= -->
-
 <header
     id="adminHeader"
-    class="hidden"
+    style="display:none;"
 >
-
-    <h1>
-        Panel de administración
-    </h1>
+    <h1>Panel de administración</h1>
 
     <button
         class="logout"
@@ -335,13 +304,12 @@ button {
     >
         Cerrar sesión
     </button>
-
 </header>
 
 
-<!-- =========================================
+<!-- ==============================
      LOGIN
-========================================= -->
+============================== -->
 
 <section
     id="loginSection"
@@ -355,7 +323,7 @@ button {
         </h2>
 
         <p>
-            Inicia sesión para administrar las reseñas.
+            Ingresa tus datos para administrar las reseñas.
         </p>
 
 
@@ -402,15 +370,14 @@ button {
 </section>
 
 
-<!-- =========================================
-     PANEL ADMINISTRADOR
-========================================= -->
+<!-- ==============================
+     PANEL
+============================== -->
 
 <main
     id="adminSection"
-    class="container hidden"
+    class="container admin-panel"
 >
-
 
     <div class="card">
 
@@ -431,10 +398,7 @@ button {
                 </h2>
 
                 <p style="color:#6b7280">
-
-                    Puedes mostrar, ocultar,
-                    responder o eliminar reseñas.
-
+                    Administra las reseñas de tu tienda.
                 </p>
 
             </div>
@@ -451,9 +415,7 @@ button {
         </div>
 
 
-        <div
-            id="reviewsList"
-        >
+        <div id="reviewsList">
 
             <div class="loading">
                 Cargando reseñas...
@@ -466,26 +428,19 @@ button {
 </main>
 
 
-<!-- =========================================
-     SUPABASE
-========================================= -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-
-/* =========================================
-   CONFIGURACIÓN SUPABASE
-========================================= */
+/* ==========================================
+   SUPABASE
+========================================== */
 
 const SUPABASE_URL =
     "https://lxmjfsdmbwgqxtovtxyn.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
     "sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -494,59 +449,52 @@ const supabaseClient =
     );
 
 
-/* =========================================
-   CORREO AUTORIZADO
-========================================= */
+/* ==========================================
+   ADMIN AUTORIZADO
+========================================== */
 
 const ADMIN_EMAIL =
     "ethelredbcp@gmail.com";
 
 
-/* =========================================
+/* ==========================================
    ELEMENTOS
-========================================= */
+========================================== */
 
 const loginSection =
     document.getElementById(
         "loginSection"
     );
 
-
 const adminSection =
     document.getElementById(
         "adminSection"
     );
-
 
 const adminHeader =
     document.getElementById(
         "adminHeader"
     );
 
-
 const loginButton =
     document.getElementById(
         "loginButton"
     );
-
 
 const loginError =
     document.getElementById(
         "loginError"
     );
 
-
-const passwordInput =
-    document.getElementById(
-        "password"
-    );
-
-
 const emailInput =
     document.getElementById(
         "email"
     );
 
+const passwordInput =
+    document.getElementById(
+        "password"
+    );
 
 const reviewsList =
     document.getElementById(
@@ -554,11 +502,11 @@ const reviewsList =
     );
 
 
-/* =========================================
-   ERROR DE LOGIN
-========================================= */
+/* ==========================================
+   ERROR
+========================================== */
 
-function showLoginError(
+function showError(
     message
 ) {
 
@@ -567,64 +515,55 @@ function showLoginError(
 
     loginError.style.display =
         "block";
-
 }
 
 
-/* =========================================
+/* ==========================================
    OCULTAR ERROR
-========================================= */
+========================================== */
 
-function hideLoginError() {
+function hideError() {
 
     loginError.textContent =
         "";
 
     loginError.style.display =
         "none";
-
 }
 
 
-/* =========================================
-   INICIAR SESIÓN
-========================================= */
+/* ==========================================
+   LOGIN
+========================================== */
 
 async function login() {
 
-    const email =
-        emailInput
-            .value
-            .trim();
+    hideError();
 
+    const email =
+        emailInput.value.trim();
 
     const password =
-        passwordInput
-            .value;
-
-
-    hideLoginError();
+        passwordInput.value;
 
 
     if (!email) {
 
-        showLoginError(
+        showError(
             "Escribe tu correo."
         );
 
         return;
-
     }
 
 
     if (!password) {
 
-        showLoginError(
+        showError(
             "Escribe tu contraseña."
         );
 
         return;
-
     }
 
 
@@ -633,12 +572,11 @@ async function login() {
         ADMIN_EMAIL.toLowerCase()
     ) {
 
-        showLoginError(
+        showError(
             "Este correo no tiene acceso de administrador."
         );
 
         return;
-
     }
 
 
@@ -664,74 +602,62 @@ async function login() {
                 });
 
 
-        const data =
-            result.data;
-
-        const error =
-            result.error;
-
-
-        if (error) {
+        if (result.error) {
 
             console.error(
-                "ERROR LOGIN:",
-                error
+                result.error
             );
 
-            showLoginError(
-                error.message ||
-                "No se pudo iniciar sesión."
+            showError(
+                result.error.message ||
+                "Correo o contraseña incorrectos."
             );
 
             return;
-
         }
 
 
         if (
-            !data ||
-            !data.user
+            !result.data ||
+            !result.data.user
         ) {
 
-            showLoginError(
-                "No se encontró el usuario."
+            showError(
+                "No se pudo iniciar la sesión."
             );
 
             return;
-
         }
 
 
         if (
-            !data.user.email ||
-            data.user.email.toLowerCase() !==
+            result.data.user.email.toLowerCase() !==
             ADMIN_EMAIL.toLowerCase()
         ) {
 
             await supabaseClient.auth
                 .signOut();
 
-            showLoginError(
+            showError(
                 "Este usuario no tiene permisos de administrador."
             );
 
             return;
-
         }
 
 
-        showAdminPanel();
+        showAdmin();
 
 
     }
     catch (error) {
 
         console.error(
-            "ERROR:",
+            "ERROR LOGIN:",
             error
         );
 
-        showLoginError(
+        showError(
             error.message ||
             "Ocurrió un error al iniciar sesión."
         );
@@ -744,15 +670,13 @@ async function login() {
 
         loginButton.textContent =
             "Entrar";
-
     }
-
 }
 
 
-/* =========================================
+/* ==========================================
    BOTÓN ENTRAR
-========================================= */
+========================================== */
 
 loginButton.addEventListener(
     "click",
@@ -760,77 +684,62 @@ loginButton.addEventListener(
 );
 
 
-/* =========================================
-   ENTER EN CORREO
-========================================= */
+/* ==========================================
+   ENTER
+========================================== */
 
 emailInput.addEventListener(
     "keydown",
     function(event) {
 
         if (
-            event.key ===
-            "Enter"
+            event.key === "Enter"
         ) {
 
             login();
 
         }
-
     }
 );
 
-
-/* =========================================
-   ENTER EN CONTRASEÑA
-========================================= */
 
 passwordInput.addEventListener(
     "keydown",
     function(event) {
 
         if (
-            event.key ===
-            "Enter"
+            event.key === "Enter"
         ) {
 
             login();
 
         }
-
     }
 );
 
 
-/* =========================================
-   MOSTRAR PANEL
-========================================= */
+/* ==========================================
+   MOSTRAR ADMIN
+========================================== */
 
-function showAdminPanel() {
+function showAdmin() {
 
-    loginSection.classList.add(
-        "hidden"
-    );
+    loginSection.style.display =
+        "none";
 
+    adminSection.style.display =
+        "block";
 
-    adminSection.classList.remove(
-        "hidden"
-    );
-
-
-    adminHeader.classList.remove(
-        "hidden"
-    );
-
+    adminHeader.style.display =
+        "flex";
 
     loadReviews();
-
 }
 
 
-/* =========================================
-   CARGAR TODAS LAS RESEÑAS
-========================================= */
+/* ==========================================
+   CARGAR RESEÑAS
+========================================== */
 
 async function loadReviews() {
 
@@ -851,25 +760,16 @@ async function loadReviews() {
                 .order(
                     "created_at",
                     {
-                        ascending: false
+                        ascending:false
                     }
                 );
 
 
-        const data =
-            result.data;
-
-        const error =
-            result.error;
-
-
-        if (error) {
+        if (result.error) {
 
             console.error(
-                "ERROR REVIEWS:",
-                error
+                result.error
             );
-
 
             reviewsList.innerHTML =
                 `
@@ -878,26 +778,27 @@ async function loadReviews() {
                     style="display:block"
                 >
 
-                    No se pudieron cargar las reseñas.
+                    Error al cargar las reseñas:
 
                     <br><br>
 
                     ${escapeHTML(
-                        error.message ||
-                        "Error desconocido"
+                        result.error.message
                     )}
 
                 </div>
                 `;
 
             return;
-
         }
 
 
+        const reviews =
+            result.data || [];
+
+
         if (
-            !data ||
-            data.length === 0
+            reviews.length === 0
         ) {
 
             reviewsList.innerHTML =
@@ -908,7 +809,6 @@ async function loadReviews() {
                 `;
 
             return;
-
         }
 
 
@@ -916,14 +816,8 @@ async function loadReviews() {
             "";
 
 
-        data.forEach(
-            function(review) {
-
-                renderReview(
-                    review
-                );
-
-            }
+        reviews.forEach(
+            renderReview
         );
 
 
@@ -931,10 +825,8 @@ async function loadReviews() {
     catch (error) {
 
         console.error(
-            "ERROR:",
             error
         );
-
 
         reviewsList.innerHTML =
             `
@@ -942,27 +834,18 @@ async function loadReviews() {
                 class="message error"
                 style="display:block"
             >
-
-                Ocurrió un error al cargar las reseñas.
-
-                <br><br>
-
                 ${escapeHTML(
-                    error.message ||
-                    "Error desconocido"
+                    error.message
                 )}
-
             </div>
             `;
-
     }
-
 }
 
 
-/* =========================================
-   CREAR RESEÑA EN EL PANEL
-========================================= */
+/* ==========================================
+   MOSTRAR RESEÑA
+========================================== */
 
 function renderReview(
     review
@@ -972,7 +855,6 @@ function renderReview(
         document.createElement(
             "div"
         );
-
 
     item.className =
         "review";
@@ -990,28 +872,12 @@ function renderReview(
         );
 
 
-    const starsHTML =
-        "★".repeat(
-            rating
-        ) +
-        `
-        <span style="color:#d1d5db">
-            ${
-                "★".repeat(
-                    5 - rating
-                )
-            }
-        </span>
-        `;
-
-
     const published =
         review.is_published === true;
 
 
     const response =
-        review.admin_response ||
-        "";
+        review.admin_response || "";
 
 
     item.innerHTML =
@@ -1026,6 +892,7 @@ function renderReview(
                     ${
                         escapeHTML(
                             review.customer_name ||
+                            review.name ||
                             "Cliente"
                         )
                     }
@@ -1035,7 +902,21 @@ function renderReview(
 
                 <div class="review-stars">
 
-                    ${starsHTML}
+                    ${
+                        "★".repeat(
+                            rating
+                        )
+                    }
+
+                    <span style="color:#d1d5db">
+
+                        ${
+                            "★".repeat(
+                                5 - rating
+                            )
+                        }
+
+                    </span>
 
                 </div>
 
@@ -1045,14 +926,11 @@ function renderReview(
             <div>
 
                 <span
-                    class="
-                        status
-                        ${
-                            published
-                                ? "status-visible"
-                                : "status-hidden"
-                        }
-                    "
+                    class="status ${
+                        published
+                            ? "visible"
+                            : "hidden-status"
+                    }"
                 >
 
                     ${
@@ -1068,12 +946,12 @@ function renderReview(
         </div>
 
 
-        <div class="review-comment">
+        <div>
 
             ${
                 escapeHTML(
                     review.comment ||
-                    "Sin comentario"
+                    ""
                 )
             }
 
@@ -1085,7 +963,6 @@ function renderReview(
                 ?
 
                 `
-
                 <div class="admin-response">
 
                     <strong>
@@ -1101,7 +978,6 @@ function renderReview(
                         }
 
                     </div>
-
 
                     ${
                         review.responded_at
@@ -1126,7 +1002,6 @@ function renderReview(
                     }
 
                 </div>
-
                 `
 
                 :
@@ -1149,7 +1024,6 @@ function renderReview(
 
         <div class="actions">
 
-
             ${
                 published
 
@@ -1159,8 +1033,10 @@ function renderReview(
                     <button
                         class="action hide"
                         type="button"
-                        data-action="hide"
-                        data-id="${review.id}"
+                        onclick="setPublished(
+                            '${review.id}',
+                            false
+                        )"
                     >
                         Ocultar
                     </button>
@@ -1172,8 +1048,10 @@ function renderReview(
                     <button
                         class="action show"
                         type="button"
-                        data-action="show"
-                        data-id="${review.id}"
+                        onclick="setPublished(
+                            '${review.id}',
+                            true
+                        )"
                     >
                         Mostrar
                     </button>
@@ -1184,8 +1062,9 @@ function renderReview(
             <button
                 class="action respond"
                 type="button"
-                data-action="respond"
-                data-id="${review.id}"
+                onclick="openResponse(
+                    '${review.id}'
+                )"
             >
 
                 ${
@@ -1200,14 +1079,14 @@ function renderReview(
             <button
                 class="action delete"
                 type="button"
-                data-action="delete"
-                data-id="${review.id}"
+                onclick="deleteReview(
+                    '${review.id}'
+                )"
             >
 
                 Eliminar
 
             </button>
-
 
         </div>
 
@@ -1219,7 +1098,7 @@ function renderReview(
 
             <textarea
                 id="responseText-${review.id}"
-                placeholder="Escribe tu respuesta al cliente..."
+                placeholder="Escribe tu respuesta..."
             >${escapeHTML(
                 response
             )}</textarea>
@@ -1228,7 +1107,95 @@ function renderReview(
             <button
                 class="save-response"
                 type="button"
-                data-action="save-response"
-                data-id="${review.id}"
+                onclick="saveResponse(
+                    '${review.id}'
+                )"
             >
-         
+
+                Guardar respuesta
+
+            </button>
+
+
+            <button
+                class="cancel-response"
+                type="button"
+                onclick="closeResponse(
+                    '${review.id}'
+                )"
+            >
+
+                Cancelar
+
+            </button>
+
+        </div>
+
+        `;
+
+
+    reviewsList.appendChild(
+        item
+    );
+}
+
+
+/* ==========================================
+   MOSTRAR / OCULTAR
+========================================== */
+
+async function setPublished(
+    reviewId,
+    published
+) {
+
+    const result =
+        await supabaseClient
+            .from("reviews")
+            .update({
+
+                is_published:
+                    published
+
+            })
+            .eq(
+                "id",
+                reviewId
+            );
+
+
+    if (result.error) {
+
+        alert(
+            "No se pudo actualizar la reseña:\n\n" +
+            result.error.message
+        );
+
+        return;
+    }
+
+
+    loadReviews();
+}
+
+
+/* ==========================================
+   ELIMINAR
+========================================== */
+
+async function deleteReview(
+    reviewId
+) {
+
+    if (
+        !confirm(
+            "¿Seguro que quieres eliminar esta reseña?"
+        )
+    ) {
+
+        return;
+    }
+
+
+    const result =
+        await supabaseCli
