@@ -40,6 +40,7 @@ header {
     padding: 9px 16px;
     border-radius: 20px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .hero {
@@ -240,7 +241,15 @@ footer {
 
 <header>
     <div class="logo">Samsung Experience Store</div>
-    <button class="admin">Acceso</button>
+
+    <!-- BOTÓN DE ACCESO AL ADMINISTRADOR -->
+    <button
+        class="admin"
+        type="button"
+        onclick="window.location.href='admin.html'"
+    >
+        Acceso
+    </button>
 </header>
 
 <section class="hero">
