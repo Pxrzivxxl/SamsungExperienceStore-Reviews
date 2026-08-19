@@ -7,6 +7,7 @@
 <title>Samsung Experience Store - Opiniones</title>
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -40,6 +41,7 @@ header {
     padding: 9px 16px;
     border-radius: 20px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .hero {
@@ -211,6 +213,19 @@ textarea {
     margin-top: 12px;
 }
 
+.admin-response {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f3f4f6;
+    border-left: 4px solid #000;
+    border-radius: 8px;
+}
+
+.admin-response-title {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
 .loading {
     text-align: center;
     color: #6b7280;
@@ -224,7 +239,183 @@ footer {
     font-size: 13px;
 }
 
+
+/* =========================
+   PANEL ADMINISTRADOR
+========================= */
+
+.admin-panel {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #f5f7fa;
+    z-index: 9999;
+    overflow-y: auto;
+}
+
+.admin-header {
+    background: #000;
+    color: white;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.admin-header-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.admin-close {
+    background: white;
+    color: black;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.admin-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 18px 40px;
+}
+
+.login-card {
+    max-width: 450px;
+    margin: 70px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 5px 25px rgba(0,0,0,.08);
+}
+
+.login-card h2 {
+    margin-bottom: 10px;
+}
+
+.login-card p {
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+.login-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #000;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.admin-content {
+    display: none;
+}
+
+.admin-title {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.admin-subtitle {
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+.admin-review {
+    background: white;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 15px rgba(0,0,0,.06);
+}
+
+.admin-review-name {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.admin-review-stars {
+    color: #f59e0b;
+    font-size: 20px;
+    margin: 8px 0;
+}
+
+.admin-review-date {
+    color: #9ca3af;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+.admin-response-input {
+    width: 100%;
+    min-height: 100px;
+    margin-top: 15px;
+    padding: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    resize: vertical;
+    font-size: 15px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.respond-button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #000;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #dc2626;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.logout-button {
+    margin-top: 20px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #e5e7eb;
+    color: #111827;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.admin-error {
+    margin-top: 15px;
+    padding: 13px;
+    border-radius: 10px;
+    background: #fee2e2;
+    color: #991b1b;
+    display: none;
+}
+
 @media(max-width:600px) {
+
     .hero h1 {
         font-size: 27px;
     }
@@ -232,56 +423,103 @@ footer {
     .store-name {
         font-size: 21px;
     }
+
+    .admin-actions {
+        flex-direction: column;
+    }
+
+    .delete-button {
+        width: 100%;
+    }
 }
+
 </style>
 </head>
 
+
 <body>
 
+
 <header>
-    <div class="logo">Samsung Experience Store</div>
-    <button class="admin">Acceso</button>
+
+    <div class="logo">
+        Samsung Experience Store
+    </div>
+
+    <button
+        class="admin"
+        id="adminButton"
+    >
+        Acceso
+    </button>
+
 </header>
 
+
 <section class="hero">
-    <h1>¿Cómo fue tu experiencia?</h1>
+
+    <h1>
+        ¿Cómo fue tu experiencia?
+    </h1>
+
     <p>
         Tu opinión nos ayuda a mejorar nuestro servicio.
         Califica la atención que recibiste en nuestra tienda.
     </p>
+
 </section>
+
 
 <main class="container">
 
+
     <section class="store-card">
 
-        <div class="store-name" id="storeName">
+        <div
+            class="store-name"
+            id="storeName"
+        >
             Samsung Store Ámbar
         </div>
 
-        <div class="store-location" id="storeLocation">
+        <div
+            class="store-location"
+            id="storeLocation"
+        >
             Tuxtla Gutiérrez, Chiapas
         </div>
 
-        <div class="rating" id="averageRating">
-            5.0
+        <div
+            class="rating"
+            id="averageRating"
+        >
+            0.0
         </div>
 
-        <div class="stars" id="averageStars">
-            ★★★★★
+        <div
+            class="stars"
+            id="averageStars"
+        >
+            ☆☆☆☆☆
         </div>
 
     </section>
 
+
     <section class="form-card">
 
-        <h2>Deja tu reseña</h2>
+        <h2>
+            Deja tu reseña
+        </h2>
 
         <p>
             Cuéntanos cómo fue tu experiencia con nuestro equipo.
         </p>
 
-        <label for="name">Tu nombre</label>
+
+        <label for="name">
+            Tu nombre
+        </label>
 
         <input
             type="text"
@@ -290,19 +528,44 @@ footer {
             maxlength="80"
         >
 
-        <label>Tu calificación</label>
+
+        <label>
+            Tu calificación
+        </label>
 
         <div class="star-selector">
 
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
+            <span
+                class="star"
+                data-value="1"
+            >★</span>
+
+            <span
+                class="star"
+                data-value="2"
+            >★</span>
+
+            <span
+                class="star"
+                data-value="3"
+            >★</span>
+
+            <span
+                class="star"
+                data-value="4"
+            >★</span>
+
+            <span
+                class="star"
+                data-value="5"
+            >★</span>
 
         </div>
 
-        <label for="comment">Tu opinión</label>
+
+        <label for="comment">
+            Tu opinión
+        </label>
 
         <textarea
             id="comment"
@@ -310,53 +573,204 @@ footer {
             maxlength="1000"
         ></textarea>
 
-        <button class="submit" id="submitButton">
+
+        <button
+            class="submit"
+            id="submitButton"
+        >
             Enviar mi opinión
         </button>
 
-        <div class="message success" id="successMessage">
+
+        <div
+            class="message success"
+            id="successMessage"
+        >
             ¡Gracias por compartir tu experiencia! ⭐
         </div>
 
-        <div class="message error" id="errorMessage">
+
+        <div
+            class="message error"
+            id="errorMessage"
+        >
             Ocurrió un problema. Inténtalo nuevamente.
         </div>
 
     </section>
 
+
     <section class="reviews">
 
-        <h2>Opiniones de clientes</h2>
+        <h2>
+            Opiniones de clientes
+        </h2>
 
-        <div id="reviewsList" class="loading">
+        <div
+            id="reviewsList"
+            class="loading"
+        >
             Cargando opiniones...
         </div>
 
     </section>
 
+
 </main>
 
+
 <footer>
+
     Samsung Experience Store<br>
     Tu opinión nos ayuda a mejorar.
+
 </footer>
+
+
+
+<!-- =========================
+     PANEL ADMINISTRADOR
+========================= -->
+
+<section
+    class="admin-panel"
+    id="adminPanel"
+>
+
+
+    <div class="admin-header">
+
+        <div class="admin-header-title">
+            Panel de administrador
+        </div>
+
+        <button
+            class="admin-close"
+            id="closeAdmin"
+        >
+            Cerrar
+        </button>
+
+    </div>
+
+
+    <div class="admin-container">
+
+
+        <!-- LOGIN -->
+
+        <div
+            class="login-card"
+            id="loginCard"
+        >
+
+            <h2>
+                Acceso de administrador
+            </h2>
+
+            <p>
+                Ingresa con tu cuenta de administrador.
+            </p>
+
+
+            <label for="adminEmail">
+                Correo
+            </label>
+
+            <input
+                type="email"
+                id="adminEmail"
+                value="ethelredbcp@gmail.com"
+                autocomplete="username"
+            >
+
+
+            <label for="adminPassword">
+                Contraseña
+            </label>
+
+            <input
+                type="password"
+                id="adminPassword"
+                placeholder="Contraseña"
+                autocomplete="current-password"
+            >
+
+
+            <button
+                class="login-button"
+                id="loginButton"
+            >
+                Iniciar sesión
+            </button>
+
+
+            <div
+                class="admin-error"
+                id="loginError"
+            ></div>
+
+        </div>
+
+
+        <!-- CONTENIDO ADMIN -->
+
+        <div
+            class="admin-content"
+            id="adminContent"
+        >
+
+            <h1 class="admin-title">
+                Reseñas
+            </h1>
+
+            <p class="admin-subtitle">
+                Aquí puedes responder o eliminar reseñas.
+            </p>
+
+
+            <div id="adminReviewsList">
+
+                <div class="loading">
+                    Cargando reseñas...
+                </div>
+
+            </div>
+
+
+            <button
+                class="logout-button"
+                id="logoutButton"
+            >
+                Cerrar sesión
+            </button>
+
+        </div>
+
+
+    </div>
+
+</section>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
 
-/*
-====================================================
-CONFIGURACIÓN DE SUPABASE
-====================================================
-*/
+
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
     "https://lxmjfsdmbwgqxtovtxyn.supabase.co";
 
+
 const SUPABASE_ANON_KEY =
     "sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
+
 
 const supabaseClient =
     supabase.createClient(
@@ -365,16 +779,16 @@ const supabaseClient =
     );
 
 
-/*
-====================================================
-TIENDA
-====================================================
-*/
+
+/* =========================
+   TIENDA
+========================= */
 
 const params =
     new URLSearchParams(
         window.location.search
     );
+
 
 const storeSlug =
     params.get("store") ||
@@ -382,126 +796,152 @@ const storeSlug =
 
 
 let storeId = null;
+
 let selectedRating = 0;
 
 
-/*
-====================================================
-ESTRELLAS
-====================================================
-*/
+
+/* =========================
+   ESTRELLAS
+========================= */
 
 const stars =
     document.querySelectorAll(".star");
 
+
 stars.forEach(star => {
 
-    star.addEventListener("click", () => {
+    star.addEventListener(
+        "click",
+        () => {
 
-        selectedRating =
-            Number(
-                star.dataset.value
-            );
-
-        stars.forEach(s => {
-
-            const value =
+            selectedRating =
                 Number(
-                    s.dataset.value
+                    star.dataset.value
                 );
 
-            s.classList.toggle(
-                "active",
-                value <= selectedRating
-            );
 
-        });
+            stars.forEach(s => {
 
-    });
+                const value =
+                    Number(
+                        s.dataset.value
+                    );
+
+
+                s.classList.toggle(
+                    "active",
+                    value <= selectedRating
+                );
+
+            });
+
+        }
+    );
 
 });
 
 
-/*
-====================================================
-CARGAR TIENDA
-====================================================
-*/
+
+/* =========================
+   CARGAR TIENDA
+========================= */
 
 async function loadStore() {
 
-    try {
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("stores")
+            .select("*")
+            .eq("slug", storeSlug)
+            .eq("active", true)
+            .single();
 
-        const { data, error } =
-            await supabaseClient
-                .from("stores")
-                .select("*")
-                .eq("slug", storeSlug)
-                .eq("active", true)
-                .single();
 
-        if (error) {
-
-            console.error(
-                "ERROR TIENDA:",
-                error
-            );
-
-            return;
-
-        }
-
-        if (!data) return;
-
-        storeId =
-            data.id;
-
-        document
-            .getElementById("storeName")
-            .textContent =
-            data.name;
-
-        document
-            .getElementById("storeLocation")
-            .textContent =
-            `${data.city || ""}, ${data.state || ""}`;
-
-        loadReviews();
-
-    }
-    catch (error) {
+    if (error) {
 
         console.error(
-            "ERROR:",
+            "Error cargando tienda:",
             error
         );
 
+        return;
+
     }
+
+
+    if (!data) {
+
+        console.error(
+            "No se encontró la tienda."
+        );
+
+        return;
+
+    }
+
+
+    storeId =
+        data.id;
+
+
+    document
+        .getElementById("storeName")
+        .textContent =
+        data.name;
+
+
+    document
+        .getElementById("storeLocation")
+        .textContent =
+        `${data.city || ""}, ${data.state || ""}`;
+
+
+    await loadReviews();
 
 }
 
 
-/*
-====================================================
-CARGAR RESEÑAS
-====================================================
-*/
+
+/* =========================
+   CARGAR RESEÑAS
+========================= */
 
 async function loadReviews() {
 
     if (!storeId) return;
+
 
     const list =
         document.getElementById(
             "reviewsList"
         );
 
-    const { data, error } =
+
+    list.innerHTML =
+        "<div class='loading'>Cargando opiniones...</div>";
+
+
+    const {
+        data,
+        error
+    } =
         await supabaseClient
             .from("reviews")
-            .select("*")
-            .eq("store_id", storeId)
-            .eq("is_published", true)
+            .select(
+                "id, store_id, customer_name, rating, comment, is_published, admin_response, responded_at, created_at"
+            )
+            .eq(
+                "store_id",
+                storeId
+            )
+            .eq(
+                "is_published",
+                true
+            )
             .order(
                 "created_at",
                 {
@@ -509,25 +949,23 @@ async function loadReviews() {
                 }
             );
 
+
     if (error) {
 
         console.error(
-            "ERROR AL CARGAR REVIEWS:",
+            "Error cargando reseñas:",
             error
         );
 
+
         list.innerHTML =
-            `<p style="color:#991b1b">
-                Error Supabase:
-                ${escapeHTML(
-                    error.message ||
-                    JSON.stringify(error)
-                )}
-            </p>`;
+            "<p>No se pudieron cargar las opiniones.</p>";
+
 
         return;
 
     }
+
 
     if (
         !data ||
@@ -537,13 +975,17 @@ async function loadReviews() {
         list.innerHTML =
             "<p class='loading'>Sé el primero en dejar una opinión.</p>";
 
+
         updateAverage([]);
+
 
         return;
 
     }
 
+
     list.innerHTML = "";
+
 
     data.forEach(review => {
 
@@ -552,13 +994,45 @@ async function loadReviews() {
                 "div"
             );
 
+
         item.className =
             "review";
+
 
         const rating =
             Number(
                 review.rating || 0
             );
+
+
+        let responseHTML = "";
+
+
+        if (
+            review.admin_response &&
+            review.admin_response.trim()
+        ) {
+
+            responseHTML = `
+
+                <div class="admin-response">
+
+                    <div class="admin-response-title">
+                        Respuesta de la tienda
+                    </div>
+
+                    <div>
+                        ${escapeHTML(
+                            review.admin_response
+                        )}
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
 
         item.innerHTML = `
 
@@ -589,28 +1063,33 @@ async function loadReviews() {
                 )}
             </div>
 
+            ${responseHTML}
+
             <div class="review-date">
+
                 ${formatDate(
                     review.created_at
                 )}
+
             </div>
 
         `;
 
+
         list.appendChild(item);
 
     });
+
 
     updateAverage(data);
 
 }
 
 
-/*
-====================================================
-CALIFICACIÓN PROMEDIO
-====================================================
-*/
+
+/* =========================
+   PROMEDIO
+========================= */
 
 function updateAverage(reviews) {
 
@@ -623,6 +1102,7 @@ function updateAverage(reviews) {
             .textContent =
             "0.0";
 
+
         document
             .getElementById(
                 "averageStars"
@@ -630,23 +1110,29 @@ function updateAverage(reviews) {
             .textContent =
             "☆☆☆☆☆";
 
+
         return;
 
     }
 
+
     const total =
         reviews.reduce(
-            (sum, review) =>
-                sum +
-                Number(
-                    review.rating || 0
-                ),
+            (sum, review) => {
+
+                return sum +
+                    Number(
+                        review.rating || 0
+                    );
+
+            },
             0
         );
 
+
     const average =
-        total /
-        reviews.length;
+        total / reviews.length;
+
 
     document
         .getElementById(
@@ -655,10 +1141,10 @@ function updateAverage(reviews) {
         .textContent =
         average.toFixed(1);
 
+
     const rounded =
-        Math.round(
-            average
-        );
+        Math.round(average);
+
 
     document
         .getElementById(
@@ -675,11 +1161,10 @@ function updateAverage(reviews) {
 }
 
 
-/*
-====================================================
-ENVIAR RESEÑA
-====================================================
-*/
+
+/* =========================
+   ENVIAR RESEÑA
+========================= */
 
 document
     .getElementById(
@@ -689,6 +1174,7 @@ document
         "click",
         async () => {
 
+
             const name =
                 document
                     .getElementById(
@@ -696,6 +1182,7 @@ document
                     )
                     .value
                     .trim();
+
 
             const comment =
                 document
@@ -705,24 +1192,31 @@ document
                     .value
                     .trim();
 
+
             const button =
-                document.getElementById(
-                    "submitButton"
-                );
+                document
+                    .getElementById(
+                        "submitButton"
+                    );
+
 
             const success =
-                document.getElementById(
-                    "successMessage"
-                );
+                document
+                    .getElementById(
+                        "successMessage"
+                    );
+
 
             const errorMessage =
-                document.getElementById(
-                    "errorMessage"
-                );
+                document
+                    .getElementById(
+                        "errorMessage"
+                    );
 
 
             success.style.display =
                 "none";
+
 
             errorMessage.style.display =
                 "none";
@@ -757,175 +1251,4 @@ document
             if (!comment) {
 
                 errorMessage.textContent =
-                    "Escribe tu opinión.";
-
-                errorMessage.style.display =
-                    "block";
-
-                return;
-
-            }
-
-
-            if (!storeId) {
-
-                errorMessage.textContent =
-                    "No se pudo identificar la tienda.";
-
-                errorMessage.style.display =
-                    "block";
-
-                return;
-
-            }
-
-
-            button.disabled =
-                true;
-
-            button.textContent =
-                "Enviando...";
-
-
-            const { error } =
-                await supabaseClient
-                    .from("reviews")
-                    .insert({
-
-                        store_id:
-                            storeId,
-
-                        customer_name:
-                            name,
-
-                        rating:
-                            selectedRating,
-
-                        comment:
-                            comment,
-
-                        is_published:
-                            true
-
-                    });
-
-
-            button.disabled =
-                false;
-
-            button.textContent =
-                "Enviar mi opinión";
-
-
-            if (error) {
-
-                console.error(
-                    "ERROR AL INSERTAR REVIEW:",
-                    error
-                );
-
-                errorMessage.textContent =
-                    "ERROR SUPABASE: " +
-                    (
-                        error.message ||
-                        JSON.stringify(error)
-                    );
-
-                errorMessage.style.display =
-                    "block";
-
-                return;
-
-            }
-
-
-            document
-                .getElementById(
-                    "name"
-                )
-                .value = "";
-
-            document
-                .getElementById(
-                    "comment"
-                )
-                .value = "";
-
-
-            selectedRating =
-                0;
-
-
-            stars.forEach(s =>
-                s.classList.remove(
-                    "active"
-                )
-            );
-
-
-            success.style.display =
-                "block";
-
-
-            loadReviews();
-
-        }
-    );
-
-
-/*
-====================================================
-SEGURIDAD PARA MOSTRAR TEXTO
-====================================================
-*/
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.textContent =
-        text;
-
-    return div.innerHTML;
-
-}
-
-
-/*
-====================================================
-FECHA
-====================================================
-*/
-
-function formatDate(date) {
-
-    if (!date) return "";
-
-    return new Date(date)
-        .toLocaleDateString(
-            "es-MX",
-            {
-                day: "numeric",
-                month: "long",
-                year: "numeric"
-            }
-        );
-
-}
-
-
-/*
-====================================================
-INICIAR
-====================================================
-*/
-
-loadStore();
-
-</script>
-
-</body>
-</html>
+                 
