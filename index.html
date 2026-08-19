@@ -40,7 +40,6 @@ header {
     padding: 9px 16px;
     border-radius: 20px;
     font-weight: bold;
-    cursor: pointer;
 }
 
 .hero {
@@ -212,19 +211,6 @@ textarea {
     margin-top: 12px;
 }
 
-.admin-response {
-    margin-top: 15px;
-    padding: 14px;
-    border-left: 4px solid #000;
-    background: #f3f4f6;
-    border-radius: 8px;
-}
-
-.admin-response-title {
-    font-weight: bold;
-    margin-bottom: 6px;
-}
-
 .loading {
     text-align: center;
     color: #6b7280;
@@ -238,213 +224,7 @@ footer {
     font-size: 13px;
 }
 
-
-/* ====================================================
-   ADMIN
-==================================================== */
-
-.admin-modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    inset: 0;
-    background: rgba(0,0,0,.65);
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.admin-box {
-    background: white;
-    max-width: 900px;
-    margin: 30px auto;
-    border-radius: 18px;
-    padding: 25px;
-    position: relative;
-}
-
-.admin-box h2 {
-    margin-bottom: 8px;
-}
-
-.admin-subtitle {
-    color: #6b7280;
-    margin-bottom: 20px;
-}
-
-.close-admin {
-    position: absolute;
-    right: 18px;
-    top: 15px;
-    border: none;
-    background: transparent;
-    font-size: 28px;
-    cursor: pointer;
-}
-
-.login-box {
-    max-width: 430px;
-}
-
-.login-box input {
-    margin-bottom: 10px;
-}
-
-.admin-login-button {
-    width: 100%;
-    background: #000;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 14px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.admin-error {
-    display: none;
-    background: #fee2e2;
-    color: #991b1b;
-    padding: 12px;
-    border-radius: 10px;
-    margin-top: 15px;
-}
-
-.admin-panel {
-    display: none;
-}
-
-.admin-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
-
-.logout-button {
-    background: #e5e7eb;
-    color: #111827;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.admin-review {
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 15px;
-}
-
-.admin-review.hidden-review {
-    opacity: .7;
-    background: #f9fafb;
-}
-
-.admin-review-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.admin-review-name {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.admin-status {
-    font-size: 12px;
-    font-weight: bold;
-    padding: 5px 9px;
-    border-radius: 20px;
-}
-
-.status-visible {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.status-hidden {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.admin-review-stars {
-    color: #f59e0b;
-    margin: 8px 0;
-    font-size: 20px;
-}
-
-.admin-review-comment {
-    margin-top: 8px;
-    line-height: 1.5;
-}
-
-.admin-response-input {
-    margin-top: 15px;
-    min-height: 90px;
-}
-
-.admin-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-}
-
-.admin-action {
-    border: none;
-    padding: 10px 13px;
-    border-radius: 9px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.reply-button {
-    background: #000;
-    color: white;
-}
-
-.hide-button {
-    background: #f3f4f6;
-    color: #111827;
-}
-
-.show-button {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.delete-button {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.admin-message {
-    display: none;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-.admin-success {
-    background: #dcfce7;
-    color: #166534;
-}
-
-.admin-error-message {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
 @media(max-width:600px) {
-
     .hero h1 {
         font-size: 27px;
     }
@@ -452,13 +232,7 @@ footer {
     .store-name {
         font-size: 21px;
     }
-
-    .admin-box {
-        margin: 10px auto;
-        padding: 20px;
-    }
 }
-
 </style>
 </head>
 
@@ -466,24 +240,16 @@ footer {
 
 <header>
     <div class="logo">Samsung Experience Store</div>
-
-    <button class="admin" id="adminAccessButton">
-        Acceso
-    </button>
+    <button class="admin">Acceso</button>
 </header>
 
-
 <section class="hero">
-
     <h1>¿Cómo fue tu experiencia?</h1>
-
     <p>
         Tu opinión nos ayuda a mejorar nuestro servicio.
         Califica la atención que recibiste en nuestra tienda.
     </p>
-
 </section>
-
 
 <main class="container">
 
@@ -507,7 +273,6 @@ footer {
 
     </section>
 
-
     <section class="form-card">
 
         <h2>Deja tu reseña</h2>
@@ -516,9 +281,7 @@ footer {
             Cuéntanos cómo fue tu experiencia con nuestro equipo.
         </p>
 
-        <label for="name">
-            Tu nombre
-        </label>
+        <label for="name">Tu nombre</label>
 
         <input
             type="text"
@@ -527,9 +290,7 @@ footer {
             maxlength="80"
         >
 
-        <label>
-            Tu calificación
-        </label>
+        <label>Tu calificación</label>
 
         <div class="star-selector">
 
@@ -541,9 +302,7 @@ footer {
 
         </div>
 
-        <label for="comment">
-            Tu opinión
-        </label>
+        <label for="comment">Tu opinión</label>
 
         <textarea
             id="comment"
@@ -551,40 +310,25 @@ footer {
             maxlength="1000"
         ></textarea>
 
-        <button
-            class="submit"
-            id="submitButton"
-        >
+        <button class="submit" id="submitButton">
             Enviar mi opinión
         </button>
 
-        <div
-            class="message success"
-            id="successMessage"
-        >
+        <div class="message success" id="successMessage">
             ¡Gracias por compartir tu experiencia! ⭐
         </div>
 
-        <div
-            class="message error"
-            id="errorMessage"
-        >
+        <div class="message error" id="errorMessage">
             Ocurrió un problema. Inténtalo nuevamente.
         </div>
 
     </section>
 
-
     <section class="reviews">
 
-        <h2>
-            Opiniones de clientes
-        </h2>
+        <h2>Opiniones de clientes</h2>
 
-        <div
-            id="reviewsList"
-            class="loading"
-        >
+        <div id="reviewsList" class="loading">
             Cargando opiniones...
         </div>
 
@@ -592,161 +336,13 @@ footer {
 
 </main>
 
-
 <footer>
-
     Samsung Experience Store<br>
-
     Tu opinión nos ayuda a mejorar.
-
 </footer>
 
 
-
-<!-- ==================================================
-     MODAL DE ADMINISTRADOR
-================================================== -->
-
-<div
-    class="admin-modal"
-    id="adminModal"
->
-
-    <div class="admin-box">
-
-        <button
-            class="close-admin"
-            id="closeAdmin"
-        >
-            ×
-        </button>
-
-
-        <!-- LOGIN -->
-
-        <div
-            id="adminLogin"
-            class="login-box"
-        >
-
-            <h2>
-                Acceso de administrador
-            </h2>
-
-            <p class="admin-subtitle">
-                Inicia sesión para administrar las reseñas.
-            </p>
-
-
-            <label for="adminEmail">
-                Correo
-            </label>
-
-            <input
-                type="email"
-                id="adminEmail"
-                placeholder="Correo del administrador"
-                autocomplete="email"
-            >
-
-
-            <label for="adminPassword">
-                Contraseña
-            </label>
-
-            <input
-                type="password"
-                id="adminPassword"
-                placeholder="Contraseña"
-                autocomplete="current-password"
-            >
-
-
-            <button
-                class="admin-login-button"
-                id="adminLoginButton"
-            >
-                Iniciar sesión
-            </button>
-
-
-            <div
-                class="admin-error"
-                id="adminLoginError"
-            >
-                Correo o contraseña incorrectos.
-            </div>
-
-        </div>
-
-
-
-        <!-- PANEL ADMIN -->
-
-        <div
-            class="admin-panel"
-            id="adminPanel"
-        >
-
-            <div class="admin-top">
-
-                <div>
-
-                    <h2>
-                        Administración de reseñas
-                    </h2>
-
-                    <p class="admin-subtitle">
-                        Aquí puedes ver, ocultar, responder o eliminar reseñas.
-                    </p>
-
-                </div>
-
-
-                <button
-                    class="logout-button"
-                    id="logoutButton"
-                >
-                    Cerrar sesión
-                </button>
-
-            </div>
-
-
-            <div
-                class="admin-message admin-success"
-                id="adminSuccessMessage"
-            >
-                Cambio realizado correctamente.
-            </div>
-
-
-            <div
-                class="admin-message admin-error-message"
-                id="adminErrorMessage"
-            >
-                Ocurrió un error.
-            </div>
-
-
-            <div
-                id="adminReviewsList"
-            >
-                <div class="loading">
-                    Cargando reseñas...
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
@@ -767,16 +363,6 @@ const supabaseClient =
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
-
-
-/*
-====================================================
-ADMINISTRADOR
-====================================================
-*/
-
-const ADMIN_EMAIL =
-    "ethelredbcp@gmail.com";
 
 
 /*
@@ -854,7 +440,6 @@ async function loadStore() {
                 .eq("active", true)
                 .single();
 
-
         if (error) {
 
             console.error(
@@ -866,25 +451,20 @@ async function loadStore() {
 
         }
 
-
         if (!data) return;
-
 
         storeId =
             data.id;
-
 
         document
             .getElementById("storeName")
             .textContent =
             data.name;
 
-
         document
             .getElementById("storeLocation")
             .textContent =
             `${data.city || ""}, ${data.state || ""}`;
-
 
         loadReviews();
 
@@ -903,7 +483,7 @@ async function loadStore() {
 
 /*
 ====================================================
-CARGAR RESEÑAS PÚBLICAS
+CARGAR RESEÑAS
 ====================================================
 */
 
@@ -911,12 +491,10 @@ async function loadReviews() {
 
     if (!storeId) return;
 
-
     const list =
         document.getElementById(
             "reviewsList"
         );
-
 
     const { data, error } =
         await supabaseClient
@@ -931,14 +509,12 @@ async function loadReviews() {
                 }
             );
 
-
     if (error) {
 
         console.error(
             "ERROR AL CARGAR REVIEWS:",
             error
         );
-
 
         list.innerHTML =
             `<p style="color:#991b1b">
@@ -949,11 +525,9 @@ async function loadReviews() {
                 )}
             </p>`;
 
-
         return;
 
     }
-
 
     if (
         !data ||
@@ -963,16 +537,13 @@ async function loadReviews() {
         list.innerHTML =
             "<p class='loading'>Sé el primero en dejar una opinión.</p>";
 
-
         updateAverage([]);
 
         return;
 
     }
 
-
     list.innerHTML = "";
-
 
     data.forEach(review => {
 
@@ -981,45 +552,13 @@ async function loadReviews() {
                 "div"
             );
 
-
         item.className =
             "review";
-
 
         const rating =
             Number(
                 review.rating || 0
             );
-
-
-        let responseHTML = "";
-
-
-        if (
-            review.admin_response &&
-            review.admin_response.trim()
-        ) {
-
-            responseHTML = `
-
-                <div class="admin-response">
-
-                    <div class="admin-response-title">
-                        Respuesta de la tienda
-                    </div>
-
-                    <div>
-                        ${escapeHTML(
-                            review.admin_response
-                        )}
-                    </div>
-
-                </div>
-
-            `;
-
-        }
-
 
         item.innerHTML = `
 
@@ -1029,7 +568,6 @@ async function loadReviews() {
                     "Cliente"
                 )}
             </div>
-
 
             <div class="review-stars">
 
@@ -1045,16 +583,11 @@ async function loadReviews() {
 
             </div>
 
-
             <div>
                 ${escapeHTML(
                     review.comment || ""
                 )}
             </div>
-
-
-            ${responseHTML}
-
 
             <div class="review-date">
                 ${formatDate(
@@ -1064,11 +597,9 @@ async function loadReviews() {
 
         `;
 
-
         list.appendChild(item);
 
     });
-
 
     updateAverage(data);
 
@@ -1092,7 +623,6 @@ function updateAverage(reviews) {
             .textContent =
             "0.0";
 
-
         document
             .getElementById(
                 "averageStars"
@@ -1100,11 +630,9 @@ function updateAverage(reviews) {
             .textContent =
             "☆☆☆☆☆";
 
-
         return;
 
     }
-
 
     const total =
         reviews.reduce(
@@ -1116,11 +644,9 @@ function updateAverage(reviews) {
             0
         );
 
-
     const average =
         total /
         reviews.length;
-
 
     document
         .getElementById(
@@ -1129,12 +655,10 @@ function updateAverage(reviews) {
         .textContent =
         average.toFixed(1);
 
-
     const rounded =
         Math.round(
             average
         );
-
 
     document
         .getElementById(
@@ -1173,7 +697,6 @@ document
                     .value
                     .trim();
 
-
             const comment =
                 document
                     .getElementById(
@@ -1182,20 +705,227 @@ document
                     .value
                     .trim();
 
-
             const button =
                 document.getElementById(
                     "submitButton"
                 );
-
 
             const success =
                 document.getElementById(
                     "successMessage"
                 );
 
-
             const errorMessage =
                 document.getElementById(
                     "errorMessage"
-    
+                );
+
+
+            success.style.display =
+                "none";
+
+            errorMessage.style.display =
+                "none";
+
+
+            if (!name) {
+
+                errorMessage.textContent =
+                    "Por favor escribe tu nombre.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            if (!selectedRating) {
+
+                errorMessage.textContent =
+                    "Selecciona una calificación.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            if (!comment) {
+
+                errorMessage.textContent =
+                    "Escribe tu opinión.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            if (!storeId) {
+
+                errorMessage.textContent =
+                    "No se pudo identificar la tienda.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            button.disabled =
+                true;
+
+            button.textContent =
+                "Enviando...";
+
+
+            const { error } =
+                await supabaseClient
+                    .from("reviews")
+                    .insert({
+
+                        store_id:
+                            storeId,
+
+                        customer_name:
+                            name,
+
+                        rating:
+                            selectedRating,
+
+                        comment:
+                            comment,
+
+                        is_published:
+                            true
+
+                    });
+
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Enviar mi opinión";
+
+
+            if (error) {
+
+                console.error(
+                    "ERROR AL INSERTAR REVIEW:",
+                    error
+                );
+
+                errorMessage.textContent =
+                    "ERROR SUPABASE: " +
+                    (
+                        error.message ||
+                        JSON.stringify(error)
+                    );
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            document
+                .getElementById(
+                    "name"
+                )
+                .value = "";
+
+            document
+                .getElementById(
+                    "comment"
+                )
+                .value = "";
+
+
+            selectedRating =
+                0;
+
+
+            stars.forEach(s =>
+                s.classList.remove(
+                    "active"
+                )
+            );
+
+
+            success.style.display =
+                "block";
+
+
+            loadReviews();
+
+        }
+    );
+
+
+/*
+====================================================
+SEGURIDAD PARA MOSTRAR TEXTO
+====================================================
+*/
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+/*
+====================================================
+FECHA
+====================================================
+*/
+
+function formatDate(date) {
+
+    if (!date) return "";
+
+    return new Date(date)
+        .toLocaleDateString(
+            "es-MX",
+            {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            }
+        );
+
+}
+
+
+/*
+====================================================
+INICIAR
+====================================================
+*/
+
+loadStore();
+
+</script>
+
+</body>
+</html>
