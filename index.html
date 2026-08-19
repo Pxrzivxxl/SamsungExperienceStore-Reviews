@@ -7,7 +7,6 @@
 <title>Samsung Experience Store - Opiniones</title>
 
 <style>
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -215,9 +214,9 @@ textarea {
 
 .admin-response {
     margin-top: 15px;
-    padding: 15px;
-    background: #f3f4f6;
+    padding: 14px;
     border-left: 4px solid #000;
+    background: #f3f4f6;
     border-radius: 8px;
 }
 
@@ -240,178 +239,208 @@ footer {
 }
 
 
-/* =========================
-   PANEL ADMINISTRADOR
-========================= */
+/* ====================================================
+   ADMIN
+==================================================== */
 
-.admin-panel {
+.admin-modal {
     display: none;
     position: fixed;
-    inset: 0;
-    background: #f5f7fa;
     z-index: 9999;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    padding: 20px;
     overflow-y: auto;
 }
 
-.admin-header {
-    background: #000;
-    color: white;
-    padding: 18px 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.admin-header-title {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.admin-close {
+.admin-box {
     background: white;
-    color: black;
-    border: none;
-    padding: 9px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.admin-container {
     max-width: 900px;
     margin: 30px auto;
-    padding: 0 18px 40px;
-}
-
-.login-card {
-    max-width: 450px;
-    margin: 70px auto;
-    background: white;
-    padding: 30px;
     border-radius: 18px;
-    box-shadow: 0 5px 25px rgba(0,0,0,.08);
+    padding: 25px;
+    position: relative;
 }
 
-.login-card h2 {
-    margin-bottom: 10px;
-}
-
-.login-card p {
-    color: #6b7280;
-    margin-bottom: 20px;
-}
-
-.login-button {
-    width: 100%;
-    margin-top: 20px;
-    padding: 15px;
-    border: none;
-    border-radius: 12px;
-    background: #000;
-    color: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.admin-content {
-    display: none;
-}
-
-.admin-title {
-    font-size: 28px;
+.admin-box h2 {
     margin-bottom: 8px;
 }
 
 .admin-subtitle {
     color: #6b7280;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+}
+
+.close-admin {
+    position: absolute;
+    right: 18px;
+    top: 15px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.login-box {
+    max-width: 430px;
+}
+
+.login-box input {
+    margin-bottom: 10px;
+}
+
+.admin-login-button {
+    width: 100%;
+    background: #000;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.admin-error {
+    display: none;
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.admin-panel {
+    display: none;
+}
+
+.admin-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.logout-button {
+    background: #e5e7eb;
+    color: #111827;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .admin-review {
-    background: white;
-    border-radius: 16px;
-    padding: 22px;
-    margin-bottom: 18px;
-    box-shadow: 0 3px 15px rgba(0,0,0,.06);
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 15px;
+}
+
+.admin-review.hidden-review {
+    opacity: .7;
+    background: #f9fafb;
+}
+
+.admin-review-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .admin-review-name {
-    font-size: 19px;
     font-weight: bold;
+    font-size: 18px;
+}
+
+.admin-status {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 9px;
+    border-radius: 20px;
+}
+
+.status-visible {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-hidden {
+    background: #fee2e2;
+    color: #991b1b;
 }
 
 .admin-review-stars {
     color: #f59e0b;
-    font-size: 20px;
     margin: 8px 0;
+    font-size: 20px;
 }
 
-.admin-review-date {
-    color: #9ca3af;
-    font-size: 12px;
-    margin-bottom: 15px;
+.admin-review-comment {
+    margin-top: 8px;
+    line-height: 1.5;
 }
 
 .admin-response-input {
-    width: 100%;
-    min-height: 100px;
     margin-top: 15px;
-    padding: 13px;
-    border: 1px solid #d1d5db;
-    border-radius: 10px;
-    resize: vertical;
-    font-size: 15px;
+    min-height: 90px;
 }
 
 .admin-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
     margin-top: 12px;
 }
 
-.respond-button {
-    flex: 1;
-    padding: 12px;
+.admin-action {
     border: none;
-    border-radius: 10px;
-    background: #000;
-    color: white;
+    padding: 10px 13px;
+    border-radius: 9px;
     font-weight: bold;
     cursor: pointer;
+}
+
+.reply-button {
+    background: #000;
+    color: white;
+}
+
+.hide-button {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.show-button {
+    background: #dcfce7;
+    color: #166534;
 }
 
 .delete-button {
-    padding: 12px 18px;
-    border: none;
-    border-radius: 10px;
-    background: #dc2626;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.logout-button {
-    margin-top: 20px;
-    padding: 12px 18px;
-    border: none;
-    border-radius: 10px;
-    background: #e5e7eb;
-    color: #111827;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.admin-error {
-    margin-top: 15px;
-    padding: 13px;
-    border-radius: 10px;
     background: #fee2e2;
     color: #991b1b;
+}
+
+.admin-message {
     display: none;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.admin-success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.admin-error-message {
+    background: #fee2e2;
+    color: #991b1b;
 }
 
 @media(max-width:600px) {
@@ -424,43 +453,29 @@ footer {
         font-size: 21px;
     }
 
-    .admin-actions {
-        flex-direction: column;
-    }
-
-    .delete-button {
-        width: 100%;
+    .admin-box {
+        margin: 10px auto;
+        padding: 20px;
     }
 }
 
 </style>
 </head>
 
-
 <body>
 
-
 <header>
+    <div class="logo">Samsung Experience Store</div>
 
-    <div class="logo">
-        Samsung Experience Store
-    </div>
-
-    <button
-        class="admin"
-        id="adminButton"
-    >
+    <button class="admin" id="adminAccessButton">
         Acceso
     </button>
-
 </header>
 
 
 <section class="hero">
 
-    <h1>
-        ¿Cómo fue tu experiencia?
-    </h1>
+    <h1>¿Cómo fue tu experiencia?</h1>
 
     <p>
         Tu opinión nos ayuda a mejorar nuestro servicio.
@@ -472,35 +487,22 @@ footer {
 
 <main class="container">
 
-
     <section class="store-card">
 
-        <div
-            class="store-name"
-            id="storeName"
-        >
+        <div class="store-name" id="storeName">
             Samsung Store Ámbar
         </div>
 
-        <div
-            class="store-location"
-            id="storeLocation"
-        >
+        <div class="store-location" id="storeLocation">
             Tuxtla Gutiérrez, Chiapas
         </div>
 
-        <div
-            class="rating"
-            id="averageRating"
-        >
-            0.0
+        <div class="rating" id="averageRating">
+            5.0
         </div>
 
-        <div
-            class="stars"
-            id="averageStars"
-        >
-            ☆☆☆☆☆
+        <div class="stars" id="averageStars">
+            ★★★★★
         </div>
 
     </section>
@@ -508,14 +510,11 @@ footer {
 
     <section class="form-card">
 
-        <h2>
-            Deja tu reseña
-        </h2>
+        <h2>Deja tu reseña</h2>
 
         <p>
             Cuéntanos cómo fue tu experiencia con nuestro equipo.
         </p>
-
 
         <label for="name">
             Tu nombre
@@ -528,40 +527,19 @@ footer {
             maxlength="80"
         >
 
-
         <label>
             Tu calificación
         </label>
 
         <div class="star-selector">
 
-            <span
-                class="star"
-                data-value="1"
-            >★</span>
-
-            <span
-                class="star"
-                data-value="2"
-            >★</span>
-
-            <span
-                class="star"
-                data-value="3"
-            >★</span>
-
-            <span
-                class="star"
-                data-value="4"
-            >★</span>
-
-            <span
-                class="star"
-                data-value="5"
-            >★</span>
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
 
         </div>
-
 
         <label for="comment">
             Tu opinión
@@ -573,7 +551,6 @@ footer {
             maxlength="1000"
         ></textarea>
 
-
         <button
             class="submit"
             id="submitButton"
@@ -581,14 +558,12 @@ footer {
             Enviar mi opinión
         </button>
 
-
         <div
             class="message success"
             id="successMessage"
         >
             ¡Gracias por compartir tu experiencia! ⭐
         </div>
-
 
         <div
             class="message error"
@@ -615,61 +590,51 @@ footer {
 
     </section>
 
-
 </main>
 
 
 <footer>
 
     Samsung Experience Store<br>
+
     Tu opinión nos ayuda a mejorar.
 
 </footer>
 
 
 
-<!-- =========================
-     PANEL ADMINISTRADOR
-========================= -->
+<!-- ==================================================
+     MODAL DE ADMINISTRADOR
+================================================== -->
 
-<section
-    class="admin-panel"
-    id="adminPanel"
+<div
+    class="admin-modal"
+    id="adminModal"
 >
 
-
-    <div class="admin-header">
-
-        <div class="admin-header-title">
-            Panel de administrador
-        </div>
+    <div class="admin-box">
 
         <button
-            class="admin-close"
+            class="close-admin"
             id="closeAdmin"
         >
-            Cerrar
+            ×
         </button>
-
-    </div>
-
-
-    <div class="admin-container">
 
 
         <!-- LOGIN -->
 
         <div
-            class="login-card"
-            id="loginCard"
+            id="adminLogin"
+            class="login-box"
         >
 
             <h2>
                 Acceso de administrador
             </h2>
 
-            <p>
-                Ingresa con tu cuenta de administrador.
+            <p class="admin-subtitle">
+                Inicia sesión para administrar las reseñas.
             </p>
 
 
@@ -680,8 +645,8 @@ footer {
             <input
                 type="email"
                 id="adminEmail"
-                value="ethelredbcp@gmail.com"
-                autocomplete="username"
+                placeholder="Correo del administrador"
+                autocomplete="email"
             >
 
 
@@ -698,8 +663,8 @@ footer {
 
 
             <button
-                class="login-button"
-                id="loginButton"
+                class="admin-login-button"
+                id="adminLoginButton"
             >
                 Iniciar sesión
             </button>
@@ -707,50 +672,76 @@ footer {
 
             <div
                 class="admin-error"
-                id="loginError"
-            ></div>
+                id="adminLoginError"
+            >
+                Correo o contraseña incorrectos.
+            </div>
 
         </div>
 
 
-        <!-- CONTENIDO ADMIN -->
+
+        <!-- PANEL ADMIN -->
 
         <div
-            class="admin-content"
-            id="adminContent"
+            class="admin-panel"
+            id="adminPanel"
         >
 
-            <h1 class="admin-title">
-                Reseñas
-            </h1>
+            <div class="admin-top">
 
-            <p class="admin-subtitle">
-                Aquí puedes responder o eliminar reseñas.
-            </p>
+                <div>
 
+                    <h2>
+                        Administración de reseñas
+                    </h2>
 
-            <div id="adminReviewsList">
+                    <p class="admin-subtitle">
+                        Aquí puedes ver, ocultar, responder o eliminar reseñas.
+                    </p>
 
-                <div class="loading">
-                    Cargando reseñas...
                 </div>
+
+
+                <button
+                    class="logout-button"
+                    id="logoutButton"
+                >
+                    Cerrar sesión
+                </button>
 
             </div>
 
 
-            <button
-                class="logout-button"
-                id="logoutButton"
+            <div
+                class="admin-message admin-success"
+                id="adminSuccessMessage"
             >
-                Cerrar sesión
-            </button>
+                Cambio realizado correctamente.
+            </div>
+
+
+            <div
+                class="admin-message admin-error-message"
+                id="adminErrorMessage"
+            >
+                Ocurrió un error.
+            </div>
+
+
+            <div
+                id="adminReviewsList"
+            >
+                <div class="loading">
+                    Cargando reseñas...
+                </div>
+            </div>
 
         </div>
 
-
     </div>
 
-</section>
+</div>
 
 
 
@@ -759,18 +750,17 @@ footer {
 
 <script>
 
-
-/* =========================
-   SUPABASE
-========================= */
+/*
+====================================================
+CONFIGURACIÓN DE SUPABASE
+====================================================
+*/
 
 const SUPABASE_URL =
     "https://lxmjfsdmbwgqxtovtxyn.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
     "sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
-
 
 const supabaseClient =
     supabase.createClient(
@@ -779,16 +769,26 @@ const supabaseClient =
     );
 
 
+/*
+====================================================
+ADMINISTRADOR
+====================================================
+*/
 
-/* =========================
-   TIENDA
-========================= */
+const ADMIN_EMAIL =
+    "ethelredbcp@gmail.com";
+
+
+/*
+====================================================
+TIENDA
+====================================================
+*/
 
 const params =
     new URLSearchParams(
         window.location.search
     );
-
 
 const storeSlug =
     params.get("store") ||
@@ -796,119 +796,116 @@ const storeSlug =
 
 
 let storeId = null;
-
 let selectedRating = 0;
 
 
-
-/* =========================
-   ESTRELLAS
-========================= */
+/*
+====================================================
+ESTRELLAS
+====================================================
+*/
 
 const stars =
     document.querySelectorAll(".star");
 
-
 stars.forEach(star => {
 
-    star.addEventListener(
-        "click",
-        () => {
+    star.addEventListener("click", () => {
 
-            selectedRating =
+        selectedRating =
+            Number(
+                star.dataset.value
+            );
+
+        stars.forEach(s => {
+
+            const value =
                 Number(
-                    star.dataset.value
+                    s.dataset.value
                 );
 
+            s.classList.toggle(
+                "active",
+                value <= selectedRating
+            );
 
-            stars.forEach(s => {
+        });
 
-                const value =
-                    Number(
-                        s.dataset.value
-                    );
-
-
-                s.classList.toggle(
-                    "active",
-                    value <= selectedRating
-                );
-
-            });
-
-        }
-    );
+    });
 
 });
 
 
-
-/* =========================
-   CARGAR TIENDA
-========================= */
+/*
+====================================================
+CARGAR TIENDA
+====================================================
+*/
 
 async function loadStore() {
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("stores")
-            .select("*")
-            .eq("slug", storeSlug)
-            .eq("active", true)
-            .single();
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from("stores")
+                .select("*")
+                .eq("slug", storeSlug)
+                .eq("active", true)
+                .single();
 
 
-    if (error) {
+        if (error) {
+
+            console.error(
+                "ERROR TIENDA:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        if (!data) return;
+
+
+        storeId =
+            data.id;
+
+
+        document
+            .getElementById("storeName")
+            .textContent =
+            data.name;
+
+
+        document
+            .getElementById("storeLocation")
+            .textContent =
+            `${data.city || ""}, ${data.state || ""}`;
+
+
+        loadReviews();
+
+    }
+    catch (error) {
 
         console.error(
-            "Error cargando tienda:",
+            "ERROR:",
             error
         );
 
-        return;
-
     }
-
-
-    if (!data) {
-
-        console.error(
-            "No se encontró la tienda."
-        );
-
-        return;
-
-    }
-
-
-    storeId =
-        data.id;
-
-
-    document
-        .getElementById("storeName")
-        .textContent =
-        data.name;
-
-
-    document
-        .getElementById("storeLocation")
-        .textContent =
-        `${data.city || ""}, ${data.state || ""}`;
-
-
-    await loadReviews();
 
 }
 
 
-
-/* =========================
-   CARGAR RESEÑAS
-========================= */
+/*
+====================================================
+CARGAR RESEÑAS PÚBLICAS
+====================================================
+*/
 
 async function loadReviews() {
 
@@ -921,27 +918,12 @@ async function loadReviews() {
         );
 
 
-    list.innerHTML =
-        "<div class='loading'>Cargando opiniones...</div>";
-
-
-    const {
-        data,
-        error
-    } =
+    const { data, error } =
         await supabaseClient
             .from("reviews")
-            .select(
-                "id, store_id, customer_name, rating, comment, is_published, admin_response, responded_at, created_at"
-            )
-            .eq(
-                "store_id",
-                storeId
-            )
-            .eq(
-                "is_published",
-                true
-            )
+            .select("*")
+            .eq("store_id", storeId)
+            .eq("is_published", true)
             .order(
                 "created_at",
                 {
@@ -953,13 +935,19 @@ async function loadReviews() {
     if (error) {
 
         console.error(
-            "Error cargando reseñas:",
+            "ERROR AL CARGAR REVIEWS:",
             error
         );
 
 
         list.innerHTML =
-            "<p>No se pudieron cargar las opiniones.</p>";
+            `<p style="color:#991b1b">
+                Error Supabase:
+                ${escapeHTML(
+                    error.message ||
+                    JSON.stringify(error)
+                )}
+            </p>`;
 
 
         return;
@@ -977,7 +965,6 @@ async function loadReviews() {
 
 
         updateAverage([]);
-
 
         return;
 
@@ -1043,6 +1030,7 @@ async function loadReviews() {
                 )}
             </div>
 
+
             <div class="review-stars">
 
                 ${"★".repeat(rating)}
@@ -1057,20 +1045,21 @@ async function loadReviews() {
 
             </div>
 
+
             <div>
                 ${escapeHTML(
                     review.comment || ""
                 )}
             </div>
 
+
             ${responseHTML}
 
-            <div class="review-date">
 
+            <div class="review-date">
                 ${formatDate(
                     review.created_at
                 )}
-
             </div>
 
         `;
@@ -1086,10 +1075,11 @@ async function loadReviews() {
 }
 
 
-
-/* =========================
-   PROMEDIO
-========================= */
+/*
+====================================================
+CALIFICACIÓN PROMEDIO
+====================================================
+*/
 
 function updateAverage(reviews) {
 
@@ -1118,20 +1108,18 @@ function updateAverage(reviews) {
 
     const total =
         reviews.reduce(
-            (sum, review) => {
-
-                return sum +
-                    Number(
-                        review.rating || 0
-                    );
-
-            },
+            (sum, review) =>
+                sum +
+                Number(
+                    review.rating || 0
+                ),
             0
         );
 
 
     const average =
-        total / reviews.length;
+        total /
+        reviews.length;
 
 
     document
@@ -1143,7 +1131,9 @@ function updateAverage(reviews) {
 
 
     const rounded =
-        Math.round(average);
+        Math.round(
+            average
+        );
 
 
     document
@@ -1161,10 +1151,11 @@ function updateAverage(reviews) {
 }
 
 
-
-/* =========================
-   ENVIAR RESEÑA
-========================= */
+/*
+====================================================
+ENVIAR RESEÑA
+====================================================
+*/
 
 document
     .getElementById(
@@ -1173,7 +1164,6 @@ document
     .addEventListener(
         "click",
         async () => {
-
 
             const name =
                 document
@@ -1194,61 +1184,18 @@ document
 
 
             const button =
-                document
-                    .getElementById(
-                        "submitButton"
-                    );
+                document.getElementById(
+                    "submitButton"
+                );
 
 
             const success =
-                document
-                    .getElementById(
-                        "successMessage"
-                    );
+                document.getElementById(
+                    "successMessage"
+                );
 
 
             const errorMessage =
-                document
-                    .getElementById(
-                        "errorMessage"
-                    );
-
-
-            success.style.display =
-                "none";
-
-
-            errorMessage.style.display =
-                "none";
-
-
-            if (!name) {
-
-                errorMessage.textContent =
-                    "Por favor escribe tu nombre.";
-
-                errorMessage.style.display =
-                    "block";
-
-                return;
-
-            }
-
-
-            if (!selectedRating) {
-
-                errorMessage.textContent =
-                    "Selecciona una calificación.";
-
-                errorMessage.style.display =
-                    "block";
-
-                return;
-
-            }
-
-
-            if (!comment) {
-
-                errorMessage.textContent =
-                 
+                document.getElementById(
+                    "errorMessage"
+    
