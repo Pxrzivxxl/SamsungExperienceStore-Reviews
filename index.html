@@ -352,9 +352,11 @@ CONFIGURACIÓN DE SUPABASE
 ====================================================
 */
 
-const SUPABASE_URL = "https://lxmjfsdmbwgqxtovtxyn.supabase.co";
+const SUPABASE_URL =
+    "https://lxmjfsdmbwgqxtovtxyn.supabase.co";
 
-const SUPABASE_ANON_KEY = "sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
+const SUPABASE_ANON_KEY =
+    "sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
 
 const supabaseClient =
     supabase.createClient(
@@ -369,10 +371,14 @@ TIENDA
 ====================================================
 */
 
-const params = new URLSearchParams(window.location.search);
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
 const storeSlug =
-    params.get("store") || "samsung-store-ambar";
+    params.get("store") ||
+    "samsung-store-ambar";
 
 
 let storeId = null;
@@ -393,12 +399,16 @@ stars.forEach(star => {
     star.addEventListener("click", () => {
 
         selectedRating =
-            Number(star.dataset.value);
+            Number(
+                star.dataset.value
+            );
 
         stars.forEach(s => {
 
             const value =
-                Number(s.dataset.value);
+                Number(
+                    s.dataset.value
+                );
 
             s.classList.toggle(
                 "active",
@@ -431,26 +441,40 @@ async function loadStore() {
                 .single();
 
         if (error) {
-            console.error(error);
+
+            console.error(
+                "ERROR TIENDA:",
+                error
+            );
+
             return;
+
         }
 
         if (!data) return;
 
-        storeId = data.id;
+        storeId =
+            data.id;
 
-        document.getElementById("storeName")
-            .textContent = data.name;
+        document
+            .getElementById("storeName")
+            .textContent =
+            data.name;
 
-        document.getElementById("storeLocation")
+        document
+            .getElementById("storeLocation")
             .textContent =
             `${data.city || ""}, ${data.state || ""}`;
 
         loadReviews();
 
-    } catch (error) {
+    }
+    catch (error) {
 
-        console.error(error);
+        console.error(
+            "ERROR:",
+            error
+        );
 
     }
 
@@ -468,25 +492,36 @@ async function loadReviews() {
     if (!storeId) return;
 
     const list =
-        document.getElementById("reviewsList");
+        document.getElementById(
+            "reviewsList"
+        );
 
     const { data, error } =
         await supabaseClient
             .from("reviews")
             .select("*")
             .eq("store_id", storeId)
-            .order("created_at", {
-                ascending: false
-            });
+            .eq("is_published", true)
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
 
     if (error) {
 
-        console.error("ERROR AL CARGAR REVIEWS:", error);
+        console.error(
+            "ERROR AL CARGAR REVIEWS:",
+            error
+        );
 
         list.innerHTML =
             `<p style="color:#991b1b">
-                Error Supabase: ${escapeHTML(
-                    error.message || JSON.stringify(error)
+                Error Supabase:
+                ${escapeHTML(
+                    error.message ||
+                    JSON.stringify(error)
                 )}
             </p>`;
 
@@ -494,7 +529,10 @@ async function loadReviews() {
 
     }
 
-    if (!data || data.length === 0) {
+    if (
+        !data ||
+        data.length === 0
+    ) {
 
         list.innerHTML =
             "<p class='loading'>Sé el primero en dejar una opinión.</p>";
@@ -510,32 +548,51 @@ async function loadReviews() {
     data.forEach(review => {
 
         const item =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
-        item.className = "review";
+        item.className =
+            "review";
 
         const rating =
-            Number(review.rating || 0);
+            Number(
+                review.rating || 0
+            );
 
         item.innerHTML = `
 
             <div class="review-name">
-                ${escapeHTML(review.name || "Cliente")}
+                ${escapeHTML(
+                    review.customer_name ||
+                    "Cliente"
+                )}
             </div>
 
             <div class="review-stars">
+
                 ${"★".repeat(rating)}
+
                 <span style="color:#d1d5db">
-                    ${"★".repeat(5-rating)}
+
+                    ${"★".repeat(
+                        5 - rating
+                    )}
+
                 </span>
+
             </div>
 
             <div>
-                ${escapeHTML(review.comment || "")}
+                ${escapeHTML(
+                    review.comment || ""
+                )}
             </div>
 
             <div class="review-date">
-                ${formatDate(review.created_at)}
+                ${formatDate(
+                    review.created_at
+                )}
             </div>
 
         `;
@@ -559,11 +616,19 @@ function updateAverage(reviews) {
 
     if (!reviews.length) {
 
-        document.getElementById("averageRating")
-            .textContent = "0.0";
+        document
+            .getElementById(
+                "averageRating"
+            )
+            .textContent =
+            "0.0";
 
-        document.getElementById("averageStars")
-            .textContent = "☆☆☆☆☆";
+        document
+            .getElementById(
+                "averageStars"
+            )
+            .textContent =
+            "☆☆☆☆☆";
 
         return;
 
@@ -572,24 +637,40 @@ function updateAverage(reviews) {
     const total =
         reviews.reduce(
             (sum, review) =>
-                sum + Number(review.rating || 0),
+                sum +
+                Number(
+                    review.rating || 0
+                ),
             0
         );
 
     const average =
-        total / reviews.length;
+        total /
+        reviews.length;
 
-    document.getElementById("averageRating")
+    document
+        .getElementById(
+            "averageRating"
+        )
         .textContent =
         average.toFixed(1);
 
     const rounded =
-        Math.round(average);
+        Math.round(
+            average
+        );
 
-    document.getElementById("averageStars")
+    document
+        .getElementById(
+            "averageStars"
+        )
         .textContent =
-        "★".repeat(rounded) +
-        "☆".repeat(5-rounded);
+        "★".repeat(
+            rounded
+        ) +
+        "☆".repeat(
+            5 - rounded
+        );
 
 }
 
@@ -601,141 +682,195 @@ ENVIAR RESEÑA
 */
 
 document
-    .getElementById("submitButton")
-    .addEventListener("click", async () => {
+    .getElementById(
+        "submitButton"
+    )
+    .addEventListener(
+        "click",
+        async () => {
 
-        const name =
-            document.getElementById("name")
-                .value.trim();
+            const name =
+                document
+                    .getElementById(
+                        "name"
+                    )
+                    .value
+                    .trim();
 
-        const comment =
-            document.getElementById("comment")
-                .value.trim();
+            const comment =
+                document
+                    .getElementById(
+                        "comment"
+                    )
+                    .value
+                    .trim();
 
-        const button =
-            document.getElementById("submitButton");
+            const button =
+                document.getElementById(
+                    "submitButton"
+                );
 
-        const success =
-            document.getElementById("successMessage");
+            const success =
+                document.getElementById(
+                    "successMessage"
+                );
 
-        const errorMessage =
-            document.getElementById("errorMessage");
-
-
-        success.style.display = "none";
-        errorMessage.style.display = "none";
-
-
-        if (!name) {
-
-            errorMessage.textContent =
-                "Por favor escribe tu nombre.";
-
-            errorMessage.style.display = "block";
-
-            return;
-
-        }
-
-
-        if (!selectedRating) {
-
-            errorMessage.textContent =
-                "Selecciona una calificación.";
-
-            errorMessage.style.display = "block";
-
-            return;
-
-        }
+            const errorMessage =
+                document.getElementById(
+                    "errorMessage"
+                );
 
 
-        if (!comment) {
-
-            errorMessage.textContent =
-                "Escribe tu opinión.";
-
-            errorMessage.style.display = "block";
-
-            return;
-
-        }
-
-
-        if (!storeId) {
-
-            errorMessage.textContent =
-                "No se pudo identificar la tienda.";
-
-            errorMessage.style.display = "block";
-
-            return;
-
-        }
-
-
-        button.disabled = true;
-
-        button.textContent =
-            "Enviando...";
-
-
-        const { error } =
-            await supabaseClient
-                .from("reviews")
-                .insert({
-
-                    store_id: storeId,
-                    name: name,
-                    rating: selectedRating,
-                    comment: comment
-
-                });
-
-
-        button.disabled = false;
-
-        button.textContent =
-            "Enviar mi opinión";
-
-
-        if (error) {
-
-            console.error("ERROR AL INSERTAR REVIEW:", error);
-
-            errorMessage.textContent =
-                "ERROR SUPABASE: " +
-                (error.message || JSON.stringify(error));
+            success.style.display =
+                "none";
 
             errorMessage.style.display =
+                "none";
+
+
+            if (!name) {
+
+                errorMessage.textContent =
+                    "Por favor escribe tu nombre.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            if (!selectedRating) {
+
+                errorMessage.textContent =
+                    "Selecciona una calificación.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            if (!comment) {
+
+                errorMessage.textContent =
+                    "Escribe tu opinión.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            if (!storeId) {
+
+                errorMessage.textContent =
+                    "No se pudo identificar la tienda.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            button.disabled =
+                true;
+
+            button.textContent =
+                "Enviando...";
+
+
+            const { error } =
+                await supabaseClient
+                    .from("reviews")
+                    .insert({
+
+                        store_id:
+                            storeId,
+
+                        customer_name:
+                            name,
+
+                        rating:
+                            selectedRating,
+
+                        comment:
+                            comment,
+
+                        is_published:
+                            true
+
+                    });
+
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "Enviar mi opinión";
+
+
+            if (error) {
+
+                console.error(
+                    "ERROR AL INSERTAR REVIEW:",
+                    error
+                );
+
+                errorMessage.textContent =
+                    "ERROR SUPABASE: " +
+                    (
+                        error.message ||
+                        JSON.stringify(error)
+                    );
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+
+            }
+
+
+            document
+                .getElementById(
+                    "name"
+                )
+                .value = "";
+
+            document
+                .getElementById(
+                    "comment"
+                )
+                .value = "";
+
+
+            selectedRating =
+                0;
+
+
+            stars.forEach(s =>
+                s.classList.remove(
+                    "active"
+                )
+            );
+
+
+            success.style.display =
                 "block";
 
-            return;
+
+            loadReviews();
 
         }
-
-
-        document.getElementById("name")
-            .value = "";
-
-        document.getElementById("comment")
-            .value = "";
-
-
-        selectedRating = 0;
-
-        stars.forEach(s =>
-            s.classList.remove("active")
-        );
-
-
-        success.style.display =
-            "block";
-
-
-        loadReviews();
-
-    });
+    );
 
 
 /*
@@ -747,9 +882,12 @@ SEGURIDAD PARA MOSTRAR TEXTO
 function escapeHTML(text) {
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    div.textContent = text;
+    div.textContent =
+        text;
 
     return div.innerHTML;
 
