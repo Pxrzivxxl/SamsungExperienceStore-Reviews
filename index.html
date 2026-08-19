@@ -350,13 +350,6 @@ footer {
 ====================================================
 CONFIGURACIÓN DE SUPABASE
 ====================================================
-
-IMPORTANTE:
-Aquí posteriormente colocaremos los datos de tu
-proyecto Supabase.
-
-NO pongas aquí una contraseña de base de datos
-ni una service_role key.
 */
 
 const SUPABASE_URL = "https://lxmjfsdmbwgqxtovtxyn.supabase.co";
@@ -374,12 +367,6 @@ const supabaseClient =
 ====================================================
 TIENDA
 ====================================================
-
-El QR puede abrir directamente:
-
-https://TU-DOMINIO.vercel.app/?store=samsung-store-ambar
-
-El cliente NO tendrá que elegir la tienda.
 */
 
 const params = new URLSearchParams(window.location.search);
@@ -488,7 +475,6 @@ async function loadReviews() {
             .from("reviews")
             .select("*")
             .eq("store_id", storeId)
-            .eq("approved", true)
             .order("created_at", {
                 ascending: false
             });
@@ -702,8 +688,7 @@ document
                     store_id: storeId,
                     name: name,
                     rating: selectedRating,
-                    comment: comment,
-                    approved: true
+                    comment: comment
 
                 });
 
