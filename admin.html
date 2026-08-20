@@ -27,6 +27,7 @@ input,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px
 .black{background:#000;color:#fff}
 .gray{background:#e5e7eb;color:#111}
 .green{background:#dcfce7;color:#166534}
+.red{background:#fee2e2;color:#991b1b}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .stat{background:#f3f4f6;border-radius:14px;padding:15px}
 .num{font-size:27px;font-weight:bold}
@@ -42,7 +43,10 @@ input,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px
 .comment,.response{margin-top:15px;padding:14px;border-radius:10px;background:#f3f4f6}
 .response{border-left:4px solid #111827}
 .comment strong,.response strong{display:block;margin-bottom:6px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.delete{background:#fee2e2;color:#991b1b}
 .empty{text-align:center;color:#6b7280;padding:30px}
+.warning{background:#fff7ed;color:#9a3412;padding:14px;border-radius:10px;margin-top:15px}
 
 @media(max-width:800px){
 .filters{grid-template-columns:1fr}
@@ -65,26 +69,18 @@ input,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px
 <p>Inicia sesión para consultar las encuestas.</p>
 
 <label for="email">Correo</label>
-<input
-id="email"
-type="email"
+<input id="email" type="email"
 placeholder="Escribe tu correo"
-autocomplete="username"
->
+autocomplete="username">
 
 <label for="password">Contraseña</label>
-<input
-id="password"
-type="password"
+<input id="password" type="password"
 placeholder="Escribe tu contraseña"
-autocomplete="current-password"
->
+autocomplete="current-password">
 
-<button
-type="button"
+<button type="button"
 class="btn loginbtn"
-id="loginBtn"
->
+id="loginBtn">
 Entrar
 </button>
 
@@ -98,7 +94,7 @@ Entrar
 <div class="card" style="background:#111827;color:#fff">
 <strong>Panel de encuestas</strong>
 <p style="color:#d1d5db;margin-top:5px">
-Consulta y analiza las opiniones de los clientes.
+Consulta y administra las opiniones de los clientes.
 </p>
 </div>
 
@@ -145,7 +141,14 @@ Descargar Excel
 Actualizar
 </button>
 
+<button class="btn red" id="deleteFiltered">
+Eliminar filtradas
+</button>
+
 </div>
+
+<div id="deleteInfo" class="warning hidden"></div>
+
 </div>
 
 <div class="card">
@@ -193,27 +196,18 @@ Información visible únicamente para administración.
 
 </main>
 
-<script
-src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
-
-<script
-src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <script>
 
-/* =========================================
-   CONFIGURACIÓN
-========================================= */
-
-const SUPABASE_URL =
+const SUPABASE_URL=
 "https://lxmjfsdmbwgqxtovtxyn.supabase.co";
 
-const SUPABASE_KEY =
+const SUPABASE_KEY=
 "sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
 
-const ADMIN_EMAIL =
+const ADMIN_EMAIL=
 "ethelredbcp@gmail.com";
 
 let db=null;
@@ -221,10 +215,7 @@ let reviews=[];
 let stores=[];
 let filtered=[];
 
-
-/* =========================================
-   ELEMENTOS
-========================================= */
+const $=id=>document.getElementById(id);
 
 const login=$("login");
 const panel=$("panel");
@@ -233,80 +224,41 @@ const loginBtn=$("loginBtn");
 const loginError=$("loginError");
 
 
-/* =========================================
-   FUNCIÓN ELEMENTO
-========================================= */
-
-function $(id){
-return document.getElementById(id);
-}
-
-
-/* =========================================
-   MOSTRAR ERROR
-========================================= */
-
 function showError(text){
-
 loginError.textContent=text;
 loginError.classList.remove("hidden");
-
 }
 
-
-/* =========================================
-   INICIAR SUPABASE
-========================================= */
 
 function startSupabase(){
 
 if(typeof window.supabase==="undefined"){
-
-showError(
-"No se pudo cargar Supabase. "+
-"Comprueba tu conexión a Internet y vuelve a cargar la página."
-);
-
+showError("No se pudo cargar Supabase. Comprueba tu conexión.");
 return false;
 }
 
 try{
-
 db=window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
-
 return true;
-
 }catch(e){
-
-showError(
-"Error al iniciar Supabase: "+
-e.message
-);
-
+showError("Error al iniciar Supabase: "+e.message);
 return false;
 }
-
 }
 
 
-/* =========================================
-   LOGIN
-========================================= */
+/* LOGIN */
 
 loginBtn.addEventListener("click",loginAdmin);
 
-
-/* También permite presionar ENTER */
 $("password").addEventListener("keydown",e=>{
-
 if(e.key==="Enter"){
 e.preventDefault();
 loginAdmin();
 }
-
 });
 
 
@@ -318,16 +270,12 @@ const email=$("email").value.trim();
 const password=$("password").value;
 
 if(!email){
-
 showError("Escribe tu correo.");
-
 return;
 }
 
 if(!password){
-
 showError("Escribe tu contraseña.");
-
 return;
 }
 
@@ -344,19 +292,12 @@ email:email,
 password:password
 });
 
-if(result.error){
-
-throw result.error;
-}
+if(result.error)throw result.error;
 
 const user=result.data.user;
 
-if(!user){
-
-throw new Error(
-"No se encontró el usuario."
-);
-}
+if(!user)
+throw new Error("No se encontró el usuario.");
 
 if(
 !user.email ||
@@ -370,8 +311,6 @@ throw new Error(
 );
 
 }
-
-/* LOGIN CORRECTO */
 
 login.classList.add("hidden");
 header.classList.remove("hidden");
@@ -398,9 +337,7 @@ loginBtn.textContent="Entrar";
 }
 
 
-/* =========================================
-   CARGAR DATOS
-========================================= */
+/* CARGAR */
 
 async function load(){
 
@@ -410,8 +347,7 @@ $("list").innerHTML=
 try{
 
 const s=
-await db
-.from("stores")
+await db.from("stores")
 .select("*")
 .order("name");
 
@@ -423,18 +359,15 @@ $("storeFilter").innerHTML=
 '<option value="">Todas las tiendas</option>';
 
 stores.forEach(x=>{
-
 $("storeFilter").innerHTML+=
 `<option value="${x.id}">
 ${esc(x.name)}
 </option>`;
-
 });
 
 
 const r=
-await db
-.from("reviews")
+await db.from("reviews")
 .select("*")
 .order(
 "created_at",
@@ -462,9 +395,7 @@ ${esc(e.message)}
 }
 
 
-/* =========================================
-   FILTROS
-========================================= */
+/* FILTROS */
 
 function filter(){
 
@@ -481,15 +412,13 @@ if(
 from &&
 new Date(r.created_at)<
 new Date(from+"T00:00:00")
-)
-return false;
+)return false;
 
 if(
 to &&
 new Date(r.created_at)>
 new Date(to+"T23:59:59")
-)
-return false;
+)return false;
 
 return true;
 
@@ -497,13 +426,12 @@ return true;
 
 stats();
 render();
+updateDeleteInfo();
 
 }
 
 
-/* =========================================
-   PROMEDIOS
-========================================= */
+/* ESTADÍSTICAS */
 
 function average(field){
 
@@ -512,8 +440,7 @@ filtered
 .map(x=>Number(x[field]))
 .filter(x=>x>=1&&x<=5);
 
-if(!values.length)
-return"0.0";
+if(!values.length)return"0.0";
 
 return(
 values.reduce((a,b)=>a+b,0)/
@@ -525,8 +452,7 @@ values.length
 
 function stats(){
 
-$("total").textContent=
-filtered.length;
+$("total").textContent=filtered.length;
 
 $("avgService").textContent=
 average("service_rating");
@@ -540,9 +466,7 @@ average("recommendation_rating");
 }
 
 
-/* =========================================
-   ESTRELLAS
-========================================= */
+/* ESTRELLAS */
 
 function stars(n){
 
@@ -566,10 +490,6 @@ ${"★".repeat(5-n)}
 }
 
 
-/* =========================================
-   PREGUNTA
-========================================= */
-
 function question(title,value){
 
 return`
@@ -582,9 +502,7 @@ ${stars(value)}
 }
 
 
-/* =========================================
-   MOSTRAR ENCUESTAS
-========================================= */
+/* MOSTRAR */
 
 function render(){
 
@@ -626,8 +544,7 @@ store?store.name:"Tienda no identificada"
 
 <div class="date">
 ${fecha(r.created_at)}
- ·
-${hora(r.created_at)}
+ · ${hora(r.created_at)}
 </div>
 
 </div>
@@ -681,13 +598,22 @@ ${esc(r.admin_response)}
 <div class="date">
 Respondida:
 ${fecha(r.responded_at)}
- ·
-${hora(r.responded_at)}
+ · ${hora(r.responded_at)}
 </div>
 
 </div>
 
 `:""}
+
+<div class="actions">
+
+<button
+class="btn delete"
+onclick="deleteOne('${r.id}')">
+🗑️ Eliminar encuesta
+</button>
+
+</div>
 
 `;
 
@@ -698,9 +624,141 @@ $("list").appendChild(el);
 }
 
 
-/* =========================================
-   BOTONES
-========================================= */
+/* INFORMACIÓN BORRADO */
+
+function updateDeleteInfo(){
+
+const box=$("deleteInfo");
+
+if(filtered.length){
+
+box.textContent=
+`Hay ${filtered.length} encuesta(s) seleccionada(s) por los filtros. El botón "Eliminar filtradas" eliminará únicamente esas encuestas.`;
+
+box.classList.remove("hidden");
+
+}else{
+
+box.classList.add("hidden");
+
+}
+
+}
+
+
+/* ELIMINAR UNA */
+
+async function deleteOne(id){
+
+const review=
+reviews.find(x=>String(x.id)===String(id));
+
+if(!review)return;
+
+const ok=
+confirm(
+"¿Seguro que quieres eliminar esta encuesta?\n\n"+
+"Esta acción no se puede deshacer."
+);
+
+if(!ok)return;
+
+try{
+
+const result=
+await db
+.from("reviews")
+.delete()
+.eq("id",id);
+
+if(result.error)throw result.error;
+
+reviews=
+reviews.filter(
+x=>String(x.id)!==String(id)
+);
+
+filter();
+
+alert("Encuesta eliminada correctamente.");
+
+}catch(e){
+
+console.error("DELETE:",e);
+
+alert(
+"No se pudo eliminar la encuesta:\n\n"+
+e.message
+);
+
+}
+
+}
+
+
+/* ELIMINAR FILTRADAS */
+
+$("deleteFiltered").onclick=async()=>{
+
+if(!filtered.length){
+
+alert(
+"No hay encuestas seleccionadas para eliminar."
+);
+
+return;
+}
+
+const cantidad=filtered.length;
+
+const ok=
+confirm(
+`Vas a eliminar ${cantidad} encuesta(s).\n\n`+
+"Esta acción NO se puede deshacer.\n\n"+
+"¿Quieres continuar?"
+);
+
+if(!ok)return;
+
+const ids=
+filtered.map(x=>x.id);
+
+try{
+
+const result=
+await db
+.from("reviews")
+.delete()
+.in("id",ids);
+
+if(result.error)throw result.error;
+
+reviews=
+reviews.filter(
+x=>!ids.includes(x.id)
+);
+
+filter();
+
+alert(
+`${cantidad} encuesta(s) eliminada(s) correctamente.`
+);
+
+}catch(e){
+
+console.error("DELETE MULTIPLE:",e);
+
+alert(
+"No se pudieron eliminar las encuestas:\n\n"+
+e.message
+);
+
+}
+
+};
+
+
+/* BOTONES */
 
 $("apply").onclick=filter;
 
@@ -717,9 +775,7 @@ filter();
 $("refresh").onclick=load;
 
 
-/* =========================================
-   EXCEL
-========================================= */
+/* EXCEL */
 
 $("excel").onclick=()=>{
 
@@ -733,8 +789,7 @@ return;
 if(typeof XLSX==="undefined"){
 
 alert(
-"No se pudo cargar el sistema de Excel. "+
-"Comprueba tu conexión a Internet."
+"No se pudo cargar el sistema de Excel."
 );
 
 return;
@@ -813,9 +868,7 @@ wb,
 };
 
 
-/* =========================================
-   CERRAR SESIÓN
-========================================= */
+/* LOGOUT */
 
 $("logout").onclick=async()=>{
 
@@ -831,9 +884,7 @@ $("password").value="";
 };
 
 
-/* =========================================
-   FECHA
-========================================= */
+/* FECHA */
 
 function fecha(x){
 
@@ -851,9 +902,7 @@ year:"numeric"
 }
 
 
-/* =========================================
-   HORA
-========================================= */
+/* HORA */
 
 function hora(x){
 
@@ -871,9 +920,7 @@ second:"2-digit"
 }
 
 
-/* =========================================
-   SEGURIDAD
-========================================= */
+/* SEGURIDAD HTML */
 
 function esc(x){
 
@@ -888,9 +935,7 @@ return d.innerHTML;
 }
 
 
-/* =========================================
-   COMPROBAR SESIÓN
-========================================= */
+/* SESIÓN */
 
 async function checkSession(){
 
@@ -922,19 +967,14 @@ await load();
 
 }catch(e){
 
-console.error(
-"SESSION:",
-e
-);
+console.error("SESSION:",e);
 
 }
 
 }
 
 
-/* =========================================
-   INICIO
-========================================= */
+/* INICIO */
 
 checkSession();
 
