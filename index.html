@@ -2,48 +2,45 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Samsung Experience Store - Encuesta</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
 body{background:#f5f7fa;color:#111827}
 header{background:#000;color:#fff;padding:18px 22px;display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:20px;font-weight:bold}
 .admin{background:#fff;color:#000;border:0;padding:9px 16px;border-radius:20px;font-weight:bold;cursor:pointer}
-.hero{background:linear-gradient(135deg,#000,#202020);color:#fff;text-align:center;padding:45px 20px}
+.hero{background:linear-gradient(135deg,#000,#202020);color:#fff;text-align:center;padding:55px 20px}
 .hero h1{font-size:32px;margin-bottom:14px}
-.hero p{font-size:16px;color:#d1d5db;max-width:650px;margin:auto;line-height:1.5}
-.container{max-width:800px;margin:30px auto;padding:0 18px}
-.card{background:#fff;border-radius:18px;padding:25px;box-shadow:0 5px 25px rgba(0,0,0,.08)}
-.store-name{font-size:23px;font-weight:bold;margin-bottom:7px}
-.store-location{color:#6b7280;margin-bottom:20px}
-.intro{color:#6b7280;line-height:1.5;margin-bottom:25px}
-label{display:block;font-weight:bold;margin:20px 0 9px}
-input,textarea{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:16px}
-textarea{min-height:120px;resize:vertical}
-.question{border-top:1px solid #e5e7eb;padding-top:20px;margin-top:20px}
-.question:first-of-type{border-top:0}
-.question-title{font-weight:bold;line-height:1.4;margin-bottom:10px}
-.stars{display:flex;gap:7px}
-.star{font-size:36px;color:#d1d5db;cursor:pointer;user-select:none}
+.hero p{font-size:16px;color:#d1d5db;max-width:650px;margin:auto}
+.container{max-width:900px;margin:30px auto;padding:0 18px}
+.store-card,.form-card{background:#fff;border-radius:18px;padding:25px;box-shadow:0 5px 25px #0001;margin-bottom:25px}
+.store-name{font-size:24px;font-weight:bold}
+.store-location{color:#6b7280;margin-top:7px}
+.form-card h2{margin-bottom:8px}
+.form-card>p{color:#6b7280;margin-bottom:22px}
+label{display:block;font-weight:bold;margin:18px 0 7px}
+input,textarea{width:100%;padding:14px;border:1px solid #d1d5db;border-radius:10px;font-size:16px}
+textarea{min-height:130px;resize:vertical}
+.question{border-top:1px solid #e5e7eb;margin-top:25px;padding-top:22px}
+.question-title{font-size:18px;font-weight:bold;line-height:1.4}
+.stars{display:flex;gap:8px;margin-top:12px}
+.star{font-size:38px;color:#d1d5db;cursor:pointer}
 .star.active{color:#f59e0b}
-.rating-text{font-size:13px;color:#6b7280;margin-top:5px}
-.submit{width:100%;margin-top:25px;padding:15px;border:0;border-radius:12px;background:#000;color:#fff;font-size:17px;font-weight:bold;cursor:pointer}
+.rating-text{color:#6b7280;margin-top:8px}
+.submit{width:100%;margin-top:25px;padding:16px;border:0;border-radius:12px;background:#000;color:#fff;font-size:17px;font-weight:bold;cursor:pointer}
 .submit:disabled{opacity:.5}
-.message{display:none;margin-top:18px;padding:16px;border-radius:12px;text-align:center}
+.message{margin-top:18px;padding:18px;border-radius:12px;text-align:center;font-size:17px;line-height:1.5}
 .success{background:#dcfce7;color:#166534}
 .error{background:#fee2e2;color:#991b1b}
-.thanks{display:none;text-align:center}
-.thanks-icon{font-size:50px;margin-bottom:15px}
-.thanks h2{margin-bottom:10px}
-.thanks p{color:#6b7280;line-height:1.5}
+.hidden{display:none!important}
 footer{text-align:center;padding:35px 15px;color:#6b7280;font-size:13px}
+
 @media(max-width:600px){
 .hero h1{font-size:27px}
-.logo{font-size:17px}
-.card{padding:20px}
-.star{font-size:32px}
+.store-name{font-size:21px}
+.star{font-size:34px}
 }
 </style>
 </head>
@@ -52,60 +49,50 @@ footer{text-align:center;padding:35px 15px;color:#6b7280;font-size:13px}
 
 <header>
 <div class="logo">Samsung Experience Store</div>
-
-<button
-class="admin"
-onclick="window.location.href='admin.html'"
->
-Acceso
-</button>
+<button class="admin" id="adminButton">Acceso</button>
 </header>
 
 <section class="hero">
 <h1>¿Cómo fue tu experiencia?</h1>
-
-<p>
-Tu opinión nos ayuda a mejorar nuestro servicio.
-</p>
+<p>Tu opinión nos ayuda a mejorar nuestro servicio.</p>
 </section>
 
 <main class="container">
 
-<div class="card" id="surveyCard">
+<section class="store-card">
+<div class="store-name" id="storeName">Samsung Store Ámbar</div>
+<div class="store-location" id="storeLocation">Tuxtla Gutiérrez, Chiapas</div>
+</section>
 
-<div class="store-name" id="storeName">
-Samsung Store Ámbar
-</div>
+<section class="form-card" id="surveyCard">
 
-<div class="store-location" id="storeLocation">
-Tuxtla Gutiérrez, Chiapas
-</div>
+<h2>Encuesta de servicio</h2>
 
-<p class="intro">
-Queremos conocer tu experiencia. Responde estas preguntas calificando cada aspecto del 1 al 5.
+<p>
+Queremos conocer tu experiencia con nuestro equipo.
 </p>
 
-<label for="name">
-Tu nombre
+<label for="advisor">
+Nombre de quien te atendió
 </label>
 
 <input
+id="advisor"
 type="text"
-id="name"
-placeholder="Escribe tu nombre"
+placeholder="Escribe el nombre del asesor o asesora que te atendió"
 maxlength="80"
+autocomplete="off"
 >
+
+<!-- PREGUNTA 1 -->
 
 <div class="question">
 
 <div class="question-title">
-1. ¿Qué tan rápida fue la atención que recibiste al llegar a la tienda?
+1. ¿Cómo fue nuestro servicio?
 </div>
 
-<div
-class="stars"
-data-question="service_rating"
->
+<div class="stars" data-question="service_rating">
 
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
@@ -115,26 +102,22 @@ data-question="service_rating"
 
 </div>
 
-<div
-class="rating-text"
-id="text-service_rating"
->
+<div class="rating-text" id="text-service_rating">
 Selecciona una calificación
 </div>
 
 </div>
 
+
+<!-- PREGUNTA 2 -->
 
 <div class="question">
 
 <div class="question-title">
-2. ¿Qué tan satisfecho estás con el conocimiento que mostro el asesor sobre los productos que te interesaban?
+2. ¿Qué tan satisfecho estás con la atención que recibiste?
 </div>
 
-<div
-class="stars"
-data-question="attention_rating"
->
+<div class="stars" data-question="attention_rating">
 
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
@@ -144,26 +127,22 @@ data-question="attention_rating"
 
 </div>
 
-<div
-class="rating-text"
-id="text-attention_rating"
->
+<div class="rating-text" id="text-attention_rating">
 Selecciona una calificación
 </div>
 
 </div>
 
+
+<!-- PREGUNTA 3 -->
 
 <div class="question">
 
 <div class="question-title">
-3. ¿El asesor identificó y te explicó productos o accesorios adicionales que pudieran complementar tu compra?
+3. ¿Qué tan satisfecho estás con la información que recibiste?
 </div>
 
-<div
-class="stars"
-data-question="information_rating"
->
+<div class="stars" data-question="information_rating">
 
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
@@ -173,26 +152,22 @@ data-question="information_rating"
 
 </div>
 
-<div
-class="rating-text"
-id="text-information_rating"
->
+<div class="rating-text" id="text-information_rating">
 Selecciona una calificación
 </div>
 
 </div>
 
+
+<!-- PREGUNTA 4 -->
 
 <div class="question">
 
 <div class="question-title">
-4. ¿Cómo calificarías el trato y la atención recibida por el personal de caja al realizar tu pago?
+4. ¿Cómo calificarías la atención que te brindó nuestro equipo?
 </div>
 
-<div
-class="stars"
-data-question="solution_rating"
->
+<div class="stars" data-question="solution_rating">
 
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
@@ -202,29 +177,22 @@ data-question="solution_rating"
 
 </div>
 
-<div
-class="rating-text"
-id="text-solution_rating"
->
+<div class="rating-text" id="text-solution_rating">
 Selecciona una calificación
 </div>
 
 </div>
 
+
+<!-- PREGUNTA 5 -->
 
 <div class="question">
 
-<div
-class="question-title"
-id="recommendationQuestion"
->
-5. Pensando en toda tu visita,¿qué tan satisfecho estas con tu experiencia en la tienda?
+<div class="question-title">
+5. ¿Qué tan probable es que recomiendes Samsung Store Ámbar a familiares o amigos?
 </div>
 
-<div
-class="stars"
-data-question="recommendation_rating"
->
+<div class="stars" data-question="recommendation_rating">
 
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
@@ -234,64 +202,48 @@ data-question="recommendation_rating"
 
 </div>
 
-<div
-class="rating-text"
-id="text-recommendation_rating"
->
+<div class="rating-text" id="text-recommendation_rating">
 Selecciona una calificación
 </div>
 
 </div>
 
+
+<!-- COMENTARIO -->
 
 <label for="comment">
-Cuéntanos más sobre tu experiencia (opcional)
+Cuéntanos más sobre tu experiencia
+<span style="font-weight:normal">(opcional)</span>
 </label>
 
 <textarea
 id="comment"
+placeholder="Escribe aquí cualquier comentario que quieras compartir..."
 maxlength="1000"
-placeholder="Escribe aquí tus comentarios..."
 ></textarea>
 
 
-<button
-class="submit"
-id="submitButton"
->
+<button class="submit" id="submitButton">
 Enviar encuesta
 </button>
 
 
-<div
-class="message error"
-id="errorMessage"
-></div>
+<div class="message success hidden" id="successMessage">
 
-</div>
+<strong>¡Gracias por compartir tu experiencia! ⭐</strong>
 
+<br>
 
-<div
-class="card thanks"
-id="thanksCard"
->
-
-<div class="thanks-icon">
-✅
-</div>
-
-<h2>
-¡Gracias por compartir tu experiencia!
-</h2>
-
-<p>
 Tu opinión es muy importante para nosotros y nos ayuda a mejorar nuestro servicio.
-</p>
 
 </div>
+
+
+<div class="message error hidden" id="errorMessage"></div>
+
+</section>
 
 </main>
-
 
 <footer>
 Samsung Experience Store<br>
@@ -303,111 +255,129 @@ Tu opinión nos ayuda a mejorar.
 
 <script>
 
-const SUPABASE_URL =
+const SUPABASE_URL=
 "https://lxmjfsdmbwgqxtovtxyn.supabase.co";
 
-const SUPABASE_ANON_KEY =
+const SUPABASE_KEY=
 "sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
 
-const supabaseClient =
+const db=
 supabase.createClient(
 SUPABASE_URL,
-SUPABASE_ANON_KEY
+SUPABASE_KEY
 );
 
 
-const params =
+const params=
 new URLSearchParams(
 window.location.search
 );
 
-const storeSlug =
-params.get("store") ||
+const storeSlug=
+params.get("store")||
 "samsung-store-ambar";
 
+let storeId=null;
 
-let storeId = null;
+
+const ratings={
+
+service_rating:0,
+
+attention_rating:0,
+
+information_rating:0,
+
+solution_rating:0,
+
+recommendation_rating:0
+
+};
 
 
-const ratings = {
+/* CATEGORÍAS QUE APARECEN DEBAJO DE LAS ESTRELLAS */
 
-service_rating: 0,
+const categories={
 
-attention_rating: 0,
+service_rating:"Rapidez",
 
-information_rating: 0,
+attention_rating:"Conocimiento",
 
-solution_rating: 0,
+information_rating:"Venta adicional",
 
-recommendation_rating: 0
+solution_rating:"Caja",
+
+recommendation_rating:"Experiencia general"
 
 };
 
 
-const ratingNames = {
+/* BOTÓN ADMIN */
 
-service_rating:
-"Servicio",
+document
+.getElementById("adminButton")
+.addEventListener("click",()=>{
 
-attention_rating:
-"Atención",
+window.location.href="/admin.html";
 
-information_rating:
-"Asesoría",
+});
 
-solution_rating:
-"Solución",
 
-recommendation_rating:
-"Recomendación"
-
-};
-
+/* ESTRELLAS */
 
 document
 .querySelectorAll(".stars")
-.forEach(group => {
+.forEach(group=>{
 
-const question =
+const question=
 group.dataset.question;
 
 group
 .querySelectorAll(".star")
-.forEach(star => {
+.forEach(star=>{
 
-star.addEventListener(
-"click",
-() => {
+star.addEventListener("click",()=>{
 
-const value =
-Number(
-star.dataset.value
-);
+const value=
+Number(star.dataset.value);
 
-ratings[question] =
-value;
+ratings[question]=value;
 
 
 group
 .querySelectorAll(".star")
-.forEach(s => {
+.forEach(s=>{
+
+const v=
+Number(s.dataset.value);
 
 s.classList.toggle(
 "active",
-Number(
-s.dataset.value
-) <= value
+v<=value
 );
 
 });
 
 
+/*
+Ahora debajo de las estrellas
+aparece:
+
+5 de 5 - Rapidez
+
+5 de 5 - Conocimiento
+
+etc.
+*/
+
 document
 .getElementById(
-"text-" + question
+"text-"+question
 )
-.textContent =
-`${value} de 5 - ${ratingNames[question]}`;
+.textContent=
+value+
+" de 5 - "+
+categories[question];
 
 });
 
@@ -415,186 +385,197 @@ document
 
 });
 
+
+/* CARGAR TIENDA */
 
 async function loadStore(){
 
 try{
 
-const { data, error } =
-await supabaseClient
+const result=
+await db
 .from("stores")
 .select("*")
 .eq("slug",storeSlug)
 .eq("active",true)
 .single();
 
+if(result.error)
+throw result.error;
 
-if(error){
-
-console.error(
-"ERROR TIENDA:",
-error
-);
-
+if(!result.data)
 return;
 
-}
-
-
-if(!data)
-return;
-
-
-storeId =
-data.id;
+storeId=
+result.data.id;
 
 
 document
 .getElementById("storeName")
-.textContent =
-data.name;
+.textContent=
+result.data.name;
 
 
 document
 .getElementById("storeLocation")
-.textContent =
-`${data.city || ""}, ${data.state || ""}`;
+.textContent=
+`${result.data.city||""}, ${result.data.state||""}`;
 
 
-document
-.getElementById(
-"recommendationQuestion"
-)
-.textContent =
-`5. ¿Qué tan probable es que recomiendes ${data.name} a familiares o amigos?`;
-
-
-}catch(error){
+}catch(e){
 
 console.error(
-"ERROR:",
-error
+"ERROR TIENDA:",
+e
 );
 
 }
 
 }
 
+
+/* ENVIAR ENCUESTA */
 
 document
 .getElementById("submitButton")
 .addEventListener(
 "click",
-async () => {
+async()=>{
 
-
-const name =
+const advisor=
 document
-.getElementById("name")
+.getElementById("advisor")
 .value
 .trim();
 
-
-const comment =
+const comment=
 document
 .getElementById("comment")
 .value
 .trim();
 
+const button=
+document
+.getElementById("submitButton");
 
-const button =
-document.getElementById(
-"submitButton"
-);
+const success=
+document
+.getElementById("successMessage");
 
-
-const errorMessage =
-document.getElementById(
-"errorMessage"
-);
-
-
-errorMessage.style.display =
-"none";
+const errorBox=
+document
+.getElementById("errorMessage");
 
 
-if(!name){
+success.classList.add("hidden");
 
-errorMessage.textContent =
-"Por favor escribe tu nombre.";
-
-errorMessage.style.display =
-"block";
-
-return;
-
-}
+errorBox.classList.add("hidden");
 
 
-for(const key in ratings){
+/* VALIDAR ASESOR */
 
-if(!ratings[key]){
+if(!advisor){
 
-errorMessage.textContent =
-"Por favor responde las 5 preguntas.";
+errorBox.textContent=
+"Escribe el nombre del asesor o asesora que te atendió.";
 
-errorMessage.style.display =
-"block";
+errorBox.classList.remove("hidden");
 
 return;
 
 }
 
+
+/* VALIDAR LAS 5 PREGUNTAS */
+
+const fields=[
+
+"service_rating",
+
+"attention_rating",
+
+"information_rating",
+
+"solution_rating",
+
+"recommendation_rating"
+
+];
+
+
+for(let i=0;i<fields.length;i++){
+
+const field=
+fields[i];
+
+if(!ratings[field]){
+
+errorBox.textContent=
+"Selecciona una calificación para la pregunta "+
+(i+1)+".";
+
+errorBox.classList.remove("hidden");
+
+return;
+
 }
 
+}
+
+
+/* VALIDAR TIENDA */
 
 if(!storeId){
 
-errorMessage.textContent =
+errorBox.textContent=
 "No se pudo identificar la tienda.";
 
-errorMessage.style.display =
-"block";
+errorBox.classList.remove("hidden");
 
 return;
 
 }
 
 
-button.disabled =
-true;
+button.disabled=true;
 
-button.textContent =
+button.textContent=
 "Enviando...";
 
 
 /*
-====================================================
-CALIFICACIÓN GENERAL COMPATIBLE
-CON LA COLUMNA rating ANTIGUA
-====================================================
+PROMEDIO GENERAL
 */
 
-const averageRating =
-Math.round(
+const average=
+
 (
-ratings.service_rating +
-ratings.attention_rating +
-ratings.information_rating +
-ratings.solution_rating +
+ratings.service_rating+
+ratings.attention_rating+
+ratings.information_rating+
+ratings.solution_rating+
 ratings.recommendation_rating
-) / 5
-);
+)/5;
 
 
 /*
-====================================================
-GUARDAR ENCUESTA
-====================================================
+La columna rating antigua sigue siendo
+obligatoria en Supabase.
+
+Usamos el promedio redondeado para
+mantener compatibilidad.
 */
 
-const { error } =
-await supabaseClient
+const legacyRating=
+Math.round(average);
+
+
+/*
+GUARDAR ENCUESTA
+*/
+
+const result=
+await db
 .from("reviews")
 .insert({
 
@@ -602,10 +583,13 @@ store_id:
 storeId,
 
 customer_name:
-name,
+advisor,
 
 rating:
-averageRating,
+legacyRating,
+
+comment:
+comment||null,
 
 service_rating:
 ratings.service_rating,
@@ -622,38 +606,32 @@ ratings.solution_rating,
 recommendation_rating:
 ratings.recommendation_rating,
 
-comment:
-comment || null,
-
 is_published:
-true
+false
 
 });
 
 
-button.disabled =
-false;
+button.disabled=false;
 
-button.textContent =
+button.textContent=
 "Enviar encuesta";
 
 
-if(error){
+/* ERROR */
+
+if(result.error){
 
 console.error(
-"ERROR AL GUARDAR ENCUESTA:",
-error
+"ERROR ENCUESTA:",
+result.error
 );
 
-errorMessage.textContent =
-"No se pudo enviar la encuesta: " +
-(
-error.message ||
-JSON.stringify(error)
-);
+errorBox.textContent=
+"No se pudo enviar la encuesta: "+
+result.error.message;
 
-errorMessage.style.display =
-"block";
+errorBox.classList.remove("hidden");
 
 return;
 
@@ -661,29 +639,64 @@ return;
 
 
 /*
-====================================================
-ÉXITO
-====================================================
+LIMPIAR FORMULARIO
 */
 
 document
-.getElementById(
-"surveyCard"
-)
-.style.display =
-"none";
-
+.getElementById("advisor")
+.value="";
 
 document
-.getElementById(
-"thanksCard"
-)
-.style.display =
-"block";
+.getElementById("comment")
+.value="";
 
+
+Object.keys(ratings)
+.forEach(key=>{
+
+ratings[key]=0;
 
 });
 
+
+document
+.querySelectorAll(".star")
+.forEach(star=>{
+
+star.classList.remove("active");
+
+});
+
+
+document
+.querySelectorAll(".rating-text")
+.forEach(text=>{
+
+text.textContent=
+"Selecciona una calificación";
+
+});
+
+
+/*
+MENSAJE DE GRACIAS
+*/
+
+success.classList.remove("hidden");
+
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+});
+
+
+/* INICIAR */
 
 loadStore();
 
