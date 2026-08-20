@@ -28,10 +28,17 @@ input,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px
 .gray{background:#e5e7eb;color:#111}
 .green{background:#dcfce7;color:#166534}
 .red{background:#fee2e2;color:#991b1b}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .stat{background:#f3f4f6;border-radius:14px;padding:15px}
 .num{font-size:27px;font-weight:bold}
 .small{font-size:13px;color:#6b7280;margin-top:4px}
+.question-stats{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:18px}
+.qstat{border:1px solid #e5e7eb;border-radius:14px;padding:16px}
+.qtitle{font-weight:bold;margin-bottom:10px;line-height:1.35}
+.avg{font-size:25px;font-weight:bold;margin-bottom:10px}
+.bar{height:9px;background:#e5e7eb;border-radius:10px;overflow:hidden;margin:7px 0}
+.fill{height:100%;background:#f59e0b}
+.dist{font-size:13px;color:#6b7280}
 .survey{border:1px solid #e5e7eb;border-radius:16px;padding:18px;margin-top:15px}
 .top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .name{font-size:20px;font-weight:bold}
@@ -47,10 +54,10 @@ input,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px
 .delete{background:#fee2e2;color:#991b1b}
 .empty{text-align:center;color:#6b7280;padding:30px}
 .warning{background:#fff7ed;color:#9a3412;padding:14px;border-radius:10px;margin-top:15px}
-
 @media(max-width:800px){
 .filters{grid-template-columns:1fr}
 .stats{grid-template-columns:1fr 1fr}
+.question-stats{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -68,21 +75,13 @@ input,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px
 <h2>Acceso de administrador</h2>
 <p>Inicia sesión para consultar las encuestas.</p>
 
-<label for="email">Correo</label>
-<input id="email" type="email"
-placeholder="Escribe tu correo"
-autocomplete="username">
+<label>Correo</label>
+<input id="email" type="email" placeholder="Escribe tu correo" autocomplete="username">
 
-<label for="password">Contraseña</label>
-<input id="password" type="password"
-placeholder="Escribe tu contraseña"
-autocomplete="current-password">
+<label>Contraseña</label>
+<input id="password" type="password" placeholder="Escribe tu contraseña" autocomplete="current-password">
 
-<button type="button"
-class="btn loginbtn"
-id="loginBtn">
-Entrar
-</button>
+<button type="button" class="btn loginbtn" id="loginBtn">Entrar</button>
 
 <div id="loginError" class="error hidden"></div>
 
@@ -125,31 +124,19 @@ Consulta y administra las opiniones de los clientes.
 
 <div class="buttons">
 
-<button class="btn black" id="apply">
-Aplicar filtros
-</button>
-
-<button class="btn gray" id="clear">
-Limpiar
-</button>
-
-<button class="btn green" id="excel">
-Descargar Excel
-</button>
-
-<button class="btn gray" id="refresh">
-Actualizar
-</button>
-
-<button class="btn red" id="deleteFiltered">
-Eliminar filtradas
-</button>
+<button class="btn black" id="apply">Aplicar filtros</button>
+<button class="btn gray" id="clear">Limpiar</button>
+<button class="btn green" id="excel">Descargar Excel</button>
+<button class="btn gray" id="refresh">Actualizar</button>
+<button class="btn red" id="deleteFiltered">Eliminar filtradas</button>
 
 </div>
 
 <div id="deleteInfo" class="warning hidden"></div>
 
 </div>
+
+<!-- RESUMEN -->
 
 <div class="card">
 
@@ -163,22 +150,54 @@ Eliminar filtradas
 </div>
 
 <div class="stat">
-<div class="num" id="avgService">0.0</div>
-<div class="small">Servicio</div>
+<div class="num" id="general">0.0</div>
+<div class="small">Promedio general</div>
 </div>
 
 <div class="stat">
-<div class="num" id="avgAttention">0.0</div>
-<div class="small">Atención</div>
-</div>
-
-<div class="stat">
-<div class="num" id="avgRecommend">0.0</div>
+<div class="num" id="recommend">0.0</div>
 <div class="small">Recomendación</div>
 </div>
 
 </div>
+
+<div class="question-stats">
+
+<div class="qstat">
+<div class="qtitle">1. ¿Cómo fue nuestro servicio?</div>
+<div class="avg" id="avgService">0.0 / 5</div>
+<div id="distService"></div>
 </div>
+
+<div class="qstat">
+<div class="qtitle">2. ¿Qué tan satisfecho estás con la atención que recibiste?</div>
+<div class="avg" id="avgAttention">0.0 / 5</div>
+<div id="distAttention"></div>
+</div>
+
+<div class="qstat">
+<div class="qtitle">3. ¿Qué tan satisfecho estás con la información que recibiste?</div>
+<div class="avg" id="avgInformation">0.0 / 5</div>
+<div id="distInformation"></div>
+</div>
+
+<div class="qstat">
+<div class="qtitle">4. ¿Cómo calificarías la atención que te brindó nuestro equipo?</div>
+<div class="avg" id="avgSolution">0.0 / 5</div>
+<div id="distSolution"></div>
+</div>
+
+<div class="qstat">
+<div class="qtitle">5. ¿Qué tan probable es que recomiendes Samsung Store Ámbar?</div>
+<div class="avg" id="avgRecommendation">0.0 / 5</div>
+<div id="distRecommendation"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- ENCUESTAS -->
 
 <div class="card">
 
@@ -201,19 +220,11 @@ Información visible únicamente para administración.
 
 <script>
 
-const SUPABASE_URL=
-"https://lxmjfsdmbwgqxtovtxyn.supabase.co";
+const SUPABASE_URL="https://lxmjfsdmbwgqxtovtxyn.supabase.co";
+const SUPABASE_KEY="sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
+const ADMIN_EMAIL="ethelredbcp@gmail.com";
 
-const SUPABASE_KEY=
-"sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
-
-const ADMIN_EMAIL=
-"ethelredbcp@gmail.com";
-
-let db=null;
-let reviews=[];
-let stores=[];
-let filtered=[];
+let db=null,reviews=[],stores=[],filtered=[];
 
 const $=id=>document.getElementById(id);
 
@@ -223,32 +234,24 @@ const header=$("header");
 const loginBtn=$("loginBtn");
 const loginError=$("loginError");
 
-
 function showError(text){
 loginError.textContent=text;
 loginError.classList.remove("hidden");
 }
 
-
 function startSupabase(){
-
 if(typeof window.supabase==="undefined"){
 showError("No se pudo cargar Supabase. Comprueba tu conexión.");
 return false;
 }
-
 try{
-db=window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 return true;
 }catch(e){
 showError("Error al iniciar Supabase: "+e.message);
 return false;
 }
 }
-
 
 /* LOGIN */
 
@@ -261,7 +264,6 @@ loginAdmin();
 }
 });
 
-
 async function loginAdmin(){
 
 loginError.classList.add("hidden");
@@ -269,16 +271,8 @@ loginError.classList.add("hidden");
 const email=$("email").value.trim();
 const password=$("password").value;
 
-if(!email){
-showError("Escribe tu correo.");
-return;
-}
-
-if(!password){
-showError("Escribe tu contraseña.");
-return;
-}
-
+if(!email){showError("Escribe tu correo.");return}
+if(!password){showError("Escribe tu contraseña.");return}
 if(!startSupabase())return;
 
 loginBtn.disabled=true;
@@ -286,30 +280,17 @@ loginBtn.textContent="Entrando...";
 
 try{
 
-const result=
-await db.auth.signInWithPassword({
-email:email,
-password:password
-});
+const result=await db.auth.signInWithPassword({email,password});
 
 if(result.error)throw result.error;
 
 const user=result.data.user;
 
-if(!user)
-throw new Error("No se encontró el usuario.");
+if(!user)throw new Error("No se encontró el usuario.");
 
-if(
-!user.email ||
-user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()
-){
-
+if(!user.email||user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
 await db.auth.signOut();
-
-throw new Error(
-"Este correo no tiene permisos de administrador."
-);
-
+throw new Error("Este correo no tiene permisos de administrador.");
 }
 
 login.classList.add("hidden");
@@ -321,11 +302,7 @@ await load();
 }catch(e){
 
 console.error("LOGIN:",e);
-
-showError(
-"No se pudo iniciar sesión: "+
-(e.message||"Error desconocido")
-);
+showError("No se pudo iniciar sesión: "+(e.message||"Error desconocido"));
 
 }finally{
 
@@ -336,43 +313,26 @@ loginBtn.textContent="Entrar";
 
 }
 
-
 /* CARGAR */
 
 async function load(){
 
-$("list").innerHTML=
-'<div class="empty">Cargando encuestas...</div>';
+$("list").innerHTML='<div class="empty">Cargando encuestas...</div>';
 
 try{
 
-const s=
-await db.from("stores")
-.select("*")
-.order("name");
-
+const s=await db.from("stores").select("*").order("name");
 if(s.error)throw s.error;
 
 stores=s.data||[];
 
-$("storeFilter").innerHTML=
-'<option value="">Todas las tiendas</option>';
+$("storeFilter").innerHTML='<option value="">Todas las tiendas</option>';
 
 stores.forEach(x=>{
-$("storeFilter").innerHTML+=
-`<option value="${x.id}">
-${esc(x.name)}
-</option>`;
+$("storeFilter").innerHTML+=`<option value="${x.id}">${esc(x.name)}</option>`;
 });
 
-
-const r=
-await db.from("reviews")
-.select("*")
-.order(
-"created_at",
-{ascending:false}
-);
+const r=await db.from("reviews").select("*").order("created_at",{ascending:false});
 
 if(r.error)throw r.error;
 
@@ -384,16 +344,13 @@ filter();
 
 console.error("LOAD:",e);
 
-$("list").innerHTML=
-`<div class="error">
-No se pudieron cargar las encuestas:<br><br>
-${esc(e.message)}
+$("list").innerHTML=`<div class="error">
+No se pudieron cargar las encuestas:<br><br>${esc(e.message)}
 </div>`;
 
 }
 
 }
-
 
 /* FILTROS */
 
@@ -405,20 +362,11 @@ const to=$("to").value;
 
 filtered=reviews.filter(r=>{
 
-if(store&&r.store_id!==store)
-return false;
+if(store&&r.store_id!==store)return false;
 
-if(
-from &&
-new Date(r.created_at)<
-new Date(from+"T00:00:00")
-)return false;
+if(from&&new Date(r.created_at)<new Date(from+"T00:00:00"))return false;
 
-if(
-to &&
-new Date(r.created_at)>
-new Date(to+"T23:59:59")
-)return false;
+if(to&&new Date(r.created_at)>new Date(to+"T23:59:59"))return false;
 
 return true;
 
@@ -430,87 +378,89 @@ updateDeleteInfo();
 
 }
 
-
-/* ESTADÍSTICAS */
+/* PROMEDIOS */
 
 function average(field){
 
-const values=
-filtered
+const values=filtered
 .map(x=>Number(x[field]))
 .filter(x=>x>=1&&x<=5);
 
 if(!values.length)return"0.0";
 
-return(
-values.reduce((a,b)=>a+b,0)/
-values.length
-).toFixed(1);
+return(values.reduce((a,b)=>a+b,0)/values.length).toFixed(1);
 
 }
 
+/* DISTRIBUCIÓN */
+
+function distribution(field){
+
+const total=filtered.length;
+
+if(!total)return'<div class="dist">Sin datos</div>';
+
+let html="";
+
+for(let n=5;n>=1;n--){
+
+const count=filtered.filter(x=>Number(x[field])===n).length;
+const percent=Math.round((count/total)*100);
+
+html+=`
+<div class="dist">${n} ⭐ — ${count} (${percent}%)</div>
+<div class="bar"><div class="fill" style="width:${percent}%"></div></div>
+`;
+
+}
+
+return html;
+
+}
+
+/* ESTADÍSTICAS */
 
 function stats(){
 
 $("total").textContent=filtered.length;
 
-$("avgService").textContent=
-average("service_rating");
+const fields=[
+"service_rating",
+"attention_rating",
+"information_rating",
+"solution_rating",
+"recommendation_rating"
+];
 
-$("avgAttention").textContent=
-average("attention_rating");
+const avgs=fields.map(average);
 
-$("avgRecommend").textContent=
-average("recommendation_rating");
+$("avgService").textContent=avgs[0]+" / 5";
+$("avgAttention").textContent=avgs[1]+" / 5";
+$("avgInformation").textContent=avgs[2]+" / 5";
+$("avgSolution").textContent=avgs[3]+" / 5";
+$("avgRecommendation").textContent=avgs[4]+" / 5";
 
-}
+$("general").textContent=
+(
+avgs.map(Number).reduce((a,b)=>a+b,0)/5
+).toFixed(1);
 
+$("recommend").textContent=avgs[4]+" / 5";
 
-/* ESTRELLAS */
-
-function stars(n){
-
-n=Number(n);
-
-if(!n)
-return'<span style="color:#9ca3af">Sin respuesta</span>';
-
-n=Math.max(1,Math.min(5,n));
-
-return`
-<span class="stars">
-${"★".repeat(n)}
-<span style="color:#d1d5db">
-${"★".repeat(5-n)}
-</span>
-</span>
-<b>${n} de 5</b>
-`;
+$("distService").innerHTML=distribution("service_rating");
+$("distAttention").innerHTML=distribution("attention_rating");
+$("distInformation").innerHTML=distribution("information_rating");
+$("distSolution").innerHTML=distribution("solution_rating");
+$("distRecommendation").innerHTML=distribution("recommendation_rating");
 
 }
-
-
-function question(title,value){
-
-return`
-<div class="q">
-<div class="qt">${title}</div>
-${stars(value)}
-</div>
-`;
-
-}
-
 
 /* MOSTRAR */
 
 function render(){
 
 if(!filtered.length){
-
-$("list").innerHTML=
-'<div class="empty">No hay encuestas con los filtros seleccionados.</div>';
-
+$("list").innerHTML='<div class="empty">No hay encuestas con los filtros seleccionados.</div>';
 return;
 }
 
@@ -518,101 +468,58 @@ $("list").innerHTML="";
 
 filtered.forEach(r=>{
 
-const store=
-stores.find(x=>x.id===r.store_id);
-
-const el=
-document.createElement("div");
+const store=stores.find(x=>x.id===r.store_id);
+const el=document.createElement("div");
 
 el.className="survey";
 
 el.innerHTML=`
 
 <div class="top">
-
 <div>
 
-<div class="name">
-${esc(r.customer_name||"Cliente")}
-</div>
+<div class="name">${esc(r.customer_name||"Cliente")}</div>
 
 <div class="store">
-${esc(
-store?store.name:"Tienda no identificada"
-)}
+${esc(store?store.name:"Tienda no identificada")}
 </div>
 
 <div class="date">
-${fecha(r.created_at)}
- · ${hora(r.created_at)}
+${fecha(r.created_at)} · ${hora(r.created_at)}
 </div>
 
 </div>
-
 </div>
 
-${question(
-"1. ¿Cómo fue nuestro servicio?",
-r.service_rating
-)}
+${question("1. ¿Cómo fue nuestro servicio?",r.service_rating)}
 
-${question(
-"2. ¿Qué tan satisfecho estás con la atención que recibiste?",
-r.attention_rating
-)}
+${question("2. ¿Qué tan satisfecho estás con la atención que recibiste?",r.attention_rating)}
 
-${question(
-"3. ¿Qué tan satisfecho estás con la información que recibiste?",
-r.information_rating
-)}
+${question("3. ¿Qué tan satisfecho estás con la información que recibiste?",r.information_rating)}
 
-${question(
-"4. ¿Cómo calificarías la atención que te brindó nuestro equipo?",
-r.solution_rating
-)}
+${question("4. ¿Cómo calificarías la atención que te brindó nuestro equipo?",r.solution_rating)}
 
-${question(
-"5. ¿Qué tan probable es que recomiendes Samsung Store Ámbar a familiares o amigos?",
-r.recommendation_rating
-)}
+${question("5. ¿Qué tan probable es que recomiendes Samsung Store Ámbar?",r.recommendation_rating)}
 
 ${r.comment?`
-
 <div class="comment">
 <strong>Comentario adicional</strong>
 ${esc(r.comment)}
-</div>
-
-`:""}
+</div>`:""}
 
 ${r.admin_response?`
-
 <div class="response">
-
-<strong>
-Samsung Store Ámbar
-</strong>
-
+<strong>Samsung Store Ámbar</strong>
 ${esc(r.admin_response)}
-
 <div class="date">
-Respondida:
-${fecha(r.responded_at)}
- · ${hora(r.responded_at)}
+Respondida: ${fecha(r.responded_at)} · ${hora(r.responded_at)}
 </div>
-
-</div>
-
-`:""}
+</div>`:""}
 
 <div class="actions">
-
-<button
-class="btn delete"
-onclick="deleteOne('${r.id}')">
+<button class="btn delete" onclick="deleteOne('${r.id}')">
 🗑️ Eliminar encuesta
 </button>
-
 </div>
 
 `;
@@ -623,8 +530,35 @@ $("list").appendChild(el);
 
 }
 
+/* PREGUNTA */
 
-/* INFORMACIÓN BORRADO */
+function question(title,value){
+
+const n=Number(value);
+
+if(!n){
+
+return`
+<div class="q">
+<div class="qt">${title}</div>
+<span style="color:#9ca3af">Sin respuesta</span>
+</div>
+`;
+
+}
+
+return`
+<div class="q">
+<div class="qt">${title}</div>
+<span class="stars">${"★".repeat(n)}
+<span style="color:#d1d5db">${"★".repeat(5-n)}</span></span>
+<b>${n} de 5</b>
+</div>
+`;
+
+}
+
+/* BORRADO */
 
 function updateDeleteInfo(){
 
@@ -645,38 +579,20 @@ box.classList.add("hidden");
 
 }
 
-
-/* ELIMINAR UNA */
-
 async function deleteOne(id){
 
-const review=
-reviews.find(x=>String(x.id)===String(id));
-
+const review=reviews.find(x=>String(x.id)===String(id));
 if(!review)return;
 
-const ok=
-confirm(
-"¿Seguro que quieres eliminar esta encuesta?\n\n"+
-"Esta acción no se puede deshacer."
-);
-
-if(!ok)return;
+if(!confirm("¿Seguro que quieres eliminar esta encuesta?\n\nEsta acción no se puede deshacer."))return;
 
 try{
 
-const result=
-await db
-.from("reviews")
-.delete()
-.eq("id",id);
+const result=await db.from("reviews").delete().eq("id",id);
 
 if(result.error)throw result.error;
 
-reviews=
-reviews.filter(
-x=>String(x.id)!==String(id)
-);
+reviews=reviews.filter(x=>String(x.id)!==String(id));
 
 filter();
 
@@ -684,196 +600,110 @@ alert("Encuesta eliminada correctamente.");
 
 }catch(e){
 
-console.error("DELETE:",e);
-
-alert(
-"No se pudo eliminar la encuesta:\n\n"+
-e.message
-);
+alert("No se pudo eliminar la encuesta:\n\n"+e.message);
 
 }
 
 }
-
-
-/* ELIMINAR FILTRADAS */
 
 $("deleteFiltered").onclick=async()=>{
 
 if(!filtered.length){
-
-alert(
-"No hay encuestas seleccionadas para eliminar."
-);
-
+alert("No hay encuestas seleccionadas para eliminar.");
 return;
 }
 
 const cantidad=filtered.length;
 
-const ok=
-confirm(
-`Vas a eliminar ${cantidad} encuesta(s).\n\n`+
-"Esta acción NO se puede deshacer.\n\n"+
-"¿Quieres continuar?"
-);
+if(!confirm(
+`Vas a eliminar ${cantidad} encuesta(s).\n\nEsta acción NO se puede deshacer.\n\n¿Quieres continuar?`
+))return;
 
-if(!ok)return;
-
-const ids=
-filtered.map(x=>x.id);
+const ids=filtered.map(x=>x.id);
 
 try{
 
-const result=
-await db
-.from("reviews")
-.delete()
-.in("id",ids);
+const result=await db.from("reviews").delete().in("id",ids);
 
 if(result.error)throw result.error;
 
-reviews=
-reviews.filter(
-x=>!ids.includes(x.id)
-);
+reviews=reviews.filter(x=>!ids.includes(x.id));
 
 filter();
 
-alert(
-`${cantidad} encuesta(s) eliminada(s) correctamente.`
-);
+alert(`${cantidad} encuesta(s) eliminada(s) correctamente.`);
 
 }catch(e){
 
-console.error("DELETE MULTIPLE:",e);
-
-alert(
-"No se pudieron eliminar las encuestas:\n\n"+
-e.message
-);
+alert("No se pudieron eliminar las encuestas:\n\n"+e.message);
 
 }
 
 };
-
 
 /* BOTONES */
 
 $("apply").onclick=filter;
 
 $("clear").onclick=()=>{
-
 $("storeFilter").value="";
 $("from").value="";
 $("to").value="";
-
 filter();
-
 };
 
 $("refresh").onclick=load;
-
 
 /* EXCEL */
 
 $("excel").onclick=()=>{
 
 if(!filtered.length){
-
 alert("No hay encuestas para descargar.");
-
 return;
 }
 
 if(typeof XLSX==="undefined"){
-
-alert(
-"No se pudo cargar el sistema de Excel."
-);
-
+alert("No se pudo cargar el sistema de Excel.");
 return;
 }
 
-const rows=
-filtered.map(r=>{
+const rows=filtered.map(r=>{
 
-const store=
-stores.find(x=>x.id===r.store_id);
+const store=stores.find(x=>x.id===r.store_id);
 
 return{
-
-"Cliente":
-r.customer_name||"",
-
-"Tienda":
-store?store.name:"",
-
-"Fecha":
-fecha(r.created_at),
-
-"Hora":
-hora(r.created_at),
-
-"Servicio":
-r.service_rating||"",
-
-"Atención":
-r.attention_rating||"",
-
-"Información":
-r.information_rating||"",
-
-"Atención del equipo":
-r.solution_rating||"",
-
-"Recomendación":
-r.recommendation_rating||"",
-
-"Comentario":
-r.comment||"",
-
-"Respuesta Samsung Store Ámbar":
-r.admin_response||"",
-
-"Fecha respuesta":
-r.responded_at?
-fecha(r.responded_at):"",
-
-"Hora respuesta":
-r.responded_at?
-hora(r.responded_at):""
-
+"Cliente":r.customer_name||"",
+"Tienda":store?store.name:"",
+"Fecha":fecha(r.created_at),
+"Hora":hora(r.created_at),
+"Servicio":r.service_rating||"",
+"Atención":r.attention_rating||"",
+"Información":r.information_rating||"",
+"Atención del equipo":r.solution_rating||"",
+"Recomendación":r.recommendation_rating||"",
+"Comentario":r.comment||"",
+"Respuesta Samsung Store Ámbar":r.admin_response||"",
+"Fecha respuesta":r.responded_at?fecha(r.responded_at):"",
+"Hora respuesta":r.responded_at?hora(r.responded_at):""
 };
 
 });
 
-const ws=
-XLSX.utils.json_to_sheet(rows);
+const ws=XLSX.utils.json_to_sheet(rows);
+const wb=XLSX.utils.book_new();
 
-const wb=
-XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(wb,ws,"Encuestas");
 
-XLSX.utils.book_append_sheet(
-wb,
-ws,
-"Encuestas"
-);
-
-XLSX.writeFile(
-wb,
-"encuestas-samsung.xlsx"
-);
+XLSX.writeFile(wb,"encuestas-samsung.xlsx");
 
 };
-
 
 /* LOGOUT */
 
 $("logout").onclick=async()=>{
 
-if(db)
-await db.auth.signOut();
+if(db)await db.auth.signOut();
 
 panel.classList.add("hidden");
 header.classList.add("hidden");
@@ -883,24 +713,19 @@ $("password").value="";
 
 };
 
-
 /* FECHA */
 
 function fecha(x){
 
 if(!x)return"";
 
-return new Date(x).toLocaleDateString(
-"es-MX",
-{
+return new Date(x).toLocaleDateString("es-MX",{
 day:"numeric",
 month:"long",
 year:"numeric"
-}
-);
+});
 
 }
-
 
 /* HORA */
 
@@ -908,54 +733,38 @@ function hora(x){
 
 if(!x)return"";
 
-return new Date(x).toLocaleTimeString(
-"es-MX",
-{
+return new Date(x).toLocaleTimeString("es-MX",{
 hour:"2-digit",
 minute:"2-digit",
 second:"2-digit"
-}
-);
+});
 
 }
 
-
-/* SEGURIDAD HTML */
+/* SEGURIDAD */
 
 function esc(x){
 
-const d=
-document.createElement("div");
+const d=document.createElement("div");
 
-d.textContent=
-String(x??"");
+d.textContent=String(x??"");
 
 return d.innerHTML;
 
 }
 
-
 /* SESIÓN */
 
 async function checkSession(){
 
-if(!startSupabase())
-return;
+if(!startSupabase())return;
 
 try{
 
-const result=
-await db.auth.getSession();
+const result=await db.auth.getSession();
+const user=result.data.session?.user;
 
-const user=
-result.data.session?.user;
-
-if(
-user &&
-user.email &&
-user.email.toLowerCase()===
-ADMIN_EMAIL.toLowerCase()
-){
+if(user&&user.email&&user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
 
 login.classList.add("hidden");
 header.classList.remove("hidden");
@@ -972,9 +781,6 @@ console.error("SESSION:",e);
 }
 
 }
-
-
-/* INICIO */
 
 checkSession();
 
