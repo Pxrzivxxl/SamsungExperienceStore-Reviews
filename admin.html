@@ -62,7 +62,7 @@ async function login(){
 $("loginError").classList.add("hidden");let email=$("email").value.trim().toLowerCase(),password=$("password").value;
 if(!email)return err("Escribe tu correo.");if(!password)return err("Escribe tu contraseña.");if(!start())return;
 $("loginBtn").disabled=true;$("loginBtn").textContent="Entrando...";
-try{let r=await db.auth.signInWithPassword({email,password});if(r.error)throw r.error;currentUser=r.data.user;await setup();login.classList.add("hidden");header.classList.remove("hidden");panel.classList.remove("hidden");await load()}
+try{let r=await db.auth.signInWithPassword({email,password});if(r.error)throw r.error;currentUser=r.data.user;await setup();document.getElementById("login").classList.add("hidden");document.getElementById("header").classList.remove("hidden");document.getElementById("panel").classList.remove("hidden");await load()}
 catch(e){try{await db.auth.signOut()}catch(_){}err("No se pudo iniciar sesión: "+(e.message||"Error desconocido"))}
 finally{$("loginBtn").disabled=false;$("loginBtn").textContent="Entrar"}
 }
@@ -148,7 +148,7 @@ $("excel").onclick=()=>{if(!filtered.length)return alert("No hay encuestas para 
 $("logout").onclick=async()=>{if(db)await db.auth.signOut();location.reload()};
 function fecha(x){return x?new Date(x).toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"}):""}
 function hora(x){return x?new Date(x).toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):""}
-async function session(){if(!start())return;try{let r=await db.auth.getSession();if(!r.data.session)return;currentUser=r.data.session.user;await setup();login.classList.add("hidden");header.classList.remove("hidden");panel.classList.remove("hidden");await load()}catch(e){console.error(e);await db.auth.signOut()}}
+async function session(){if(!start())return;try{let r=await db.auth.getSession();if(!r.data.session)return;currentUser=r.data.session.user;await setup();document.getElementById("login").classList.add("hidden");document.getElementById("header").classList.remove("hidden");document.getElementById("panel").classList.remove("hidden");await load()}catch(e){console.error(e);await db.auth.signOut()}}
 session();
 </script>
 </body>
