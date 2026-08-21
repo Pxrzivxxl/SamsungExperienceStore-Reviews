@@ -59,19 +59,49 @@ function start(){if(!window.supabase){err("No se pudo cargar Supabase.");return 
 $("loginBtn").onclick=login;
 $("password").onkeydown=e=>{if(e.key==="Enter")login()};
 async function login(){
-$("loginError").classList.add("hidden");let email=$("email").value.trim().toLowerCase(),password=$("password").value;
-if(!email)return err("Escribe tu correo.");if(!password)return err("Escribe tu contraseña.");if(!start())return;
-$("loginBtn").disabled=true;$("loginBtn").textContent="Entrando...";
-try{let r=await db.auth.signInWithPassword({email,password});if(r.error)throw r.error;currentUser=r.data.user;await setup();document.getElementById("login").classList.add("hidden");document.getElementById("header").classList.remove("hidden");document.getElementById("panel").classList.remove("hidden");await load()}
-catch(e){try{await db.auth.signOut()}catch(_){}err("No se pudo iniciar sesión: "+(e.message||"Error desconocido"))}
-finally{$("loginBtn").disabled=false;$("loginBtn").textContent="Entrar"}
+const button=$("loginBtn"),box=$("loginError");
+box.classList.add("hidden");box.textContent="";
+const email=$("email").value.trim().toLowerCase(),password=$("password").value;
+if(!email){return err("Escribe tu correo.")}
+if(!password){return err("Escribe tu contraseña.")}
+if(!start()){return}
+button.disabled=true;button.textContent="Conectando con Supabase...";
+try{
+const p=db.auth.signInWithPassword({email,password});
+const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error("Supabase no respondió después de 15 segundos.")),15000));
+const r=await Promise.race([p,timeout]);
+if(r.error)throw r.error;
+if(!r.data||!r.data.user)throw new Error("No se recibió el usuario de Supabase.");
+currentUser=r.data.user;
+button.textContent="Cargando panel...";
+await setup();
+document.getElementById("login").classList.add("hidden");
+document.getElementById("header").classList.remove("hidden");
+document.getElementById("panel").classList.remove("hidden");
+await load();
+}catch(e){
+console.error("LOGIN ERROR",e);
+try{await db.auth.signOut()}catch(_){}
+err("No se pudo iniciar sesión: "+(e&&e.message?e.message:String(e)));
+button.disabled=false;button.textContent="Entrar";return;
+}
+button.disabled=false;button.textContent="Entrar";
 }
 
 async function setup(){
-let email=(currentUser.email||"").toLowerCase(),r=await db.from("user_store_access").select("*").eq("user_id",currentUser.id).maybeSingle();if(r.error)throw r.error;if(!r.data)throw Error("El usuario no tiene permisos configurados.");
-currentRole=(r.data.role||"").toLowerCase();isAdmin=currentRole==="admin"||ADMINS.includes(email);currentStoreId=isAdmin?null:r.data.store_id;
-if(!isAdmin&&!currentStoreId)throw Error("El gerente no tiene tienda asignada.");
-$("userBox").innerHTML=`<strong>Usuario:</strong> ${esc(currentUser.email)}<br><strong>Rol:</strong> ${isAdmin?"Administrador general":"Gerente"}<br><strong>Tienda:</strong> ${isAdmin?"Todas las tiendas":await storeName(currentStoreId)}`;
+const email=(currentUser.email||"").toLowerCase();
+isAdmin=ADMINS.includes(email);
+if(isAdmin){
+currentRole="admin";currentStoreId=null;
+$("userBox").innerHTML=`<strong>Usuario:</strong> ${esc(currentUser.email)}<br><strong>Rol:</strong> Administrador general<br><strong>Tienda:</strong> Todas las tiendas`;
+return;
+}
+let r=await db.from("user_store_access").select("*").eq("user_id",currentUser.id).maybeSingle();
+if(r.error)throw r.error;
+if(!r.data)throw Error("El usuario no tiene permisos configurados.");
+currentRole=(r.data.role||"").toLowerCase();currentStoreId=r.data.store_id;
+if(!currentStoreId)throw Error("El gerente no tiene tienda asignada.");
+$("userBox").innerHTML=`<strong>Usuario:</strong> ${esc(currentUser.email)}<br><strong>Rol:</strong> Gerente<br><strong>Tienda:</strong> ${esc(await storeName(currentStoreId))}`;
 }
 
 async function storeName(id){let s=stores.find(x=>String(x.id)===String(id));if(s)return s.name;let r=await db.from("stores").select("name").eq("id",id).single();return r.data?.name||"Tienda";}
