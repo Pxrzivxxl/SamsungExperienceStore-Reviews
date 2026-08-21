@@ -15,7 +15,7 @@
 <h2>Acceso de administrador</h2><p>Inicia sesión para consultar las encuestas.</p>
 <label>Correo</label><input id="email" type="email" autocomplete="username" placeholder="Escribe tu correo">
 <label>Contraseña</label><input id="password" type="password" autocomplete="current-password" placeholder="Escribe tu contraseña">
-<button class="btn loginbtn" id="loginBtn">Entrar</button><div id="loginError" class="error hidden"></div>
+<button class="btn loginbtn" id="loginBtn" type="button" onclick="window.loginAdmin()">Entrar</button><div id="loginError" class="error hidden"></div>
 </div></section>
 
 <main id="panel" class="container hidden">
@@ -56,9 +56,9 @@ const $=id=>document.getElementById(id),esc=x=>{const d=document.createElement("
 function err(t){$("loginError").textContent=t;$("loginError").classList.remove("hidden")}
 function start(){if(!window.supabase){err("No se pudo cargar Supabase.");return false}db=window.supabase.createClient(URL,KEY);return true}
 
-$("loginBtn").onclick=login;
-$("password").onkeydown=e=>{if(e.key==="Enter")login()};
-async function login(){
+/* login handled by onclick */
+$("password").onkeydown=e=>{if(e.key==="Enter")loginAdmin()};
+async function loginAdmin(){
 const button=$("loginBtn"),box=$("loginError");
 box.classList.add("hidden");box.textContent="";
 const email=$("email").value.trim().toLowerCase(),password=$("password").value;
@@ -178,6 +178,9 @@ $("excel").onclick=()=>{if(!filtered.length)return alert("No hay encuestas para 
 $("logout").onclick=async()=>{if(db)await db.auth.signOut();location.reload()};
 function fecha(x){return x?new Date(x).toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"}):""}
 function hora(x){return x?new Date(x).toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):""}
+window.loginAdmin=loginAdmin;
+window.addEventListener("error",e=>{try{err("Error de la página: "+(e.message||"Error de JavaScript"));}catch(_){}});
+
 async function session(){if(!start())return;try{let r=await db.auth.getSession();if(!r.data.session)return;currentUser=r.data.session.user;await setup();document.getElementById("login").classList.add("hidden");document.getElementById("header").classList.remove("hidden");document.getElementById("panel").classList.remove("hidden");await load()}catch(e){console.error(e);await db.auth.signOut()}}
 session();
 </script>
