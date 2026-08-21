@@ -5,22 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Administrador - Encuestas</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f5f7fa;color:#111827}header{background:#000;color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
-button{cursor:pointer}.btn{border:0;border-radius:10px;padding:12px 16px;font-weight:bold}.logout{background:#fff;color:#000;border-radius:20px}
-.container{max-width:1100px;margin:25px auto;padding:0 16px}.card{background:#fff;border-radius:18px;padding:22px;margin-bottom:20px;box-shadow:0 4px 20px #0001}.login{max-width:450px;margin:60px auto}
-h2{margin-bottom:10px}label{display:block;font-weight:bold;margin:15px 0 7px}input,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:16px;background:#fff}
-.loginbtn{width:100%;margin-top:20px;background:#000;color:#fff;font-size:16px}.hidden{display:none!important}.error{background:#fee2e2;color:#991b1b;padding:14px;border-radius:10px;margin-top:15px;line-height:1.4}
-.filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
-.black{background:#000;color:#fff}.gray{background:#e5e7eb;color:#111}.green{background:#dcfce7;color:#166534}.red{background:#fee2e2;color:#991b1b}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#f3f4f6;border-radius:14px;padding:15px}.num{font-size:27px;font-weight:bold}.small{font-size:13px;color:#6b7280;margin-top:4px}
-.userbox{background:#eef2ff;color:#1e293b;border-radius:14px;padding:15px;margin-top:15px;line-height:1.6}.survey{border:1px solid #e5e7eb;border-radius:16px;padding:18px;margin-top:15px}.top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}.name{font-size:20px;font-weight:bold}.store{color:#6b7280;margin-top:4px}.date{font-size:13px;color:#6b7280;margin-top:6px}
-.q{border-top:1px solid #e5e7eb;margin-top:15px;padding-top:14px}.qt{font-weight:bold;margin-bottom:7px}.stars{color:#f59e0b;font-size:22px}.comment,.response{margin-top:15px;padding:14px;border-radius:10px;background:#f3f4f6}.response{border-left:4px solid #111827}.comment strong,.response strong{display:block;margin-bottom:6px}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.delete{background:#fee2e2;color:#991b1b}.empty{text-align:center;color:#6b7280;padding:30px}.warning{background:#fff7ed;color:#9a3412;padding:14px;border-radius:10px;margin-top:15px}
-.tableWrap{overflow-x:auto;margin-top:15px}table{width:100%;border-collapse:collapse;min-width:850px}th,td{padding:12px 10px;border-bottom:1px solid #e5e7eb;text-align:left}th{background:#f3f4f6;font-size:13px}td{font-size:14px}.avg{font-weight:bold}
-.rank{display:grid;grid-template-columns:55px 1fr repeat(6,auto);gap:8px;align-items:center;padding:12px;border-bottom:1px solid #e5e7eb}.rank b{font-size:16px}.rankhead{font-weight:bold;background:#f3f4f6;border-radius:10px}.medal{font-size:22px}
-@media(max-width:800px){.filters{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.rank{grid-template-columns:45px 1fr 1fr}.rank span:nth-child(n+4){grid-column:auto}}
-@media(max-width:500px){.stats{grid-template-columns:1fr}}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}body{background:#f5f7fa;color:#111827}header{background:#000;color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}header h1{font-size:20px}.btn{border:0;border-radius:10px;padding:12px 16px;font-weight:bold;cursor:pointer}.logout{background:#fff;color:#000;border-radius:20px}.container{max-width:1150px;margin:25px auto;padding:0 16px}.card{background:#fff;border-radius:18px;padding:22px;margin-bottom:20px;box-shadow:0 4px 20px #0001}.login{max-width:450px;margin:60px auto}h2{margin-bottom:10px}label{display:block;font-weight:bold;margin:15px 0 7px}input,select{width:100%;padding:13px;border:1px solid #d1d5db;border-radius:10px;font-size:16px;background:#fff}.loginbtn{width:100%;margin-top:20px;background:#000;color:#fff;font-size:16px}.hidden{display:none!important}.error{background:#fee2e2;color:#991b1b;padding:14px;border-radius:10px;margin-top:15px;line-height:1.4}.filters{display:grid;grid-template-columns:1.4fr 1.2fr 1fr 1fr;gap:12px}.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.black{background:#000;color:#fff}.gray{background:#e5e7eb;color:#111}.green{background:#dcfce7;color:#166534}.red{background:#fee2e2;color:#991b1b}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.stat{background:#f3f4f6;border-radius:14px;padding:15px}.num{font-size:27px;font-weight:bold}.small{font-size:13px;color:#6b7280;margin-top:4px}.userbox{background:#eef2ff;color:#1e293b;border-radius:14px;padding:15px;margin-top:15px;line-height:1.6}.survey{border:1px solid #e5e7eb;border-radius:16px;padding:18px;margin-top:15px}.top{display:flex;justify-content:space-between;gap:10px}.name{font-size:20px;font-weight:bold}.store,.date{color:#6b7280;margin-top:5px;font-size:13px}.q{border-top:1px solid #e5e7eb;margin-top:15px;padding-top:14px}.qt{font-weight:bold;margin-bottom:7px}.stars{color:#f59e0b;font-size:22px}.comment,.response{margin-top:15px;padding:14px;border-radius:10px;background:#f3f4f6}.response{border-left:4px solid #111827}.comment strong,.response strong{display:block;margin-bottom:6px}.actions{display:flex;gap:8px;margin-top:15px}.delete{background:#fee2e2;color:#991b1b}.empty{text-align:center;color:#6b7280;padding:30px}.warning{background:#fff7ed;color:#9a3412;padding:14px;border-radius:10px;margin-top:15px}.tableWrap{overflow-x:auto;margin-top:15px}table{width:100%;border-collapse:collapse;min-width:850px}th,td{padding:11px 10px;border-bottom:1px solid #e5e7eb;text-align:left}th{background:#f3f4f6;font-size:13px}td{font-size:14px}.avg{font-weight:bold}.rank{border:1px solid #e5e7eb;border-radius:14px;padding:13px;margin-top:10px}.ranktop{display:flex;justify-content:space-between;gap:10px;align-items:center}.medal{font-size:22px}.rankname{font-weight:bold;font-size:17px}.rankmeta{color:#6b7280;font-size:13px;margin-top:4px}.bar{height:8px;background:#e5e7eb;border-radius:10px;margin-top:9px;overflow:hidden}.bar i{display:block;height:100%;background:#111827;border-radius:10px}.note{font-size:13px;color:#6b7280;margin-top:5px}@media(max-width:800px){.filters{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}}@media(max-width:500px){.filters,.stats{grid-template-columns:1fr}.container{padding:0 10px}.card{padding:17px}.top{display:block}}
 </style>
 </head>
 <body>
@@ -28,8 +13,8 @@ h2{margin-bottom:10px}label{display:block;font-weight:bold;margin:15px 0 7px}inp
 
 <section id="login" class="container"><div class="card login">
 <h2>Acceso de administrador</h2><p>Inicia sesión para consultar las encuestas.</p>
-<label>Correo</label><input id="email" type="email" autocomplete="username">
-<label>Contraseña</label><input id="password" type="password" autocomplete="current-password">
+<label>Correo</label><input id="email" type="email" autocomplete="username" placeholder="Escribe tu correo">
+<label>Contraseña</label><input id="password" type="password" autocomplete="current-password" placeholder="Escribe tu contraseña">
 <button class="btn loginbtn" id="loginBtn">Entrar</button><div id="loginError" class="error hidden"></div>
 </div></section>
 
@@ -42,12 +27,12 @@ h2{margin-bottom:10px}label{display:block;font-weight:bold;margin:15px 0 7px}inp
 <div><label>Desde</label><input type="date" id="from"></div>
 <div><label>Hasta</label><input type="date" id="to"></div>
 </div>
-<div class="buttons"><button class="btn black" id="apply">Aplicar filtros</button><button class="btn gray" id="clear">Limpiar</button><button class="btn green" id="excel">Descargar Excel</button><button class="btn gray" id="refresh">Actualizar</button><button class="btn red hidden" id="deleteFiltered">Eliminar filtradas</button></div>
+<div class="buttons"><button class="btn black" id="apply">Aplicar filtros</button><button class="btn gray" id="clear">Limpiar</button><button class="btn green" id="excel">Descargar Excel</button><button class="btn gray" id="refresh">Actualizar</button><button class="btn red" id="deleteFiltered">Eliminar filtradas</button></div>
 <div id="deleteInfo" class="warning hidden"></div></div>
 
-<div class="card"><h2>🏆 Ranking de asesores</h2><p style="color:#6b7280;margin-top:5px">Promedio de las 5 preguntas por asesor.</p><div id="ranking"><div class="empty">Cargando...</div></div></div>
+<div class="card" id="storeSummaryCard"><h2>Resumen por tiendas</h2><p class="note">Resultados según el periodo seleccionado.</p><div class="tableWrap"><table><thead><tr><th>Tienda</th><th>Encuestas</th><th>Atención</th><th>Conocimiento</th><th>Adición</th><th>Caja</th><th>Experiencia</th><th>Promedio</th></tr></thead><tbody id="storeSummary"></tbody></table></div></div>
 
-<div class="card" id="storeSummaryCard"><h2>Resumen por tiendas</h2><p style="color:#6b7280;margin-top:5px">Resultados de las tiendas según el periodo seleccionado.</p><div class="tableWrap"><table><thead><tr><th>Tienda</th><th>Encuestas</th><th>Atención</th><th>Conocimiento</th><th>Adición</th><th>Caja</th><th>Experiencia</th><th>Promedio</th></tr></thead><tbody id="storeSummary"></tbody></table></div></div>
+<div class="card"><h2>🏆 Ranking de asesores</h2><p class="note">Promedio de las 5 preguntas por asesor.</p><div id="ranking"></div></div>
 
 <div class="card"><h2>Resumen de la tienda seleccionada</h2><div class="stats">
 <div class="stat"><div class="num" id="total">0</div><div class="small">Encuestas</div></div>
@@ -59,105 +44,112 @@ h2{margin-bottom:10px}label{display:block;font-weight:bold;margin:15px 0 7px}inp
 <div class="stat"><div class="num" id="avgRecommend">0.0</div><div class="small">Experiencia</div></div>
 </div></div>
 
-<div class="card"><h2>Encuestas de clientes</h2><p style="color:#6b7280;margin-top:5px">Información visible únicamente para administración.</p><div id="list"><div class="empty">Cargando encuestas...</div></div></div>
+<div class="card"><h2>Encuestas de clientes</h2><p class="note">Información visible según los permisos del usuario.</p><div id="list"><div class="empty">Cargando encuestas...</div></div></div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
-const SUPABASE_URL="https://lxmjfsdmbwgqxtovtxyn.supabase.co",SUPABASE_KEY="sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
-const ADMIN_EMAILS=["ethelredbcp@gmail.com","distrital.se@gmail.com"];
-let db,reviews=[],stores=[],filtered=[],currentUser=null,currentRole="",currentStoreId=null,isAdmin=false;
-const $=id=>document.getElementById(id),show=e=>$(e).classList.remove("hidden"),hide=e=>$(e).classList.add("hidden");
-function esc(x){const d=document.createElement("div");d.textContent=String(x??"");return d.innerHTML}
-function fecha(x){return x?new Date(x).toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"}):""}
-function hora(x){return x?new Date(x).toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):""}
-function start(){if(!window.supabase){err("No se pudo cargar Supabase.");return false}db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);return true}
-function err(t){$("loginError").textContent=t;show("loginError")}
+const URL="https://lxmjfsdmbwgqxtovtxyn.supabase.co",KEY="sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V",ADMINS=["ethelredbcp@gmail.com","distrital.se@gmail.com"];
+let db,reviews=[],stores=[],advisors=[],filtered=[],currentUser=null,currentRole="",currentStoreId=null,isAdmin=false;
+const $=id=>document.getElementById(id),esc=x=>{const d=document.createElement("div");d.textContent=String(x??"");return d.innerHTML};
+function err(t){$("loginError").textContent=t;$("loginError").classList.remove("hidden")}
+function start(){if(!window.supabase){err("No se pudo cargar Supabase.");return false}db=window.supabase.createClient(URL,KEY);return true}
+
 $("loginBtn").onclick=login;
 $("password").onkeydown=e=>{if(e.key==="Enter")login()};
 async function login(){
-hide("loginError");let email=$("email").value.trim().toLowerCase(),password=$("password").value;
+$("loginError").classList.add("hidden");let email=$("email").value.trim().toLowerCase(),password=$("password").value;
 if(!email)return err("Escribe tu correo.");if(!password)return err("Escribe tu contraseña.");if(!start())return;
 $("loginBtn").disabled=true;$("loginBtn").textContent="Entrando...";
-try{let r=await db.auth.signInWithPassword({email,password});if(r.error)throw r.error;currentUser=r.data.user;await setupUser();hide("login");show("header");show("panel");await load()}
+try{let r=await db.auth.signInWithPassword({email,password});if(r.error)throw r.error;currentUser=r.data.user;await setup();login.classList.add("hidden");header.classList.remove("hidden");panel.classList.remove("hidden");await load()}
 catch(e){try{await db.auth.signOut()}catch(_){}err("No se pudo iniciar sesión: "+(e.message||"Error desconocido"))}
-$("loginBtn").disabled=false;$("loginBtn").textContent="Entrar";
+finally{$("loginBtn").disabled=false;$("loginBtn").textContent="Entrar"}
 }
-async function setupUser(){
-let email=(currentUser.email||"").toLowerCase(),r=await db.from("user_store_access").select("*").eq("user_id",currentUser.id).maybeSingle();
-if(r.error)throw r.error;if(!r.data)throw Error("El usuario no tiene permisos configurados.");
-currentRole=(r.data.role||"").toLowerCase();isAdmin=currentRole==="admin"||ADMIN_EMAILS.includes(email);currentStoreId=isAdmin?null:r.data.store_id;
+
+async function setup(){
+let email=(currentUser.email||"").toLowerCase(),r=await db.from("user_store_access").select("*").eq("user_id",currentUser.id).maybeSingle();if(r.error)throw r.error;if(!r.data)throw Error("El usuario no tiene permisos configurados.");
+currentRole=(r.data.role||"").toLowerCase();isAdmin=currentRole==="admin"||ADMINS.includes(email);currentStoreId=isAdmin?null:r.data.store_id;
 if(!isAdmin&&!currentStoreId)throw Error("El gerente no tiene tienda asignada.");
-$("userBox").innerHTML=`<strong>Usuario:</strong> ${esc(currentUser.email)}<br><strong>Rol:</strong> ${isAdmin?"Administrador general":"Gerente de tienda"}<br><strong>Tienda:</strong> ${isAdmin?"Todas las tiendas":esc(r.data.store_id)}`;
-if(isAdmin)show("deleteFiltered");else hide("deleteFiltered");
+$("userBox").innerHTML=`<strong>Usuario:</strong> ${esc(currentUser.email)}<br><strong>Rol:</strong> ${isAdmin?"Administrador general":"Gerente"}<br><strong>Tienda:</strong> ${isAdmin?"Todas las tiendas":await storeName(currentStoreId)}`;
 }
-async function load(){try{await loadStores();await loadReviews()}catch(e){console.error(e);$("list").innerHTML=`<div class="error">No se pudieron cargar las encuestas:<br><br>${esc(e.message)}</div>`}}
+
+async function storeName(id){let s=stores.find(x=>String(x.id)===String(id));if(s)return s.name;let r=await db.from("stores").select("name").eq("id",id).single();return r.data?.name||"Tienda";}
+
+async function load(){
+$("list").innerHTML='<div class="empty">Cargando encuestas...</div>';
+try{await loadStores();await loadAdvisors();await loadReviews()}catch(e){console.error(e);$("list").innerHTML=`<div class="error">No se pudieron cargar las encuestas:<br><br>${esc(e.message)}</div>`}
+}
+
 async function loadStores(){
-let q=db.from("stores").select("*").order("name");if(!isAdmin)q=q.eq("id",currentStoreId);let r=await q;if(r.error)throw r.error;stores=r.data||[];if(!stores.length)throw Error("No se encontró la tienda.");
+let q=db.from("stores").select("*").eq("active",true).order("name");if(!isAdmin)q=q.eq("id",currentStoreId);
+let r=await q;if(r.error)throw r.error;stores=r.data||[];if(!stores.length)throw Error("No se encontró la tienda.");
 let s=$("storeFilter");s.innerHTML=isAdmin?'<option value="">Todas las tiendas</option>':"";
 stores.forEach(x=>s.innerHTML+=`<option value="${x.id}">${esc(x.name)}</option>`);
-if(!isAdmin){s.value=stores[0].id;s.disabled=true}else s.disabled=false;loadAdvisorOptions();
+if(!isAdmin){s.value=currentStoreId;s.disabled=true}
+s.onchange=()=>{updateAdvisorFilter();filter()}
 }
-function loadAdvisorOptions(){
-let names=[...new Set(reviews.map(r=>(r.customer_name||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,"es"));
-$("advisorFilter").innerHTML='<option value="">Todos los asesores</option>'+names.map(n=>`<option>${esc(n)}</option>`).join("");
+
+async function loadAdvisors(){
+let q=db.from("store_advisors").select("id,store_id,name,active").eq("active",true).order("name");if(!isAdmin)q=q.eq("store_id",currentStoreId);
+let r=await q;if(r.error)throw r.error;advisors=r.data||[];updateAdvisorFilter();
 }
+
+function selectedStore(){return isAdmin?$("storeFilter").value:currentStoreId}
+function updateAdvisorFilter(){
+let store=selectedStore(),list=advisors.filter(a=>!store||String(a.store_id)===String(store)),sel=$("advisorFilter"),old=sel.value;
+sel.innerHTML='<option value="">Todos los asesores</option>'+list.map(a=>`<option value="${esc(a.name)}">${esc(a.name)}</option>`).join("");
+if(list.some(a=>a.name===old))sel.value=old;
+}
+$("advisorFilter").onchange=()=>filter();
+
 async function loadReviews(){
-let q=db.from("reviews").select("*").order("created_at",{ascending:false});if(!isAdmin)q=q.eq("store_id",currentStoreId);let r=await q;if(r.error)throw r.error;reviews=r.data||[];loadAdvisorOptions();filter();
+let q=db.from("reviews").select("*").order("created_at",{ascending:false});if(!isAdmin)q=q.eq("store_id",currentStoreId);
+let r=await q;if(r.error)throw r.error;reviews=r.data||[];filter();
 }
-function dateFilter(data){let f=$("from").value,t=$("to").value;return data.filter(r=>(!f||new Date(r.created_at)>=new Date(f+"T00:00:00"))&&(!t||new Date(r.created_at)<=new Date(t+"T23:59:59")))}
+
+function dates(data){let f=$("from").value,t=$("to").value;return data.filter(r=>(!f||new Date(r.created_at)>=new Date(f+"T00:00:00"))&&(!t||new Date(r.created_at)<=new Date(t+"T23:59:59")))}
 function filter(){
-let store=$("storeFilter").value,adv=$("advisorFilter").value;
-if(!isAdmin)store=currentStoreId;
-filtered=dateFilter(reviews.filter(r=>(!store||String(r.store_id)===String(store))&&(!adv||(r.customer_name||"")===adv)));
-stats();render();updateDeleteInfo();renderRanking();renderStoreSummary();
+let store=selectedStore(),adv=$("advisorFilter").value;
+filtered=dates(reviews.filter(r=>(!store||String(r.store_id)===String(store))&&(!adv||String(r.customer_name||"").toLowerCase()===adv.toLowerCase())));
+stats();render();updateDeleteInfo();renderStoreSummary();renderRanking();
 }
-function vals(data,f){return data.map(r=>Number(r[f])).filter(n=>n>=1&&n<=5)}
-function avg(data,f){let v=vals(data,f);return v.length?(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1):"0.0"}
-const fields=["service_rating","attention_rating","information_rating","solution_rating","recommendation_rating"];
-function generalAverage(data){let v=[];data.forEach(r=>fields.forEach(f=>{let n=Number(r[f]);if(n>=1&&n<=5)v.push(n)}));return v.length?(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1):"0.0"}
-function stats(){$("total").textContent=filtered.length;$("avgGeneral").textContent=generalAverage(filtered);$("avgService").textContent=avg(filtered,"service_rating");$("avgAttention").textContent=avg(filtered,"attention_rating");$("avgInformation").textContent=avg(filtered,"information_rating");$("avgSolution").textContent=avg(filtered,"solution_rating");$("avgRecommend").textContent=avg(filtered,"recommendation_rating")}
-function renderRanking(){
-let groups={};filtered.forEach(r=>{let n=(r.customer_name||"").trim()||"Sin asesor";(groups[n]??=[]).push(r)});
-let arr=Object.entries(groups).map(([n,d])=>({n,d,avg:Number(generalAverage(d))})).sort((a,b)=>b.avg-a.avg);
-$("ranking").innerHTML=arr.length?arr.map((x,i)=>`<div class="rank"><span class="medal">${i<3?["🥇","🥈","🥉"][i]:i+1}</span><b>${esc(x.n)}</b><span>${x.d.length} encuesta(s)</span><span>Atención ${avg(x.d,"service_rating")}</span><span>Conocimiento ${avg(x.d,"attention_rating")}</span><span>Adición ${avg(x.d,"information_rating")}</span><span>Caja ${avg(x.d,"solution_rating")}</span><span>⭐ ${x.avg.toFixed(1)}</span></div>`).join(""):'<div class="empty">No hay datos para el periodo seleccionado.</div>';
-}
+function avg(data,f){let v=data.map(r=>Number(r[f])).filter(n=>n>=1&&n<=5);return v.length?(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1):"0.0"}
+function general(data){let fs=["service_rating","attention_rating","information_rating","solution_rating","recommendation_rating"],t=0,c=0;data.forEach(r=>fs.forEach(f=>{let n=Number(r[f]);if(n>=1&&n<=5){t+=n;c++}}));return c?(t/c).toFixed(1):"0.0"}
+function stats(){$("total").textContent=filtered.length;$("avgGeneral").textContent=general(filtered);$("avgService").textContent=avg(filtered,"service_rating");$("avgAttention").textContent=avg(filtered,"attention_rating");$("avgInformation").textContent=avg(filtered,"information_rating");$("avgSolution").textContent=avg(filtered,"solution_rating");$("avgRecommend").textContent=avg(filtered,"recommendation_rating")}
+
 function renderStoreSummary(){
-if(!isAdmin){hide("storeSummaryCard");return}show("storeSummaryCard");
-$("storeSummary").innerHTML=stores.map(s=>{let d=dateFilter(reviews.filter(r=>String(r.store_id)===String(s.id)));return`<tr><td><b>${esc(s.name)}</b></td><td>${d.length}</td><td>${avg(d,fields[0])}</td><td>${avg(d,fields[1])}</td><td>${avg(d,fields[2])}</td><td>${avg(d,fields[3])}</td><td>${avg(d,fields[4])}</td><td>⭐ ${generalAverage(d)}</td></tr>`}).join("");
+let tb=$("storeSummary");if(!isAdmin){$("storeSummaryCard").classList.add("hidden");return}$("storeSummaryCard").classList.remove("hidden");
+tb.innerHTML=stores.map(s=>{let d=dates(reviews.filter(r=>String(r.store_id)===String(s.id)));return`<tr><td><strong>${esc(s.name)}</strong></td><td>${d.length}</td><td class="avg">${avg(d,"service_rating")}</td><td class="avg">${avg(d,"attention_rating")}</td><td class="avg">${avg(d,"information_rating")}</td><td class="avg">${avg(d,"solution_rating")}</td><td class="avg">${avg(d,"recommendation_rating")}</td><td class="avg">⭐ ${general(d)}</td></tr>`}).join("")
 }
-function stars(n){n=Number(n);return n?`<span class="stars">${"★".repeat(n)}<span style="color:#d1d5db">${"★".repeat(5-n)}</span></span> <b>${n} de 5</b>`:'<span style="color:#9ca3af">Sin respuesta</span>'}
-function question(t,v){return`<div class="q"><div class="qt">${t}</div>${stars(v)}</div>`}
+
+function renderRanking(){
+let store=selectedStore(),list=advisors.filter(a=>!store||String(a.store_id)===String(store));
+let box=$("ranking");if(!list.length){box.innerHTML='<div class="empty">No hay asesores configurados para esta tienda.</div>';return}
+let rows=list.map(a=>{let d=dates(reviews.filter(r=>String(r.store_id)===String(a.store_id)&&String(r.customer_name||"").toLowerCase()===a.name.toLowerCase()));return{name:a.name,count:d.length,score:Number(general(d))}}).sort((a,b)=>b.score-a.score||b.count-a.count);
+box.innerHTML=rows.map((a,i)=>`<div class="rank"><div class="ranktop"><div><span class="medal">${i===0?"🥇":i===1?"🥈":i===2?"🥉":"👤"}</span> <span class="rankname">${esc(a.name)}</span></div><strong>${a.score.toFixed(1)} / 5</strong></div><div class="rankmeta">${a.count} encuesta(s) · Atención ${a.count?avg(dates(reviews.filter(r=>String(r.store_id)===String(store||a.store_id)&&String(r.customer_name||"").toLowerCase()===a.name.toLowerCase())),"service_rating"):"0.0"} · Conocimiento ${a.count?avg(dates(reviews.filter(r=>String(r.store_id)===String(store||a.store_id)&&String(r.customer_name||"").toLowerCase()===a.name.toLowerCase())),"attention_rating"):"0.0"} · Adición ${a.count?avg(dates(reviews.filter(r=>String(r.store_id)===String(store||a.store_id)&&String(r.customer_name||"").toLowerCase()===a.name.toLowerCase())),"information_rating"):"0.0"} · Caja ${a.count?avg(dates(reviews.filter(r=>String(r.store_id)===String(store||a.store_id)&&String(r.customer_name||"").toLowerCase()===a.name.toLowerCase())),"solution_rating"):"0.0"}</div><div class="bar"><i style="width:${a.score*20}%"></i></div></div>`).join("")
+}
+
+function stars(n){n=Number(n);if(!n)return'<span style="color:#9ca3af">Sin respuesta</span>';return`<span class="stars">${"★".repeat(n)}<span style="color:#d1d5db">${"★".repeat(5-n)}</span></span> <b>${n} de 5</b>`}
+function q(t,v){return`<div class="q"><div class="qt">${t}</div>${stars(v)}</div>`}
 function render(){
 if(!filtered.length){$("list").innerHTML='<div class="empty">No hay encuestas con los filtros seleccionados.</div>';return}
-$("list").innerHTML=filtered.map(r=>{let s=stores.find(x=>String(x.id)===String(r.store_id));return`<div class="survey"><div class="top"><div><div class="name">${esc(r.customer_name||"Cliente")}</div><div class="store">${esc(s?.name||"Tienda no identificada")}</div><div class="date">${fecha(r.created_at)} · ${hora(r.created_at)}</div></div></div>
-${question("1. Atención",r.service_rating)}${question("2. Conocimiento",r.attention_rating)}${question("3. Adición",r.information_rating)}${question("4. Caja",r.solution_rating)}${question("5. Experiencia",r.recommendation_rating)}
-${r.comment?`<div class="comment"><strong>Comentario adicional</strong>${esc(r.comment)}</div>`:""}${r.admin_response?`<div class="response"><strong>Respuesta</strong>${esc(r.admin_response)}<div class="date">Respondida: ${fecha(r.responded_at)} · ${hora(r.responded_at)}</div></div>`:""}
-${isAdmin?`<div class="actions"><button class="btn delete" onclick="deleteOne('${r.id}')">🗑️ Eliminar encuesta</button></div>`:""}</div>`}).join("");
+$("list").innerHTML=filtered.map(r=>{let s=stores.find(x=>String(x.id)===String(r.store_id));return`<div class="survey"><div class="top"><div><div class="name">${esc(r.customer_name||"Sin asesor")}</div><div class="store">${esc(s?.name||"Tienda no identificada")}</div><div class="date">${fecha(r.created_at)} · ${hora(r.created_at)}</div></div></div>${q("1. Atención",r.service_rating)}${q("2. Conocimiento Producto",r.attention_rating)}${q("3. Adición",r.information_rating)}${q("4. Caja",r.solution_rating)}${q("5. Experiencia",r.recommendation_rating)}${r.comment?`<div class="comment"><strong>Comentario adicional</strong>${esc(r.comment)}</div>`:""}${isAdmin?`<div class="actions"><button class="btn delete" onclick="deleteOne('${r.id}')">🗑️ Eliminar encuesta</button></div>`:""}</div>`}).join("")
 }
-function updateDeleteInfo(){let b=$("deleteInfo");if(isAdmin&&filtered.length){b.textContent=`Hay ${filtered.length} encuesta(s) seleccionada(s). "Eliminar filtradas" eliminará únicamente esas encuestas.`;show("deleteInfo")}else hide("deleteInfo")}
-async function deleteOne(id){
-if(!isAdmin)return alert("Solo los administradores pueden eliminar encuestas.");
-if(!confirm("¿Seguro que quieres eliminar esta encuesta? Esta acción no se puede deshacer."))return;
-try{let r=await db.from("reviews").delete().eq("id",id);if(r.error)throw r.error;reviews=reviews.filter(x=>String(x.id)!==String(id));filter();alert("Encuesta eliminada correctamente.")}catch(e){alert("No se pudo eliminar la encuesta:\n\n"+e.message)}
-}
-$("deleteFiltered").onclick=async()=>{
-if(!isAdmin)return;if(!filtered.length)return alert("No hay encuestas seleccionadas para eliminar.");
-if(!confirm(`Vas a eliminar ${filtered.length} encuesta(s). Esta acción NO se puede deshacer.\n\n¿Quieres continuar?`))return;
-let ids=filtered.map(r=>r.id);try{let r=await db.from("reviews").delete().in("id",ids);if(r.error)throw r.error;reviews=reviews.filter(r=>!ids.includes(r.id));filter();alert(`${ids.length} encuesta(s) eliminada(s) correctamente.`)}catch(e){alert("No se pudieron eliminar las encuestas:\n\n"+e.message)}
-};
-$("apply").onclick=filter;$("advisorFilter").onchange=filter;$("storeFilter").onchange=filter;
-$("clear").onclick=()=>{$("from").value="";$("to").value="";$("advisorFilter").value="";if(isAdmin)$("storeFilter").value="";filter()};
-$("refresh").onclick=load;
-$("excel").onclick=()=>{
-if(!filtered.length)return alert("No hay encuestas para descargar.");if(typeof XLSX==="undefined")return alert("No se pudo cargar Excel.");
-let rows=filtered.map(r=>{let s=stores.find(x=>String(x.id)===String(r.store_id));return{"Cliente/Asesor":r.customer_name||"","Tienda":s?.name||"","Fecha":fecha(r.created_at),"Hora":hora(r.created_at),"Atención":r.service_rating||"","Conocimiento":r.attention_rating||"","Adición":r.information_rating||"","Caja":r.solution_rating||"","Experiencia":r.recommendation_rating||"","Promedio":generalAverage([r]),"Comentario":r.comment||""}});
-let ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Encuestas");XLSX.writeFile(wb,"encuestas-samsung.xlsx");
-};
+function updateDeleteInfo(){let b=$("deleteInfo");if(!isAdmin){b.classList.add("hidden");$("deleteFiltered").classList.add("hidden");return}$("deleteFiltered").classList.remove("hidden");if(filtered.length){b.textContent=`Hay ${filtered.length} encuesta(s) seleccionada(s) por los filtros. El botón "Eliminar filtradas" eliminará únicamente esas encuestas.`;b.classList.remove("hidden")}else b.classList.add("hidden")}
+
+async function deleteOne(id){if(!isAdmin)return;if(!confirm("¿Seguro que quieres eliminar esta encuesta?\n\nEsta acción no se puede deshacer."))return;let r=await db.from("reviews").delete().eq("id",id);if(r.error)return alert("No se pudo eliminar la encuesta:\n\n"+r.error.message);reviews=reviews.filter(x=>String(x.id)!==String(id));filter();alert("Encuesta eliminada correctamente.")}
+$("deleteFiltered").onclick=async()=>{if(!isAdmin||!filtered.length)return alert("No hay encuestas seleccionadas para eliminar.");if(!confirm(`Vas a eliminar ${filtered.length} encuesta(s).\n\nEsta acción NO se puede deshacer.\n\n¿Quieres continuar?`))return;let ids=filtered.map(x=>x.id),r=await db.from("reviews").delete().in("id",ids);if(r.error)return alert("No se pudieron eliminar las encuestas:\n\n"+r.error.message);reviews=reviews.filter(x=>!ids.includes(x.id));filter();alert(`${ids.length} encuesta(s) eliminada(s) correctamente.`)}
+
+$("apply").onclick=filter;$("clear").onclick=()=>{$("from").value="";$("to").value="";if(isAdmin)$("storeFilter").value="";updateAdvisorFilter();filter()};$("refresh").onclick=load;
+
+$("excel").onclick=()=>{if(!filtered.length)return alert("No hay encuestas para descargar.");if(typeof XLSX==="undefined")return alert("No se pudo cargar Excel.");let rows=filtered.map(r=>{let s=stores.find(x=>String(x.id)===String(r.store_id));return{"Asesor":r.customer_name||"","Tienda":s?.name||"","Fecha":fecha(r.created_at),"Hora":hora(r.created_at),"Atención":r.service_rating||"","Conocimiento Producto":r.attention_rating||"","Adición":r.information_rating||"","Caja":r.solution_rating||"","Experiencia":r.recommendation_rating||"","Promedio":general([r]),"Comentario":r.comment||""}}),ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Encuestas");XLSX.writeFile(wb,"encuestas-samsung.xlsx")};
+
 $("logout").onclick=async()=>{if(db)await db.auth.signOut();location.reload()};
-async function checkSession(){if(!start())return;try{let r=await db.auth.getSession();if(!r.data.session)return;currentUser=r.data.session.user;await setupUser();hide("login");show("header");show("panel");await load()}catch(e){console.error(e);try{await db.auth.signOut()}catch(_){}}}
-checkSession();
+function fecha(x){return x?new Date(x).toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"}):""}
+function hora(x){return x?new Date(x).toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"}):""}
+async function session(){if(!start())return;try{let r=await db.auth.getSession();if(!r.data.session)return;currentUser=r.data.session.user;await setup();login.classList.add("hidden");header.classList.remove("hidden");panel.classList.remove("hidden");await load()}catch(e){console.error(e);await db.auth.signOut()}}
+session();
 </script>
 </body>
 </html>
