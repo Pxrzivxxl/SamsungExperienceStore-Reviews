@@ -49,11 +49,6 @@ td{font-size:14px}
 .avg{font-weight:bold}
 .rank1{font-size:18px}.rank2{font-size:18px}.rank3{font-size:18px}
 .advisorTag{display:inline-block;background:#eef2ff;color:#3730a3;padding:5px 9px;border-radius:20px;font-size:13px;font-weight:bold;margin-top:7px}
-.clientToggle{margin-top:14px;width:100%;background:#f3f4f6;color:#111827;border:0;border-radius:10px;padding:11px 14px;font-weight:bold;text-align:left;cursor:pointer}
-.clientDetails{display:none;margin-top:8px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:12px;line-height:1.7}
-.clientDetails.open{display:block}
-.clientDetails strong{display:inline-block;min-width:85px}
-
 /* NUEVAS MEJORAS */
 .stat{cursor:pointer;transition:transform .15s,box-shadow .15s}
 .stat:hover{transform:translateY(-2px);box-shadow:0 5px 14px #0002}
@@ -1152,13 +1147,6 @@ const el=document.createElement("div");
 
 el.className="survey";
 
-const advisorName=(r.customer_name||"").trim();
-const clientName=(r.client_name||"").trim();
-const clientPhone=(r.client_phone||"").trim();
-
-const clientButtonId=`clientBtn_${r.id}`;
-const clientDetailsId=`clientDetails_${r.id}`;
-
 el.innerHTML=`
 
 <div class="top">
@@ -1166,11 +1154,11 @@ el.innerHTML=`
 <div>
 
 <div class="name">
-${esc(advisorName||"Asesor no registrado")}
+Encuesta
 </div>
 
 <div class="advisorTag">
-👤 Asesor
+👤 ${esc(r.customer_name||"Asesor no registrado")}
 </div>
 
 <div class="store">
@@ -1196,19 +1184,6 @@ ${r.comment?`
 <div class="comment">
 <strong>Comentario adicional</strong>
 ${esc(r.comment)}
-</div>
-
-`:""}
-
-${(clientName||clientPhone)?`
-
-<button type="button" class="clientToggle" id="${clientButtonId}">
-▾ Ver datos del cliente
-</button>
-
-<div class="clientDetails" id="${clientDetailsId}">
-${clientName?`<div><strong>Cliente:</strong> ${esc(clientName)}</div>`:""}
-${clientPhone?`<div><strong>Celular:</strong> ${esc(clientPhone)}</div>`:""}
 </div>
 
 `:""}
@@ -1249,17 +1224,6 @@ onclick="deleteOne('${r.id}')">
 
 $("list").appendChild(el);
 
-if(clientName||clientPhone){
-const button=document.getElementById(clientButtonId);
-const details=document.getElementById(clientDetailsId);
-
-button.addEventListener("click",()=>{
-const open=details.classList.toggle("open");
-button.innerHTML=open
-? '▴ Ocultar datos del cliente'
-: '▾ Ver datos del cliente';
-});
-}
 
 });
 
@@ -1268,7 +1232,7 @@ const wrap=document.createElement("div");
 wrap.className="showMoreWrap";
 const button=document.createElement("button");
 button.className="btn showMore";
-button.innerHTML=surveysExpanded ? 'Ocultar encuestas <span>▲</span>' : `Ver todas las encuestas <span>▼</span>`;
+button.innerHTML=surveysExpanded ? 'Ocultar encuestas <span>▲</span>' : `Ver todas las ${filtered.length} encuestas <span>▼</span>`;
 button.onclick=()=>{
 surveysExpanded=!surveysExpanded;
 render();
@@ -1277,9 +1241,8 @@ wrap.appendChild(button);
 $("list").appendChild(wrap);
 }
 
-}
 
-/n
+}
 
 /* INFORMACIÓN DE ELIMINACIÓN */
 
