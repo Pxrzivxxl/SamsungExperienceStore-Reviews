@@ -49,6 +49,23 @@ td{font-size:14px}
 .avg{font-weight:bold}
 .rank1{font-size:18px}.rank2{font-size:18px}.rank3{font-size:18px}
 .advisorTag{display:inline-block;background:#eef2ff;color:#3730a3;padding:5px 9px;border-radius:20px;font-size:13px;font-weight:bold;margin-top:7px}
+/* NUEVAS MEJORAS */
+.stat{cursor:pointer;transition:transform .15s,box-shadow .15s}
+.stat:hover{transform:translateY(-2px);box-shadow:0 5px 14px #0002}
+.stat.active{outline:2px solid #111827}
+.metricDetail{margin-top:18px;border-top:1px solid #e5e7eb;padding-top:18px}
+.metricTitle{font-size:18px;font-weight:bold;margin-bottom:14px}
+.metricBars{display:grid;gap:10px}
+.metricRow{display:grid;grid-template-columns:70px 1fr 48px;align-items:center;gap:10px;font-size:14px}
+.metricTrack{height:12px;background:#e5e7eb;border-radius:20px;overflow:hidden}
+.metricFill{height:100%;background:#22c55e;border-radius:20px}
+.storeMetric{min-width:115px}.storeMetricNum{font-weight:bold;font-size:13px;margin-bottom:5px}
+.storeTrack{height:8px;background:#e5e7eb;border-radius:20px;overflow:hidden}
+.storeFill{height:100%;background:#22c55e;border-radius:20px}
+.showMoreWrap{text-align:center;margin-top:18px}
+.showMore{background:#e5e7eb;color:#111827;min-width:220px}
+.showMore span{font-size:18px;margin-left:5px}
+
 @media(max-width:800px){
 .filters{grid-template-columns:1fr 1fr}
 .stats{grid-template-columns:1fr 1fr}
@@ -140,7 +157,7 @@ Consulta y administra las opiniones de los clientes.
 <h2>🏆 Ranking de asesores</h2>
 
 <p style="color:#6b7280;margin-top:5px">
-Ranking ordenado por promedio general de las 5 evaluaciones.
+Se muestran únicamente los 5 asesores con mejor promedio general de las 5 evaluaciones.
 </p>
 
 <div class="tableWrap">
@@ -217,42 +234,48 @@ Resultados de las tiendas según el periodo seleccionado.
 
 <div class="stats">
 
-<div class="stat">
+<div class="stat" data-metric="total">
 <div class="num" id="total">0</div>
 <div class="small">Encuestas</div>
 </div>
 
-<div class="stat">
+<div class="stat" data-metric="general">
 <div class="num" id="avgGeneral">0.0</div>
 <div class="small">Promedio general</div>
 </div>
 
-<div class="stat">
+<div class="stat" data-metric="service_rating">
 <div class="num" id="avgService">0.0</div>
 <div class="small">Atención</div>
 </div>
 
-<div class="stat">
+<div class="stat" data-metric="attention_rating">
 <div class="num" id="avgAttention">0.0</div>
 <div class="small">Conocimiento Producto</div>
 </div>
 
-<div class="stat">
+<div class="stat" data-metric="information_rating">
 <div class="num" id="avgInformation">0.0</div>
 <div class="small">Adición</div>
 </div>
 
-<div class="stat">
+<div class="stat" data-metric="solution_rating">
 <div class="num" id="avgSolution">0.0</div>
 <div class="small">Caja</div>
 </div>
 
-<div class="stat">
+<div class="stat" data-metric="recommendation_rating">
 <div class="num" id="avgRecommend">0.0</div>
 <div class="small">Experiencia</div>
 </div>
 
 </div>
+
+<div id="metricDetail" class="metricDetail hidden">
+<div class="metricTitle" id="metricTitle"></div>
+<div class="metricBars" id="metricBars"></div>
+</div>
+
 </div>
 
 <!-- ENCUESTAS -->
@@ -294,6 +317,10 @@ let currentUser=null;
 let currentRole="";
 let currentStoreId=null;
 let isAdmin=false;
+
+/* Mostrar inicialmente 5 encuestas */
+let surveysExpanded=false;
+const INITIAL_SURVEYS=5;
 
 const $=id=>document.getElementById(id);
 
@@ -644,6 +671,8 @@ return true;
 
 function filter(){
 
+surveysExpanded=false;
+
 let store=$("storeFilter").value;
 let advisor=$("advisorFilter").value;
 
@@ -749,8 +778,57 @@ avg(filtered,"recommendation_rating");
 
 }
 
-/* RANKING */
 
+/* MÉTRICAS INTERACTIVAS */
+const metricNames={
+general:"Promedio general",
+service_rating:"Atención",
+attention_rating:"Conocimiento Producto",
+information_rating:"Adición",
+solution_rating:"Caja",
+recommendation_rating:"Experiencia"
+};
+
+function metricValue(review,metric){
+if(metric==="general")return Number(generalAverage([review]));
+return Number(review[metric]);
+}
+
+function showMetric(metric,card){
+const detail=$("metricDetail");
+const title=$("metricTitle");
+const bars=$("metricBars");
+document.querySelectorAll(".stat").forEach(s=>s.classList.remove("active"));
+card.classList.add("active");
+
+if(metric==="total"){
+title.textContent="Encuestas seleccionadas";
+bars.innerHTML=`<div class="metricRow"><div>Total</div><div class="metricTrack"><div class="metricFill" style="width:100%"></div></div><div>${filtered.length}</div></div>`;
+detail.classList.remove("hidden");
+return;
+}
+
+const counts={1:0,2:0,3:0,4:0,5:0};
+filtered.forEach(r=>{
+const n=Math.round(metricValue(r,metric));
+if(n>=1&&n<=5)counts[n]++;
+});
+
+const max=Math.max(1,...Object.values(counts));
+bars.innerHTML=[5,4,3,2,1].map(n=>{
+const count=counts[n];
+return `<div class="metricRow"><div>${n} estrella${n!==1?"s":""}</div><div class="metricTrack"><div class="metricFill" style="width:${(count/max)*100}%"></div></div><div>${count}</div></div>`;
+}).join("");
+
+title.textContent=metricNames[metric]+" — distribución de respuestas";
+detail.classList.remove("hidden");
+}
+
+document.querySelectorAll(".stat").forEach(card=>{
+card.addEventListener("click",()=>showMetric(card.dataset.metric,card));
+});
+
+/* RANKING */
 function renderRanking(){
 
 const tbody=$("advisorRanking");
@@ -832,7 +910,10 @@ return;
 
 let html="";
 
-rows.forEach((item,index)=>{
+/* Mostrar únicamente los 5 asesores con mejor promedio */
+const topRows=rows.slice(0,5);
+
+topRows.forEach((item,index)=>{
 
 const d=item.reviews;
 
@@ -900,6 +981,11 @@ tbody.innerHTML=html;
 
 /* RESUMEN TIENDAS */
 
+function storeMetric(value){
+const n=Math.max(0,Math.min(5,Number(value)||0));
+return `<div class="storeMetric"><div class="storeMetricNum">${n.toFixed(1)}</div><div class="storeTrack"><div class="storeFill" style="width:${(n/5)*100}%"></div></div></div>`;
+}
+
 function renderStoreSummary(){
 
 const tbody=$("storeSummary");
@@ -944,17 +1030,17 @@ html+=`
 
 <td>${data.length}</td>
 
-<td class="avg">${avg(data,"service_rating")}</td>
+<td>${storeMetric(avg(data,"service_rating"))}</td>
 
-<td class="avg">${avg(data,"attention_rating")}</td>
+<td>${storeMetric(avg(data,"attention_rating"))}</td>
 
-<td class="avg">${avg(data,"information_rating")}</td>
+<td>${storeMetric(avg(data,"information_rating"))}</td>
 
-<td class="avg">${avg(data,"solution_rating")}</td>
+<td>${storeMetric(avg(data,"solution_rating"))}</td>
 
-<td class="avg">${avg(data,"recommendation_rating")}</td>
+<td>${storeMetric(avg(data,"recommendation_rating"))}</td>
 
-<td class="avg">⭐ ${generalAverage(data)}</td>
+<td>${storeMetric(generalAverage(data))}</td>
 
 </tr>
 
@@ -1015,7 +1101,9 @@ return;
 
 $("list").innerHTML="";
 
-filtered.forEach(r=>{
+const visibleReviews=surveysExpanded ? filtered : filtered.slice(0,INITIAL_SURVEYS);
+
+visibleReviews.forEach(r=>{
 
 const store=stores.find(s=>
 String(s.id)===String(r.store_id)
@@ -1102,7 +1190,23 @@ onclick="deleteOne('${r.id}')">
 
 $("list").appendChild(el);
 
+
 });
+
+if(filtered.length>INITIAL_SURVEYS){
+const wrap=document.createElement("div");
+wrap.className="showMoreWrap";
+const button=document.createElement("button");
+button.className="btn showMore";
+button.innerHTML=surveysExpanded ? 'Ocultar encuestas <span>▲</span>' : `Ver todas las ${filtered.length} encuestas <span>▼</span>`;
+button.onclick=()=>{
+surveysExpanded=!surveysExpanded;
+render();
+};
+wrap.appendChild(button);
+$("list").appendChild(wrap);
+}
+
 
 }
 
