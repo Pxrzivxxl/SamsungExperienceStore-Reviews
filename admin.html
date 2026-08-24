@@ -1232,7 +1232,7 @@ const wrap=document.createElement("div");
 wrap.className="showMoreWrap";
 const button=document.createElement("button");
 button.className="btn showMore";
-button.innerHTML=surveysExpanded ? 'Ocultar encuestas <span>▲</span>' : `Ver todas las ${filtered.length} encuestas <span>▼</span>`;
+button.innerHTML=surveysExpanded ? 'Ocultar encuestas <span>▲</span>' : `Ver todas las encuestas <span>▼</span>`;
 button.onclick=()=>{
 surveysExpanded=!surveysExpanded;
 render();
