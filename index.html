@@ -4,41 +4,129 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Samsung Experience Store - Encuesta</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+
 body{background:#f5f7fa;color:#111827}
-header{background:#000;color:#fff;padding:18px 22px;display:flex;justify-content:space-between;align-items:center}
+
+header{
+background:#000;color:#fff;padding:18px 22px;
+display:flex;justify-content:space-between;align-items:center
+}
+
 .logo{font-size:20px;font-weight:bold}
-.admin{background:#fff;color:#000;border:0;padding:10px 17px;border-radius:20px;font-weight:bold;cursor:pointer}
-.hero{background:linear-gradient(135deg,#000,#202020);color:#fff;text-align:center;padding:50px 20px}
+
+.admin{
+background:#fff;color:#000;border:0;padding:10px 17px;
+border-radius:20px;font-weight:bold;cursor:pointer
+}
+
+.hero{
+background:linear-gradient(135deg,#000,#202020);
+color:#fff;text-align:center;padding:50px 20px
+}
+
 .hero h1{font-size:32px;margin-bottom:12px}
 .hero p{color:#d1d5db;font-size:16px}
+
 .container{max-width:850px;margin:30px auto;padding:0 18px}
-.card{background:#fff;border-radius:18px;padding:25px;box-shadow:0 5px 25px #0001;margin-bottom:25px}
+
+.card{
+background:#fff;border-radius:18px;padding:25px;
+box-shadow:0 5px 25px #0001;margin-bottom:25px
+}
+
 .store-name{font-size:24px;font-weight:bold}
 .store-location{color:#6b7280;margin-top:6px}
-label{display:block;font-weight:bold;margin:18px 0 8px}
-input,select,textarea{width:100%;padding:14px;border:1px solid #d1d5db;border-radius:10px;font-size:16px;background:#fff}
+
+label{
+display:block;font-weight:bold;margin:18px 0 8px
+}
+
+input,select,textarea{
+width:100%;padding:14px;border:1px solid #d1d5db;
+border-radius:10px;font-size:16px;background:#fff
+}
+
 select{cursor:pointer}
+
 textarea{min-height:120px;resize:vertical}
-.question{border-top:1px solid #e5e7eb;padding-top:22px;margin-top:22px}
+
+.question{
+border-top:1px solid #e5e7eb;
+padding-top:22px;margin-top:22px
+}
+
 .question:first-of-type{border-top:0;margin-top:0}
-.question-title{font-size:18px;font-weight:bold;line-height:1.4}
-.stars{display:flex;gap:8px;margin-top:13px}
-.star{font-size:38px;color:#d1d5db;cursor:pointer;user-select:none}
+
+.question-title{
+font-size:18px;font-weight:bold;line-height:1.4
+}
+
+.stars{
+display:flex;gap:8px;margin-top:13px
+}
+
+.star{
+font-size:38px;color:#d1d5db;cursor:pointer;
+user-select:none
+}
+
 .star.active{color:#f59e0b}
-.rating-text{margin-top:7px;color:#6b7280;font-size:15px}
-.submit{width:100%;margin-top:25px;padding:16px;border:0;border-radius:12px;background:#000;color:#fff;font-size:17px;font-weight:bold;cursor:pointer}
+
+.rating-text{
+margin-top:7px;color:#6b7280;font-size:15px
+}
+
+.submit{
+width:100%;margin-top:25px;padding:16px;border:0;
+border-radius:12px;background:#000;color:#fff;
+font-size:17px;font-weight:bold;cursor:pointer
+}
+
 .submit:disabled{opacity:.5}
-.message{margin-top:18px;padding:15px;border-radius:10px;display:none}
+
+.message{
+margin-top:18px;padding:15px;border-radius:10px;
+display:none
+}
+
 .error{background:#fee2e2;color:#991b1b}
-.thanks{position:fixed;inset:0;background:#f5f7fa;display:none;align-items:center;justify-content:center;text-align:center;padding:25px;z-index:9999}
-.thanks-box{background:#fff;border-radius:22px;padding:45px 25px;max-width:700px;width:100%;box-shadow:0 8px 35px #0001}
-.check{font-size:60px;margin-bottom:18px}
-.thanks h2{font-size:30px;margin-bottom:15px}
-.thanks p{font-size:17px;color:#6b7280;line-height:1.5}
-footer{text-align:center;padding:35px 15px;color:#6b7280;font-size:13px}
-.loading{color:#6b7280;font-size:14px;margin-top:7px}
+
+.thanks{
+position:fixed;inset:0;background:#f5f7fa;
+display:none;align-items:center;justify-content:center;
+text-align:center;padding:25px;z-index:9999
+}
+
+.thanks-box{
+background:#fff;border-radius:22px;padding:45px 25px;
+max-width:700px;width:100%;
+box-shadow:0 8px 35px #0001
+}
+
+.check{
+font-size:60px;margin-bottom:18px
+}
+
+.thanks h2{
+font-size:30px;margin-bottom:15px
+}
+
+.thanks p{
+font-size:17px;color:#6b7280;line-height:1.5
+}
+
+footer{
+text-align:center;padding:35px 15px;
+color:#6b7280;font-size:13px
+}
+
+.loading{
+color:#6b7280;font-size:14px;margin-top:7px
+}
+
 @media(max-width:600px){
 .hero h1{font-size:27px}
 .store-name{font-size:21px}
@@ -52,7 +140,10 @@ footer{text-align:center;padding:35px 15px;color:#6b7280;font-size:13px}
 
 <header>
 <div class="logo">Samsung Experience Store</div>
-<button class="admin" onclick="location.href='admin.html'">Acceso</button>
+
+<button class="admin" onclick="location.href='admin.html'">
+Acceso
+</button>
 </header>
 
 <section class="hero">
@@ -63,8 +154,15 @@ footer{text-align:center;padding:35px 15px;color:#6b7280;font-size:13px}
 <main class="container" id="surveyContainer">
 
 <section class="card">
-<div class="store-name" id="storeName">Samsung Store Ámbar</div>
-<div class="store-location" id="storeLocation">Tuxtla Gutiérrez, Chiapas</div>
+
+<div class="store-name" id="storeName">
+Samsung Store Ámbar
+</div>
+
+<div class="store-location" id="storeLocation">
+Tuxtla Gutiérrez, Chiapas
+</div>
+
 </section>
 
 <section class="card">
@@ -74,6 +172,7 @@ footer{text-align:center;padding:35px 15px;color:#6b7280;font-size:13px}
 <p style="color:#6b7280;margin-top:7px">
 Queremos conocer tu experiencia. Tu opinión es muy importante para nosotros.
 </p>
+
 
 <label for="advisor">
 ¿Quién te atendió?
@@ -87,7 +186,9 @@ Queremos conocer tu experiencia. Tu opinión es muy importante para nosotros.
 Cargando asesores...
 </div>
 
+
 <!-- PREGUNTA 1 -->
+
 <div class="question">
 
 <div class="question-title">
@@ -95,11 +196,13 @@ Cargando asesores...
 </div>
 
 <div class="stars" data-question="service_rating">
+
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
 <span class="star" data-value="3">★</span>
 <span class="star" data-value="4">★</span>
 <span class="star" data-value="5">★</span>
+
 </div>
 
 <div class="rating-text" id="text-service_rating">
@@ -108,7 +211,9 @@ Selecciona una calificación
 
 </div>
 
+
 <!-- PREGUNTA 2 -->
+
 <div class="question">
 
 <div class="question-title">
@@ -116,11 +221,13 @@ Selecciona una calificación
 </div>
 
 <div class="stars" data-question="attention_rating">
+
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
 <span class="star" data-value="3">★</span>
 <span class="star" data-value="4">★</span>
 <span class="star" data-value="5">★</span>
+
 </div>
 
 <div class="rating-text" id="text-attention_rating">
@@ -129,7 +236,9 @@ Selecciona una calificación
 
 </div>
 
+
 <!-- PREGUNTA 3 -->
+
 <div class="question">
 
 <div class="question-title">
@@ -137,11 +246,13 @@ Selecciona una calificación
 </div>
 
 <div class="stars" data-question="information_rating">
+
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
 <span class="star" data-value="3">★</span>
 <span class="star" data-value="4">★</span>
 <span class="star" data-value="5">★</span>
+
 </div>
 
 <div class="rating-text" id="text-information_rating">
@@ -150,7 +261,9 @@ Selecciona una calificación
 
 </div>
 
+
 <!-- PREGUNTA 4 -->
+
 <div class="question">
 
 <div class="question-title">
@@ -158,11 +271,13 @@ Selecciona una calificación
 </div>
 
 <div class="stars" data-question="solution_rating">
+
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
 <span class="star" data-value="3">★</span>
 <span class="star" data-value="4">★</span>
 <span class="star" data-value="5">★</span>
+
 </div>
 
 <div class="rating-text" id="text-solution_rating">
@@ -171,7 +286,9 @@ Selecciona una calificación
 
 </div>
 
+
 <!-- PREGUNTA 5 -->
+
 <div class="question">
 
 <div class="question-title">
@@ -179,11 +296,13 @@ Selecciona una calificación
 </div>
 
 <div class="stars" data-question="recommendation_rating">
+
 <span class="star" data-value="1">★</span>
 <span class="star" data-value="2">★</span>
 <span class="star" data-value="3">★</span>
 <span class="star" data-value="4">★</span>
 <span class="star" data-value="5">★</span>
+
 </div>
 
 <div class="rating-text" id="text-recommendation_rating">
@@ -191,6 +310,34 @@ Selecciona una calificación
 </div>
 
 </div>
+
+
+<!-- DATOS DEL CLIENTE -->
+
+<label for="clientName">
+Tu nombre
+</label>
+
+<input
+id="clientName"
+type="text"
+placeholder="Escribe tu nombre"
+maxlength="150"
+>
+
+
+<label for="clientPhone">
+Número de celular
+</label>
+
+<input
+id="clientPhone"
+type="tel"
+placeholder="Escribe tu número de celular"
+maxlength="20"
+inputmode="tel"
+>
+
 
 <label for="comment">
 Cuéntanos más sobre tu experiencia
@@ -203,6 +350,7 @@ maxlength="1000"
 placeholder="Escribe aquí algún comentario sobre tu experiencia..."
 ></textarea>
 
+
 <button class="submit" id="submitButton">
 Enviar encuesta
 </button>
@@ -210,14 +358,18 @@ Enviar encuesta
 <div class="message error" id="errorMessage"></div>
 
 </section>
+
 </main>
+
 
 <footer>
 Samsung Experience Store<br>
 Tu opinión nos ayuda a mejorar.
 </footer>
 
+
 <!-- PANTALLA FINAL -->
+
 <section class="thanks" id="thanks">
 
 <div class="thanks-box">
@@ -235,6 +387,7 @@ Tu opinión es muy importante para nosotros y nos ayuda a mejorar nuestro servic
 </div>
 
 </section>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -254,6 +407,7 @@ SUPABASE_KEY
 
 let storeId=null;
 let advisorsLoaded=false;
+
 
 const ratings={
 service_rating:0,
@@ -396,6 +550,7 @@ const loading=
 document.getElementById("advisorLoading");
 
 loading.style.display="block";
+
 select.disabled=true;
 
 try{
@@ -453,6 +608,7 @@ showError(
 }finally{
 
 loading.style.display="none";
+
 select.disabled=false;
 
 }
@@ -473,15 +629,32 @@ document.getElementById(
 "advisor"
 ).value;
 
+
+const clientName=
+document.getElementById(
+"clientName"
+).value.trim();
+
+
+const clientPhone=
+document.getElementById(
+"clientPhone"
+).value.trim();
+
+
 const comment=
 document.getElementById(
 "comment"
 ).value.trim();
 
+
 const button=
 document.getElementById(
 "submitButton"
 );
+
+
+/* VALIDAR ASESOR */
 
 if(!advisor){
 
@@ -492,6 +665,35 @@ showError(
 return;
 
 }
+
+
+/* VALIDAR NOMBRE DEL CLIENTE */
+
+if(!clientName){
+
+showError(
+"Por favor escribe tu nombre."
+);
+
+return;
+
+}
+
+
+/* VALIDAR CELULAR */
+
+if(!clientPhone){
+
+showError(
+"Por favor escribe tu número de celular."
+);
+
+return;
+
+}
+
+
+/* VALIDAR PREGUNTAS */
 
 for(const key in ratings){
 
@@ -507,6 +709,9 @@ return;
 
 }
 
+
+/* VALIDAR TIENDA */
+
 if(!storeId){
 
 showError(
@@ -516,6 +721,9 @@ showError(
 return;
 
 }
+
+
+/* VALIDAR ASESORES */
 
 if(!advisorsLoaded){
 
@@ -527,10 +735,15 @@ return;
 
 }
 
+
 button.disabled=true;
 button.textContent="Enviando...";
 
+
 try{
+
+
+/* CALCULAR PROMEDIO */
 
 const average=
 (
@@ -540,6 +753,7 @@ ratings.information_rating+
 ratings.solution_rating+
 ratings.recommendation_rating
 )/5;
+
 
 const overallRating=
 Math.round(average);
@@ -551,6 +765,7 @@ en customer_name para mantener
 compatible el sistema actual.
 */
 
+
 const result=
 await db
 .from("reviews")
@@ -559,8 +774,23 @@ await db
 store_id:
 storeId,
 
+
+/* ASESOR */
+
 customer_name:
 advisor,
+
+
+/* DATOS DEL CLIENTE */
+
+client_name:
+clientName,
+
+client_phone:
+clientPhone,
+
+
+/* CALIFICACIONES */
 
 rating:
 overallRating,
@@ -580,13 +810,18 @@ ratings.solution_rating,
 recommendation_rating:
 ratings.recommendation_rating,
 
+
+/* COMENTARIO */
+
 comment:
 comment||null,
+
 
 is_published:
 true
 
 });
+
 
 if(result.error)
 throw result.error;
@@ -598,15 +833,19 @@ document.getElementById(
 "surveyContainer"
 ).style.display="none";
 
+
 document.querySelector(
 "footer"
 ).style.display="none";
+
 
 document.getElementById(
 "thanks"
 ).style.display="flex";
 
+
 window.scrollTo(0,0);
+
 
 }catch(e){
 
@@ -621,6 +860,7 @@ showError(
 );
 
 button.disabled=false;
+
 button.textContent="Enviar encuesta";
 
 }
@@ -638,6 +878,7 @@ document.getElementById(
 );
 
 box.textContent=text;
+
 box.style.display="block";
 
 window.scrollTo({
