@@ -6,360 +6,501 @@
 <title>Administrador - Encuestas</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif
+}
 
 body{
-background:#f5f7fa;
-color:#111827
+  background:#f5f7fa;
+  color:#111827
 }
 
 header{
-background:#000;
-color:#fff;
-padding:18px 20px;
-display:flex;
-justify-content:space-between;
-align-items:center
+  background:#000;
+  color:#fff;
+  padding:18px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
 }
 
 header h1{
-font-size:20px
+  font-size:20px
 }
 
 button{
-cursor:pointer
+  cursor:pointer
 }
 
 .btn{
-border:0;
-border-radius:10px;
-padding:12px 16px;
-font-weight:bold
+  border:0;
+  border-radius:10px;
+  padding:12px 16px;
+  font-weight:bold
 }
 
 .logout{
-background:#fff;
-color:#000;
-border-radius:20px
+  background:#fff;
+  color:#000;
+  border-radius:20px
 }
 
 .container{
-max-width:1100px;
-margin:25px auto;
-padding:0 16px
+  max-width:1200px;
+  margin:25px auto;
+  padding:0 16px
 }
 
 .card{
-background:#fff;
-border-radius:18px;
-padding:22px;
-margin-bottom:20px;
-box-shadow:0 4px 20px #0001
+  background:#fff;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 4px 20px #0001
 }
 
 .login{
-max-width:450px;
-margin:60px auto
+  max-width:450px;
+  margin:60px auto
 }
 
 h2{
-margin-bottom:10px
+  margin-bottom:10px
 }
 
 label{
-display:block;
-font-weight:bold;
-margin:15px 0 7px
+  display:block;
+  font-weight:bold;
+  margin:15px 0 7px
 }
 
 input,select{
-width:100%;
-padding:13px;
-border:1px solid #d1d5db;
-border-radius:10px;
-font-size:16px;
-background:#fff
+  width:100%;
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:16px;
+  background:#fff
 }
 
 .loginbtn{
-width:100%;
-margin-top:20px;
-background:#000;
-color:#fff;
-font-size:16px
+  width:100%;
+  margin-top:20px;
+  background:#000;
+  color:#fff;
+  font-size:16px
 }
 
 .hidden{
-display:none!important
+  display:none!important
 }
 
 .error{
-background:#fee2e2;
-color:#991b1b;
-padding:14px;
-border-radius:10px;
-margin-top:15px;
-line-height:1.4
+  background:#fee2e2;
+  color:#991b1b;
+  padding:14px;
+  border-radius:10px;
+  margin-top:15px;
+  line-height:1.4
 }
 
 .filters{
-display:grid;
-grid-template-columns:1fr 1fr 1fr;
-gap:12px
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:12px
 }
 
 .buttons{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-top:15px
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px
 }
 
 .black{
-background:#000;
-color:#fff
+  background:#000;
+  color:#fff
 }
 
 .gray{
-background:#e5e7eb;
-color:#111
+  background:#e5e7eb;
+  color:#111
 }
 
 .green{
-background:#dcfce7;
-color:#166534
+  background:#dcfce7;
+  color:#166534
 }
 
 .red{
-background:#fee2e2;
-color:#991b1b
+  background:#fee2e2;
+  color:#991b1b
+}
+
+.blue{
+  background:#e0f2fe;
+  color:#075985
 }
 
 .stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:12px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px
 }
 
 .stat{
-background:#f3f4f6;
-border-radius:14px;
-padding:15px
+  background:#f3f4f6;
+  border-radius:14px;
+  padding:15px
 }
 
 .num{
-font-size:27px;
-font-weight:bold
+  font-size:27px;
+  font-weight:bold
 }
 
 .small{
-font-size:13px;
-color:#6b7280;
-margin-top:4px
+  font-size:13px;
+  color:#6b7280;
+  margin-top:4px
 }
 
 .userbox{
-background:#eef2ff;
-color:#1e293b;
-border-radius:14px;
-padding:15px;
-margin-top:15px;
-line-height:1.6
+  background:#eef2ff;
+  color:#1e293b;
+  border-radius:14px;
+  padding:15px;
+  margin-top:15px;
+  line-height:1.6
 }
 
 .survey{
-border:1px solid #e5e7eb;
-border-radius:16px;
-padding:18px;
-margin-top:15px
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:18px;
+  margin-top:15px;
+  background:#fff
 }
 
 .top{
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-gap:10px
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px
 }
 
 .name{
-font-size:20px;
-font-weight:bold
+  font-size:20px;
+  font-weight:bold
 }
 
 .store{
-color:#6b7280;
-margin-top:4px
+  color:#6b7280;
+  margin-top:4px
 }
 
 .date{
-font-size:13px;
-color:#6b7280;
-margin-top:6px
+  font-size:13px;
+  color:#6b7280;
+  margin-top:6px
 }
 
 .q{
-border-top:1px solid #e5e7eb;
-margin-top:15px;
-padding-top:14px
+  border-top:1px solid #e5e7eb;
+  margin-top:15px;
+  padding-top:14px
 }
 
 .qt{
-font-weight:bold;
-margin-bottom:7px
+  font-weight:bold;
+  margin-bottom:7px
 }
 
 .stars{
-color:#f59e0b;
-font-size:22px
+  color:#f59e0b;
+  font-size:22px
 }
 
-.comment,
+.comment,.response{
+  margin-top:15px;
+  padding:14px;
+  border-radius:10px;
+  background:#f3f4f6
+}
+
 .response{
-margin-top:15px;
-padding:14px;
-border-radius:10px;
-background:#f3f4f6
+  border-left:4px solid #111827
 }
 
-.response{
-border-left:4px solid #111827
-}
-
-.comment strong,
-.response strong{
-display:block;
-margin-bottom:6px
+.comment strong,.response strong{
+  display:block;
+  margin-bottom:6px
 }
 
 .actions{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-margin-top:15px
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:15px
 }
 
 .delete{
-background:#fee2e2;
-color:#991b1b
+  background:#fee2e2;
+  color:#991b1b
 }
 
 .empty{
-text-align:center;
-color:#6b7280;
-padding:30px
+  text-align:center;
+  color:#6b7280;
+  padding:30px
 }
 
 .warning{
-background:#fff7ed;
-color:#9a3412;
-padding:14px;
-border-radius:10px;
-margin-top:15px
+  background:#fff7ed;
+  color:#9a3412;
+  padding:14px;
+  border-radius:10px;
+  margin-top:15px
 }
 
 .tableWrap{
-overflow-x:auto;
-margin-top:15px
+  overflow-x:auto;
+  margin-top:15px
 }
 
 table{
-width:100%;
-border-collapse:collapse;
-min-width:850px
+  width:100%;
+  border-collapse:collapse;
+  min-width:1050px
 }
 
 th,td{
-padding:12px 10px;
-border-bottom:1px solid #e5e7eb;
-text-align:left
+  padding:12px 10px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:left
 }
 
 th{
-background:#f3f4f6;
-font-size:13px
+  background:#f3f4f6;
+  font-size:13px
 }
 
 td{
-font-size:14px
+  font-size:14px
 }
 
 .avg{
-font-weight:bold
+  font-weight:bold
 }
 
-/* DATOS DE CONTACTO */
+/* RANKING */
 
-.contact-details{
-margin-top:15px;
-border:1px solid #dbe1ea;
-border-radius:10px;
-background:#f8fafc;
-overflow:hidden
+.rankingTable{
+  min-width:900px
 }
 
-.contact-details summary{
-padding:13px 15px;
-cursor:pointer;
-font-weight:bold;
-list-style:none;
-display:flex;
-align-items:center;
-justify-content:space-between;
-user-select:none
+.rankingPosition{
+  font-size:22px;
+  text-align:center
 }
 
-.contact-details summary::-webkit-details-marker{
-display:none
+.medal{
+  font-size:24px
 }
 
-.contact-details summary::after{
-content:"▼";
-font-size:14px;
-transition:transform .2s ease
+.rankingName{
+  font-weight:bold;
+  font-size:16px
 }
 
-.contact-details[open] summary::after{
-transform:rotate(180deg)
+.rankingAverage{
+  font-size:18px;
+  font-weight:bold
 }
 
-.contact-content{
-border-top:1px solid #dbe1ea;
-padding:14px 15px;
-line-height:1.7
+.rankBar{
+  width:160px;
+  height:10px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden
 }
 
-.contact-row{
-margin-top:5px
+.rankBarFill{
+  height:100%;
+  background:#16a34a;
+  border-radius:20px
 }
 
-.contact-label{
-font-weight:bold;
-color:#374151
+.expandBtn{
+  display:block;
+  margin:18px auto 0;
+  border:0;
+  background:#eef2ff;
+  color:#1e3a8a;
+  padding:13px 20px;
+  border-radius:12px;
+  font-weight:bold;
+  font-size:15px
 }
 
-.no-contact{
-color:#6b7280;
-font-size:14px
+/* CLIENTE */
+
+.clientToggle{
+  width:100%;
+  margin-top:15px;
+  border:0;
+  background:#f3f4f6;
+  padding:12px 15px;
+  border-radius:10px;
+  text-align:left;
+  font-weight:bold;
+  color:#374151
+}
+
+.clientDetails{
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:14px;
+  margin-top:8px;
+  line-height:1.8
+}
+
+/* METRICAS */
+
+.metricHeader{
+  border:0;
+  background:transparent;
+  font-weight:bold;
+  color:#1e3a8a;
+  cursor:pointer;
+  padding:0;
+  text-align:left
+}
+
+.metricHeader:hover{
+  text-decoration:underline
+}
+
+.metricCell{
+  min-width:180px
+}
+
+.metricValue{
+  font-weight:bold;
+  margin-bottom:5px
+}
+
+.metricBar{
+  width:100%;
+  height:12px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden
+}
+
+.metricBarFill{
+  height:100%;
+  background:#34a853;
+  border-radius:20px
+}
+
+.metricDetail{
+  margin-top:20px;
+  padding:18px;
+  background:#f8fafc;
+  border:1px solid #e5e7eb;
+  border-radius:14px
+}
+
+.metricDetailTitle{
+  font-size:19px;
+  font-weight:bold;
+  margin-bottom:15px
+}
+
+.metricStore{
+  margin-bottom:15px
+}
+
+.metricStoreTop{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:5px
+}
+
+.metricStoreName{
+  font-weight:bold
+}
+
+.metricStoreValue{
+  font-weight:bold
+}
+
+.metricDetailBar{
+  width:100%;
+  height:16px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden
+}
+
+.metricDetailFill{
+  height:100%;
+  background:#34a853;
+  border-radius:20px
+}
+
+/* ENCUESTAS */
+
+.surveyLimitInfo{
+  color:#6b7280;
+  font-size:14px;
+  margin-top:5px
+}
+
+.surveyExpandWrap{
+  text-align:center;
+  margin-top:18px
+}
+
+.surveyExpandBtn{
+  border:0;
+  background:#eef2ff;
+  color:#1e3a8a;
+  padding:13px 20px;
+  border-radius:12px;
+  font-weight:bold;
+  font-size:15px
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+  .filters{
+    grid-template-columns:1fr 1fr
+  }
 }
 
 @media(max-width:800px){
+  .stats{
+    grid-template-columns:1fr 1fr
+  }
 
-.filters{
-grid-template-columns:1fr
-}
-
-.stats{
-grid-template-columns:1fr 1fr
-}
-
+  .filters{
+    grid-template-columns:1fr
+  }
 }
 
 @media(max-width:500px){
-
-.stats{
-grid-template-columns:1fr
-}
-
+  .stats{
+    grid-template-columns:1fr
+  }
 }
 </style>
 </head>
@@ -367,9 +508,10 @@ grid-template-columns:1fr
 <body>
 
 <header id="header" class="hidden">
-<h1>Panel de administración</h1>
-<button class="btn logout" id="logout">Cerrar sesión</button>
+  <h1>Panel de administración</h1>
+  <button class="btn logout" id="logout">Cerrar sesión</button>
 </header>
+
 
 <section id="login" class="container">
 
@@ -382,23 +524,23 @@ grid-template-columns:1fr
 <label>Correo</label>
 
 <input
-id="email"
-type="email"
-placeholder="Escribe tu correo"
-autocomplete="username"
+  id="email"
+  type="email"
+  placeholder="Escribe tu correo"
+  autocomplete="username"
 >
 
 <label>Contraseña</label>
 
 <input
-id="password"
-type="password"
-placeholder="Escribe tu contraseña"
-autocomplete="current-password"
+  id="password"
+  type="password"
+  placeholder="Escribe tu contraseña"
+  autocomplete="current-password"
 >
 
 <button class="btn loginbtn" id="loginBtn">
-Entrar
+  Entrar
 </button>
 
 <div id="loginError" class="error hidden"></div>
@@ -409,6 +551,9 @@ Entrar
 
 
 <main id="panel" class="container hidden">
+
+
+<!-- USUARIO -->
 
 <div class="card" style="background:#111827;color:#fff">
 
@@ -425,6 +570,8 @@ Cargando...
 </div>
 
 
+<!-- FILTROS -->
+
 <div class="card">
 
 <h2>Filtros</h2>
@@ -436,6 +583,15 @@ Cargando...
 <label>Tienda</label>
 
 <select id="storeFilter"></select>
+
+</div>
+
+
+<div>
+
+<label>Asesor</label>
+
+<select id="advisorFilter"></select>
 
 </div>
 
@@ -489,6 +645,82 @@ Eliminar filtradas
 </div>
 
 
+<!-- RANKING DE ASESORES -->
+
+<div class="card">
+
+<h2>🏆 Ranking de asesores</h2>
+
+<p style="color:#6b7280;margin-top:5px">
+Se muestran inicialmente los 5 asesores con mejor promedio entre quienes tienen encuestas.
+</p>
+
+
+<div class="tableWrap">
+
+<table class="rankingTable">
+
+<thead>
+
+<tr>
+
+<th style="width:70px">
+Pos.
+</th>
+
+<th>
+Asesor
+</th>
+
+<th>
+Tienda
+</th>
+
+<th>
+Encuestas
+</th>
+
+<th>
+Promedio general
+</th>
+
+<th>
+Calificación
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="advisorRanking">
+
+<tr>
+
+<td colspan="6" style="text-align:center">
+Cargando...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<button
+  id="rankingToggle"
+  class="expandBtn hidden"
+>
+Ver todos los asesores con encuestas ▼
+</button>
+
+</div>
+
+
+<!-- RESUMEN POR TIENDAS -->
+
 <div class="card" id="storeSummaryCard">
 
 <h2>Resumen por tiendas</h2>
@@ -496,6 +728,7 @@ Eliminar filtradas
 <p style="color:#6b7280;margin-top:5px">
 Resultados de las tiendas según el periodo seleccionado.
 </p>
+
 
 <div class="tableWrap">
 
@@ -506,17 +739,67 @@ Resultados de las tiendas según el periodo seleccionado.
 <tr>
 
 <th>Tienda</th>
+
 <th>Encuestas</th>
-<th>Rapidez</th>
-<th>Conocimiento</th>
-<th>Venta adicional</th>
-<th>Caja</th>
-<th>Experiencia</th>
-<th>Promedio general</th>
+
+<th>
+<button
+  class="metricHeader"
+  data-metric="service_rating"
+>
+Atención
+</button>
+</th>
+
+<th>
+<button
+  class="metricHeader"
+  data-metric="attention_rating"
+>
+Conocimiento
+</button>
+</th>
+
+<th>
+<button
+  class="metricHeader"
+  data-metric="information_rating"
+>
+Adición
+</button>
+</th>
+
+<th>
+<button
+  class="metricHeader"
+  data-metric="solution_rating"
+>
+Caja
+</button>
+</th>
+
+<th>
+<button
+  class="metricHeader"
+  data-metric="recommendation_rating"
+>
+Experiencia
+</button>
+</th>
+
+<th>
+<button
+  class="metricHeader"
+  data-metric="general"
+>
+Promedio general
+</button>
+</th>
 
 </tr>
 
 </thead>
+
 
 <tbody id="storeSummary">
 
@@ -534,8 +817,27 @@ Cargando...
 
 </div>
 
+
+<div
+  id="metricDetail"
+  class="metricDetail hidden"
+>
+
+<div
+  id="metricDetailTitle"
+  class="metricDetailTitle"
+></div>
+
+<div
+  id="metricDetailContent"
+></div>
+
 </div>
 
+</div>
+
+
+<!-- RESUMEN DE TIENDA -->
 
 <div class="card">
 
@@ -544,50 +846,107 @@ Cargando...
 <div class="stats">
 
 <div class="stat">
-<div class="num" id="total">0</div>
-<div class="small">Encuestas</div>
+
+<div class="num" id="total">
+0
 </div>
+
+<div class="small">
+Encuestas
+</div>
+
+</div>
+
 
 <div class="stat">
-<div class="num" id="avgGeneral">0.0</div>
-<div class="small">Promedio general</div>
+
+<div class="num" id="avgGeneral">
+0.0
 </div>
+
+<div class="small">
+Promedio general
+</div>
+
+</div>
+
 
 <div class="stat">
-<div class="num" id="avgService">0.0</div>
-<div class="small">Rapidez</div>
+
+<div class="num" id="avgService">
+0.0
 </div>
+
+<div class="small">
+Atención
+</div>
+
+</div>
+
 
 <div class="stat">
-<div class="num" id="avgAttention">0.0</div>
-<div class="small">Conocimiento</div>
+
+<div class="num" id="avgAttention">
+0.0
 </div>
+
+<div class="small">
+Conocimiento Producto
+</div>
+
+</div>
+
 
 <div class="stat">
-<div class="num" id="avgInformation">0.0</div>
-<div class="small">Venta adicional</div>
+
+<div class="num" id="avgInformation">
+0.0
 </div>
+
+<div class="small">
+Adición
+</div>
+
+</div>
+
 
 <div class="stat">
-<div class="num" id="avgSolution">0.0</div>
-<div class="small">Caja</div>
+
+<div class="num" id="avgSolution">
+0.0
 </div>
+
+<div class="small">
+Caja
+</div>
+
+</div>
+
 
 <div class="stat">
-<div class="num" id="avgRecommend">0.0</div>
-<div class="small">Experiencia general</div>
+
+<div class="num" id="avgRecommend">
+0.0
+</div>
+
+<div class="small">
+Experiencia
 </div>
 
 </div>
 
 </div>
 
+</div>
+
+
+<!-- ENCUESTAS -->
 
 <div class="card">
 
 <h2>Encuestas de clientes</h2>
 
-<p style="color:#6b7280;margin-top:5px">
+<p class="surveyLimitInfo">
 Información visible únicamente para administración.
 </p>
 
@@ -599,7 +958,23 @@ Cargando encuestas...
 
 </div>
 
+
+<div
+  id="surveyExpandWrap"
+  class="surveyExpandWrap hidden"
+>
+
+<button
+  id="surveyToggle"
+  class="surveyExpandBtn"
+>
+Ver todas las encuestas ▼
+</button>
+
 </div>
+
+</div>
+
 
 </main>
 
@@ -616,47 +991,68 @@ const SUPABASE_URL="https://lxmjfsdmbwgqxtovtxyn.supabase.co";
 const SUPABASE_KEY="sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
 
 const ADMIN_EMAILS=[
-"ethelredbcp@gmail.com",
-"distrital.se@gmail.com"
+  "ethelredbcp@gmail.com",
+  "distrital.se@gmail.com"
 ];
 
+
 let db=null;
+
 let reviews=[];
+
 let stores=[];
+
+let advisors=[];
+
 let filtered=[];
+
 let currentUser=null;
+
 let currentRole="";
+
 let currentStoreId=null;
+
 let isAdmin=false;
+
+let rankingExpanded=false;
+
+let surveysExpanded=false;
+
+let selectedMetric="general";
+
 
 const $=id=>document.getElementById(id);
 
 
+/* =========================
+   LOGIN ORIGINAL
+========================= */
+
 function showError(t){
 
-$("loginError").textContent=t;
+  $("loginError").textContent=t;
 
-$("loginError").classList.remove("hidden");
+  $("loginError").classList.remove("hidden");
 
 }
 
 
 function startSupabase(){
 
-if(!window.supabase){
+  if(!window.supabase){
 
-showError("No se pudo cargar Supabase.");
+    showError("No se pudo cargar Supabase.");
 
-return false;
+    return false;
 
-}
+  }
 
-db=window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+  db=window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
-return true;
+  return true;
 
 }
 
@@ -664,1110 +1060,1633 @@ return true;
 $("loginBtn").onclick=loginAdmin;
 
 
-$("password").addEventListener("keydown",e=>{
+$("password").addEventListener(
+  "keydown",
+  e=>{
+    if(e.key==="Enter"){
 
-if(e.key==="Enter"){
+      e.preventDefault();
 
-e.preventDefault();
+      loginAdmin();
 
-loginAdmin();
-
-}
-
-});
+    }
+  }
+);
 
 
 async function loginAdmin(){
 
-$("loginError").classList.add("hidden");
+  $("loginError").classList.add("hidden");
 
-const email=$("email").value.trim().toLowerCase();
+  const email=$("email").value.trim().toLowerCase();
 
-const password=$("password").value;
-
-
-if(!email){
-
-return showError("Escribe tu correo.");
-
-}
+  const password=$("password").value;
 
 
-if(!password){
+  if(!email)
+    return showError("Escribe tu correo.");
 
-return showError("Escribe tu contraseña.");
+  if(!password)
+    return showError("Escribe tu contraseña.");
 
-}
-
-
-if(!startSupabase())return;
-
-
-$("loginBtn").disabled=true;
-
-$("loginBtn").textContent="Entrando...";
+  if(!startSupabase())
+    return;
 
 
-try{
+  $("loginBtn").disabled=true;
 
-const result=await db.auth.signInWithPassword({
-email,
-password
-});
+  $("loginBtn").textContent="Entrando...";
 
 
-if(result.error)throw result.error;
+  try{
+
+    const result=await db.auth.signInWithPassword({
+      email,
+      password
+    });
 
 
-currentUser=result.data.user;
+    if(result.error)
+      throw result.error;
 
 
-if(!currentUser){
-
-throw new Error("No se encontró el usuario.");
-
-}
+    currentUser=result.data.user;
 
 
-await setupUser();
+    if(!currentUser)
+      throw new Error("No se encontró el usuario.");
 
 
-login.classList.add("hidden");
-
-header.classList.remove("hidden");
-
-panel.classList.remove("hidden");
+    await setupUser();
 
 
-await load();
+    login.classList.add("hidden");
+
+    header.classList.remove("hidden");
+
+    panel.classList.remove("hidden");
 
 
-}catch(e){
-
-console.error(e);
+    await load();
 
 
-try{
+  }catch(e){
 
-await db.auth.signOut();
+    console.error(e);
 
-}catch(_){}
-
-
-showError(
-"No se pudo iniciar sesión: "+
-(e.message||"Error desconocido")
-);
+    try{
+      await db.auth.signOut()
+    }catch(_){}
 
 
-}finally{
+    showError(
+      "No se pudo iniciar sesión: "+
+      (e.message||"Error desconocido")
+    );
 
-$("loginBtn").disabled=false;
 
-$("loginBtn").textContent="Entrar";
+  }finally{
+
+    $("loginBtn").disabled=false;
+
+    $("loginBtn").textContent="Entrar";
+
+  }
 
 }
 
-}
 
+/* =========================
+   USUARIO
+========================= */
 
 async function setupUser(){
 
-const email=(currentUser.email||"").toLowerCase();
+  const email=(currentUser.email||"").toLowerCase();
 
 
-const access=await db
-.from("user_store_access")
-.select("*")
-.eq("user_id",currentUser.id)
-.maybeSingle();
+  const access=await db
+    .from("user_store_access")
+    .select("*")
+    .eq("user_id",currentUser.id)
+    .maybeSingle();
 
 
-if(access.error)throw access.error;
+  if(access.error)
+    throw access.error;
 
 
-if(!access.data){
-
-throw new Error(
-"El usuario no tiene permisos configurados."
-);
-
-}
+  if(!access.data)
+    throw new Error(
+      "El usuario no tiene permisos configurados."
+    );
 
 
-currentRole=(access.data.role||"").toLowerCase();
+  currentRole=(access.data.role||"").toLowerCase();
 
 
-isAdmin=
-currentRole==="admin"||
-ADMIN_EMAILS.includes(email);
+  isAdmin=
+    currentRole==="admin" ||
+    ADMIN_EMAILS.includes(email);
 
 
-if(isAdmin){
+  if(isAdmin){
 
-currentStoreId=null;
-
-
-$("userBox").innerHTML=`
-<strong>Usuario:</strong>
-${esc(currentUser.email)}
-<br>
-<strong>Rol:</strong>
-Administrador general
-<br>
-<strong>Tienda:</strong>
-Todas las tiendas
-`;
+    currentStoreId=null;
 
 
-}else{
+    $("userBox").innerHTML=
+      `<strong>Usuario:</strong> ${esc(currentUser.email)}
+      <br>
+      <strong>Rol:</strong> Administrador general
+      <br>
+      <strong>Tienda:</strong> Todas las tiendas`;
+
+  }else{
+
+    currentStoreId=access.data.store_id;
 
 
-currentStoreId=access.data.store_id;
+    if(!currentStoreId)
+      throw new Error(
+        "El gerente no tiene tienda asignada."
+      );
 
-
-if(!currentStoreId){
-
-throw new Error(
-"El gerente no tiene tienda asignada."
-);
+  }
 
 }
 
-}
 
-}
-
+/* =========================
+   CARGA GENERAL
+========================= */
 
 async function load(){
 
-$("list").innerHTML=
-'<div class="empty">Cargando encuestas...</div>';
+  $("list").innerHTML=
+    '<div class="empty">Cargando encuestas...</div>';
 
 
-try{
+  try{
 
-await loadStores();
+    await loadStores();
 
-await loadReviews();
+    await loadAdvisors();
 
+    await loadReviews();
 
-}catch(e){
+    rankingExpanded=false;
 
-console.error(e);
+    surveysExpanded=false;
 
+  }catch(e){
 
-$("list").innerHTML=`
-<div class="error">
+    console.error(e);
 
-No se pudieron cargar las encuestas:
+    $("list").innerHTML=
+      `<div class="error">
+      No se pudieron cargar las encuestas:
+      <br><br>
+      ${esc(e.message)}
+      </div>`;
 
-<br><br>
-
-${esc(e.message)}
-
-</div>
-`;
+  }
 
 }
 
-}
 
+/* =========================
+   TIENDAS
+========================= */
 
 async function loadStores(){
 
-let result;
+  let result;
 
 
-if(isAdmin){
+  if(isAdmin){
 
-result=await db
-.from("stores")
-.select("*")
-.order("name");
+    result=await db
+      .from("stores")
+      .select("*")
+      .order("name");
+
+  }else{
+
+    result=await db
+      .from("stores")
+      .select("*")
+      .eq("id",currentStoreId);
+
+  }
 
 
-}else{
+  if(result.error)
+    throw result.error;
 
-result=await db
-.from("stores")
-.select("*")
-.eq("id",currentStoreId);
+
+  stores=result.data||[];
+
+
+  if(!stores.length)
+    throw new Error(
+      "No se encontró la tienda."
+    );
+
+
+  const select=$("storeFilter");
+
+  select.innerHTML="";
+
+
+  if(isAdmin){
+
+    select.innerHTML=
+      '<option value="">Todas las tiendas</option>';
+
+
+    stores.forEach(s=>{
+
+      select.innerHTML+=
+        `<option value="${s.id}">
+        ${esc(s.name)}
+        </option>`;
+
+    });
+
+
+    $("userBox").innerHTML=
+      `<strong>Usuario:</strong> ${esc(currentUser.email)}
+      <br>
+      <strong>Rol:</strong> Administrador general
+      <br>
+      <strong>Tienda:</strong> Todas las tiendas`;
+
+  }else{
+
+    const s=stores[0];
+
+
+    select.innerHTML=
+      `<option value="${s.id}">
+      ${esc(s.name)}
+      </option>`;
+
+
+    select.value=s.id;
+
+    select.disabled=true;
+
+
+    $("userBox").innerHTML=
+      `<strong>Usuario:</strong> ${esc(currentUser.email)}
+      <br>
+      <strong>Rol:</strong> Gerente de tienda
+      <br>
+      <strong>Tienda:</strong> ${esc(s.name)}`;
+
+  }
+
+}
+
+
+/* =========================
+   ASESORES
+========================= */
+
+async function loadAdvisors(){
+
+  let query=db
+    .from("store_advisors")
+    .select("*")
+    .order("name");
+
+
+  if(!isAdmin)
+    query=query.eq("store_id",currentStoreId);
+
+
+  const result=await query;
+
+
+  if(result.error){
+
+    console.warn(
+      "No se pudieron cargar asesores:",
+      result.error
+    );
+
+    advisors=[];
+
+  }else{
+
+    advisors=result.data||[];
+
+  }
+
+
+  const select=$("advisorFilter");
+
+  select.innerHTML=
+    '<option value="">Todos los asesores</option>';
+
+
+  advisors.forEach(a=>{
+
+    select.innerHTML+=
+      `<option value="${a.id}">
+      ${esc(a.name)}
+      </option>`;
+
+  });
 
 }
 
 
-if(result.error)throw result.error;
-
-
-stores=result.data||[];
-
-
-if(!stores.length){
-
-throw new Error(
-"No se encontró la tienda."
-);
-
-}
-
-
-const select=$("storeFilter");
-
-
-select.innerHTML="";
-
-
-if(isAdmin){
-
-select.innerHTML=
-'<option value="">Todas las tiendas</option>';
-
-
-stores.forEach(s=>{
-
-select.innerHTML+=`
-<option value="${s.id}">
-${esc(s.name)}
-</option>
-`;
-
-});
-
-
-$("userBox").innerHTML=`
-<strong>Usuario:</strong>
-${esc(currentUser.email)}
-<br>
-<strong>Rol:</strong>
-Administrador general
-<br>
-<strong>Tienda:</strong>
-Todas las tiendas
-`;
-
-
-}else{
-
-
-const s=stores[0];
-
-
-select.innerHTML=`
-<option value="${s.id}">
-${esc(s.name)}
-</option>
-`;
-
-
-select.value=s.id;
-
-select.disabled=true;
-
-
-$("userBox").innerHTML=`
-<strong>Usuario:</strong>
-${esc(currentUser.email)}
-<br>
-<strong>Rol:</strong>
-Gerente de tienda
-<br>
-<strong>Tienda:</strong>
-${esc(s.name)}
-`;
-
-}
-
-}
-
+/* =========================
+   ENCUESTAS
+========================= */
 
 async function loadReviews(){
 
-let query=db
-.from("reviews")
-.select("*")
-.order("created_at",{ascending:false});
+  let query=db
+    .from("reviews")
+    .select("*")
+    .order("created_at",{ascending:false});
 
 
-if(!isAdmin){
-
-query=query.eq(
-"store_id",
-currentStoreId
-);
-
-}
+  if(!isAdmin)
+    query=query.eq("store_id",currentStoreId);
 
 
-const result=await query;
+  const result=await query;
 
 
-if(result.error)throw result.error;
+  if(result.error)
+    throw result.error;
 
 
-reviews=result.data||[];
+  reviews=result.data||[];
 
 
-filter();
+  filter();
 
 }
 
+
+/* =========================
+   FECHAS
+========================= */
 
 function getDateFiltered(data){
 
-const from=$("from").value;
+  const from=$("from").value;
 
-const to=$("to").value;
-
-
-return data.filter(r=>{
+  const to=$("to").value;
 
 
-if(
-from&&
-new Date(r.created_at)<
-new Date(from+"T00:00:00")
-){
+  return data.filter(r=>{
 
-return false;
-
-}
-
-
-if(
-to&&
-new Date(r.created_at)>
-new Date(to+"T23:59:59")
-){
-
-return false;
-
-}
+    if(
+      from &&
+      new Date(r.created_at)<
+      new Date(from+"T00:00:00")
+    )
+      return false;
 
 
-return true;
+    if(
+      to &&
+      new Date(r.created_at)>
+      new Date(to+"T23:59:59")
+    )
+      return false;
 
-});
+
+    return true;
+
+  });
 
 }
 
+
+/* =========================
+   FILTROS
+========================= */
 
 function filter(){
 
-let store=$("storeFilter").value;
+  let store=$("storeFilter").value;
+
+  let advisor=$("advisorFilter").value;
 
 
-if(!isAdmin){
+  if(!isAdmin)
+    store=currentStoreId;
 
-store=currentStoreId;
+
+  filtered=reviews.filter(r=>{
+
+    if(
+      store &&
+      String(r.store_id)!==
+      String(store)
+    )
+      return false;
+
+
+    if(
+      advisor &&
+      String(r.seller_id)!==
+      String(advisor)
+    )
+      return false;
+
+
+    return true;
+
+  });
+
+
+  filtered=getDateFiltered(filtered);
+
+
+  stats();
+
+  render();
+
+  updateDeleteInfo();
+
+  renderStoreSummary();
+
+  renderAdvisorRanking();
 
 }
 
 
-filtered=reviews.filter(r=>
-!store||
-String(r.store_id)===String(store)
-);
-
-
-filtered=getDateFiltered(filtered);
-
-
-stats();
-
-render();
-
-updateDeleteInfo();
-
-renderStoreSummary();
-
-}
-
+/* =========================
+   PROMEDIOS
+========================= */
 
 function avg(data,field){
 
-const values=data
-.map(r=>Number(r[field]))
-.filter(n=>n>=1&&n<=5);
+  const values=data
+    .map(r=>Number(r[field]))
+    .filter(n=>n>=1&&n<=5);
 
 
-if(!values.length)return"0.0";
+  if(!values.length)
+    return"0.0";
 
 
-return(
-values.reduce((a,b)=>a+b,0)/
-values.length
-).toFixed(1);
+  return(
+    values.reduce((a,b)=>a+b,0)/
+    values.length
+  ).toFixed(1);
 
 }
 
 
 function generalAverage(data){
 
-const fields=[
-"service_rating",
-"attention_rating",
-"information_rating",
-"solution_rating",
-"recommendation_rating"
-];
+  const fields=[
+    "service_rating",
+    "attention_rating",
+    "information_rating",
+    "solution_rating",
+    "recommendation_rating"
+  ];
 
 
-let total=0;
+  let total=0;
 
-let count=0;
-
-
-data.forEach(r=>
-
-fields.forEach(f=>{
-
-const n=Number(r[f]);
+  let count=0;
 
 
-if(n>=1&&n<=5){
+  data.forEach(r=>{
 
-total+=n;
+    fields.forEach(f=>{
 
-count++;
+      const n=Number(r[f]);
+
+
+      if(n>=1&&n<=5){
+
+        total+=n;
+
+        count++;
+
+      }
+
+    });
+
+  });
+
+
+  return count?
+    (total/count).toFixed(1):
+    "0.0";
 
 }
 
-})
 
-);
-
-
-return count?
-(total/count).toFixed(1):
-"0.0";
-
-}
-
+/* =========================
+   STATS
+========================= */
 
 function stats(){
 
-$("total").textContent=
-filtered.length;
+  $("total").textContent=
+    filtered.length;
 
 
-$("avgGeneral").textContent=
-generalAverage(filtered);
+  $("avgGeneral").textContent=
+    generalAverage(filtered);
 
 
-$("avgService").textContent=
-avg(
-filtered,
-"service_rating"
-);
+  $("avgService").textContent=
+    avg(filtered,"service_rating");
 
 
-$("avgAttention").textContent=
-avg(
-filtered,
-"attention_rating"
-);
+  $("avgAttention").textContent=
+    avg(filtered,"attention_rating");
 
 
-$("avgInformation").textContent=
-avg(
-filtered,
-"information_rating"
-);
+  $("avgInformation").textContent=
+    avg(filtered,"information_rating");
 
 
-$("avgSolution").textContent=
-avg(
-filtered,
-"solution_rating"
-);
+  $("avgSolution").textContent=
+    avg(filtered,"solution_rating");
 
 
-$("avgRecommend").textContent=
-avg(
-filtered,
-"recommendation_rating"
-);
+  $("avgRecommend").textContent=
+    avg(filtered,"recommendation_rating");
+
+}
+
+
+/* =========================
+   RANKING ASESORES
+========================= */
+
+function getAdvisorName(id){
+
+  const a=advisors.find(
+    x=>String(x.id)===String(id)
+  );
+
+
+  if(a)
+    return a.name;
+
+
+  return "Asesor no identificado";
+
+}
+
+
+function getAdvisorStore(id){
+
+  const a=advisors.find(
+    x=>String(x.id)===String(id)
+  );
+
+
+  if(!a)
+    return "Tienda no identificada";
+
+
+  const s=stores.find(
+    x=>String(x.id)===String(a.store_id)
+  );
+
+
+  return s?.name||"Tienda no identificada";
+
+}
+
+
+function renderAdvisorRanking(){
+
+  const tbody=$("advisorRanking");
+
+
+  const grouped={};
+
+
+  filtered.forEach(r=>{
+
+    if(!r.seller_id)
+      return;
+
+
+    const key=String(r.seller_id);
+
+
+    if(!grouped[key])
+      grouped[key]=[];
+
+
+    grouped[key].push(r);
+
+  });
+
+
+  let ranking=Object.entries(grouped)
+    .map(([id,data])=>({
+
+      id,
+
+      name:getAdvisorName(id),
+
+      store:getAdvisorStore(id),
+
+      count:data.length,
+
+      average:Number(
+        generalAverage(data)
+      )
+
+    }))
+    .sort((a,b)=>{
+
+      if(b.average!==a.average)
+        return b.average-a.average;
+
+      return b.count-a.count;
+
+    });
+
+
+  if(!ranking.length){
+
+    tbody.innerHTML=
+      `<tr>
+      <td colspan="6" style="text-align:center">
+      No hay asesores con encuestas.
+      </td>
+      </tr>`;
+
+
+    $("rankingToggle")
+      .classList.add("hidden");
+
+
+    return;
+
+  }
+
+
+  const visible=rankingExpanded?
+    ranking:
+    ranking.slice(0,5);
+
+
+  let html="";
+
+
+  visible.forEach((a,index)=>{
+
+    let position=index+1;
+
+    let medal="";
+
+
+    if(position===1)
+      medal="🥇";
+
+    else if(position===2)
+      medal="🥈";
+
+    else if(position===3)
+      medal="🥉";
+
+
+    html+=`
+
+    <tr>
+
+      <td class="rankingPosition">
+
+        ${
+          medal?
+          `<span class="medal">${medal}</span>`:
+          position
+        }
+
+      </td>
+
+
+      <td>
+
+        <div class="rankingName">
+          ${esc(a.name)}
+        </div>
+
+      </td>
+
+
+      <td>
+        ${esc(a.store)}
+      </td>
+
+
+      <td>
+        ${a.count}
+      </td>
+
+
+      <td>
+
+        <span class="rankingAverage">
+          ⭐ ${a.average.toFixed(1)}
+        </span>
+
+      </td>
+
+
+      <td>
+
+        <div class="rankBar">
+
+          <div
+            class="rankBarFill"
+            style="width:${(a.average/5)*100}%"
+          ></div>
+
+        </div>
+
+      </td>
+
+    </tr>
+
+    `;
+
+  });
+
+
+  tbody.innerHTML=html;
+
+
+  if(ranking.length>5){
+
+    $("rankingToggle")
+      .classList.remove("hidden");
+
+
+    if(rankingExpanded){
+
+      $("rankingToggle").textContent=
+        "Mostrar solo los 5 mejores asesores ▲";
+
+    }else{
+
+      $("rankingToggle").textContent=
+        "Ver todos los asesores con encuestas ▼";
+
+    }
+
+  }else{
+
+    $("rankingToggle")
+      .classList.add("hidden");
+
+  }
+
+}
+
+
+$("rankingToggle").onclick=()=>{
+
+  rankingExpanded=!rankingExpanded;
+
+  renderAdvisorRanking();
+
+};
+
+
+/* =========================
+   BARRAS DE MÉTRICAS
+========================= */
+
+function metricBar(value){
+
+  const n=Number(value)||0;
+
+  const width=Math.max(
+    0,
+    Math.min(100,(n/5)*100)
+  );
+
+
+  return`
+
+  <div class="metricValue">
+    ${n.toFixed(1)}
+  </div>
+
+  <div class="metricBar">
+
+    <div
+      class="metricBarFill"
+      style="width:${width}%"
+    ></div>
+
+  </div>
+
+  `;
+
+}
+
+
+function metricValue(data,metric){
+
+  if(metric==="general")
+    return Number(generalAverage(data));
+
+
+  return Number(
+    avg(data,metric)
+  );
 
 }
 
 
 function renderStoreSummary(){
 
-const tbody=$("storeSummary");
+  const tbody=$("storeSummary");
 
 
-if(!isAdmin){
+  if(!isAdmin){
 
-$("storeSummaryCard")
-.classList.add("hidden");
+    $("storeSummaryCard")
+      .classList.add("hidden");
 
-return;
+    return;
+
+  }
+
+
+  $("storeSummaryCard")
+    .classList.remove("hidden");
+
+
+  if(!stores.length){
+
+    tbody.innerHTML=
+      `<tr>
+      <td colspan="8" style="text-align:center">
+      No hay tiendas.
+      </td>
+      </tr>`;
+
+    return;
+
+  }
+
+
+  let html="";
+
+
+  stores.forEach(store=>{
+
+    let data=reviews.filter(
+      r=>
+        String(r.store_id)===
+        String(store.id)
+    );
+
+
+    data=getDateFiltered(data);
+
+
+    html+=`
+
+    <tr>
+
+      <td>
+        <strong>
+          ${esc(store.name)}
+        </strong>
+      </td>
+
+
+      <td>
+        ${data.length}
+      </td>
+
+
+      <td class="metricCell">
+        ${metricBar(
+          metricValue(
+            data,
+            "service_rating"
+          )
+        )}
+      </td>
+
+
+      <td class="metricCell">
+        ${metricBar(
+          metricValue(
+            data,
+            "attention_rating"
+          )
+        )}
+      </td>
+
+
+      <td class="metricCell">
+        ${metricBar(
+          metricValue(
+            data,
+            "information_rating"
+          )
+        )}
+      </td>
+
+
+      <td class="metricCell">
+        ${metricBar(
+          metricValue(
+            data,
+            "solution_rating"
+          )
+        )}
+      </td>
+
+
+      <td class="metricCell">
+        ${metricBar(
+          metricValue(
+            data,
+            "recommendation_rating"
+          )
+        )}
+      </td>
+
+
+      <td class="metricCell">
+        ${metricBar(
+          metricValue(
+            data,
+            "general"
+          )
+        )}
+      </td>
+
+    </tr>
+
+    `;
+
+  });
+
+
+  tbody.innerHTML=html;
 
 }
 
 
-$("storeSummaryCard")
-.classList.remove("hidden");
+/* =========================
+   DETALLE DE METRICA
+========================= */
+
+const metricNames={
+
+  service_rating:"Atención",
+
+  attention_rating:"Conocimiento",
+
+  information_rating:"Adición",
+
+  solution_rating:"Caja",
+
+  recommendation_rating:"Experiencia",
+
+  general:"Promedio general"
+
+};
 
 
-if(!stores.length){
+function renderMetricDetail(metric){
 
-tbody.innerHTML=`
-<tr>
-<td colspan="8" style="text-align:center">
-No hay tiendas.
-</td>
-</tr>
-`;
+  selectedMetric=metric;
 
-return;
+
+  const detail=$("metricDetail");
+
+  const title=$("metricDetailTitle");
+
+  const content=$("metricDetailContent");
+
+
+  detail.classList.remove("hidden");
+
+
+  title.textContent=
+    "Detalle: "+
+    metricNames[metric];
+
+
+  let html="";
+
+
+  stores.forEach(store=>{
+
+    let data=reviews.filter(
+      r=>
+        String(r.store_id)===
+        String(store.id)
+    );
+
+
+    data=getDateFiltered(data);
+
+
+    const value=metricValue(
+      data,
+      metric
+    );
+
+
+    const width=Math.max(
+      0,
+      Math.min(100,(value/5)*100)
+    );
+
+
+    html+=`
+
+    <div class="metricStore">
+
+      <div class="metricStoreTop">
+
+        <span class="metricStoreName">
+          ${esc(store.name)}
+        </span>
+
+        <span class="metricStoreValue">
+          ${value.toFixed(1)} / 5
+        </span>
+
+      </div>
+
+
+      <div class="metricDetailBar">
+
+        <div
+          class="metricDetailFill"
+          style="width:${width}%"
+        ></div>
+
+      </div>
+
+    </div>
+
+    `;
+
+  });
+
+
+  content.innerHTML=html;
 
 }
 
 
-let html="";
+document
+  .querySelectorAll(".metricHeader")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        renderMetricDetail(
+          button.dataset.metric
+        );
+
+      }
+    );
+
+  });
 
 
-stores.forEach(store=>{
-
-
-let data=reviews.filter(r=>
-String(r.store_id)===
-String(store.id)
-);
-
-
-data=getDateFiltered(data);
-
-
-html+=`
-
-<tr>
-
-<td>
-<strong>
-${esc(store.name)}
-</strong>
-</td>
-
-<td>
-${data.length}
-</td>
-
-<td class="avg">
-${avg(data,"service_rating")}
-</td>
-
-<td class="avg">
-${avg(data,"attention_rating")}
-</td>
-
-<td class="avg">
-${avg(data,"information_rating")}
-</td>
-
-<td class="avg">
-${avg(data,"solution_rating")}
-</td>
-
-<td class="avg">
-${avg(data,"recommendation_rating")}
-</td>
-
-<td class="avg">
-⭐ ${generalAverage(data)}
-</td>
-
-</tr>
-
-`;
-
-});
-
-
-tbody.innerHTML=html;
-
-}
-
+/* =========================
+   ESTRELLAS
+========================= */
 
 function stars(n){
 
-n=Number(n);
+  n=Number(n);
 
 
-if(!n){
-
-return`
-<span style="color:#9ca3af">
-Sin respuesta
-</span>
-`;
-
-}
+  if(!n)
+    return'<span style="color:#9ca3af">Sin respuesta</span>';
 
 
-n=Math.max(
-1,
-Math.min(5,n)
-);
+  n=Math.max(
+    1,
+    Math.min(5,n)
+  );
 
 
-return`
+  return`
 
-<span class="stars">
+  <span class="stars">
 
-${"★".repeat(n)}
+    ${"★".repeat(n)}
 
-<span style="color:#d1d5db">
+    <span style="color:#d1d5db">
 
-${"★".repeat(5-n)}
+      ${"★".repeat(5-n)}
 
-</span>
+    </span>
 
-</span>
+  </span>
 
-<b>
-${n} de 5
-</b>
+  <b>${n} de 5</b>
 
-`;
+  `;
 
 }
 
 
 function question(title,value){
 
-return`
+  return`
 
-<div class="q">
+  <div class="q">
 
-<div class="qt">
-${title}
-</div>
+    <div class="qt">
+      ${title}
+    </div>
 
-${stars(value)}
+    ${stars(value)}
 
-</div>
+  </div>
 
-`;
-
-}
-
-
-function contactInfo(r){
-
-const name=r.client_name?
-esc(r.client_name):
-"";
-
-const phone=r.client_phone?
-esc(r.client_phone):
-"";
-
-
-if(!name&&!phone){
-
-return`
-
-<details class="contact-details">
-
-<summary>
-Ver datos de contacto
-</summary>
-
-<div class="contact-content">
-
-<div class="no-contact">
-El cliente no proporcionó datos de contacto.
-</div>
-
-</div>
-
-</details>
-
-`;
+  `;
 
 }
 
 
-return`
-
-<details class="contact-details">
-
-<summary>
-Ver datos de contacto
-</summary>
-
-<div class="contact-content">
-
-${name?`
-
-<div class="contact-row">
-
-<span class="contact-label">
-Nombre:
-</span>
-
-${name}
-
-</div>
-
-`:""}
-
-
-${phone?`
-
-<div class="contact-row">
-
-<span class="contact-label">
-Celular:
-</span>
-
-${phone}
-
-</div>
-
-`:""}
-
-</div>
-
-</details>
-
-`;
-
-}
-
+/* =========================
+   ENCUESTAS
+========================= */
 
 function render(){
 
+  if(!filtered.length){
 
-if(!filtered.length){
+    $("list").innerHTML=
+      '<div class="empty">No hay encuestas con los filtros seleccionados.</div>';
 
-$("list").innerHTML=
-'<div class="empty">No hay encuestas con los filtros seleccionados.</div>';
 
-return;
+    $("surveyExpandWrap")
+      .classList.add("hidden");
+
+
+    return;
+
+  }
+
+
+  const LIMIT=5;
+
+
+  const visible=surveysExpanded?
+    filtered:
+    filtered.slice(0,LIMIT);
+
+
+  $("list").innerHTML="";
+
+
+  visible.forEach(r=>{
+
+    const store=stores.find(
+      s=>
+        String(s.id)===
+        String(r.store_id)
+    );
+
+
+    const advisorName=
+      r.seller_id?
+      getAdvisorName(r.seller_id):
+      "No especificado";
+
+
+    const clientName=
+      r.client_name||
+      r.customer_name||
+      "";
+
+
+    const clientPhone=
+      r.client_phone||
+      "";
+
+
+    const el=document.createElement("div");
+
+
+    el.className="survey";
+
+
+    el.innerHTML=`
+
+    <div class="top">
+
+      <div>
+
+        <div class="name">
+          ${esc(
+            clientName||
+            "Cliente"
+          )}
+        </div>
+
+        <div class="store">
+          ${esc(
+            store?.name||
+            "Tienda no identificada"
+          )}
+        </div>
+
+        <div class="date">
+          ${fecha(r.created_at)}
+          ·
+          ${hora(r.created_at)}
+        </div>
+
+        <div
+          class="small"
+          style="margin-top:8px"
+        >
+          <strong>Asesor:</strong>
+          ${esc(advisorName)}
+        </div>
+
+      </div>
+
+    </div>
+
+
+    ${question(
+      "1. Atención",
+      r.service_rating
+    )}
+
+
+    ${question(
+      "2. Conocimiento Producto",
+      r.attention_rating
+    )}
+
+
+    ${question(
+      "3. Adición",
+      r.information_rating
+    )}
+
+
+    ${question(
+      "4. Caja",
+      r.solution_rating
+    )}
+
+
+    ${question(
+      "5. Experiencia",
+      r.recommendation_rating
+    )}
+
+
+    ${
+      r.comment?
+      `<div class="comment">
+        <strong>Comentario adicional</strong>
+        ${esc(r.comment)}
+      </div>`:
+      ""
+    }
+
+
+    ${
+      r.admin_response?
+      `<div class="response">
+
+        <strong>
+          Samsung Store Ámbar
+        </strong>
+
+        ${esc(r.admin_response)}
+
+        <div class="date">
+          Respondida:
+          ${fecha(r.responded_at)}
+          ·
+          ${hora(r.responded_at)}
+        </div>
+
+      </div>`:
+      ""
+    }
+
+
+    <button
+      class="clientToggle"
+      data-client-toggle="${r.id}"
+    >
+      👤 Ver datos del cliente ▼
+    </button>
+
+
+    <div
+      id="clientDetails-${r.id}"
+      class="clientDetails hidden"
+    >
+
+      <div>
+        <strong>Nombre:</strong>
+        ${
+          clientName?
+          esc(clientName):
+          "No proporcionado"
+        }
+      </div>
+
+
+      <div>
+        <strong>Celular:</strong>
+        ${
+          clientPhone?
+          esc(clientPhone):
+          "No proporcionado"
+        }
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn delete"
+        onclick="deleteOne('${r.id}')"
+      >
+        🗑️ Eliminar encuesta
+      </button>
+
+    </div>
+
+    `;
+
+
+    $("list").appendChild(el);
+
+
+    const toggle=
+      el.querySelector(
+        `[data-client-toggle="${r.id}"]`
+      );
+
+
+    toggle.onclick=()=>{
+
+      const details=
+        document.getElementById(
+          `clientDetails-${r.id}`
+        );
+
+
+      if(details.classList.contains("hidden")){
+
+        details.classList.remove("hidden");
+
+        toggle.textContent=
+          "👤 Ocultar datos del cliente ▲";
+
+      }else{
+
+        details.classList.add("hidden");
+
+        toggle.textContent=
+          "👤 Ver datos del cliente ▼";
+
+      }
+
+    };
+
+  });
+
+
+  if(filtered.length>LIMIT){
+
+    $("surveyExpandWrap")
+      .classList.remove("hidden");
+
+
+    if(surveysExpanded){
+
+      $("surveyToggle").textContent=
+        "Mostrar solo las primeras 5 encuestas ▲";
+
+    }else{
+
+      $("surveyToggle").textContent=
+        `Ver todas las ${filtered.length} encuestas ▼`;
+
+    }
+
+  }else{
+
+    $("surveyExpandWrap")
+      .classList.add("hidden");
+
+  }
 
 }
 
 
-$("list").innerHTML="";
+$("surveyToggle").onclick=()=>{
 
+  surveysExpanded=!surveysExpanded;
 
-filtered.forEach(r=>{
+  render();
 
+};
 
-const store=stores.find(s=>
-String(s.id)===
-String(r.store_id)
-);
 
-
-const el=document.createElement("div");
-
-
-el.className="survey";
-
-
-el.innerHTML=`
-
-<div class="top">
-
-<div>
-
-<div class="name">
-
-${esc(r.customer_name||"Cliente")}
-
-</div>
-
-
-<div class="store">
-
-${esc(
-store?.name||
-"Tienda no identificada"
-)}
-
-</div>
-
-
-<div class="date">
-
-${fecha(r.created_at)}
-
-·
-
-${hora(r.created_at)}
-
-</div>
-
-</div>
-
-</div>
-
-
-${question(
-"1. Rapidez",
-r.service_rating
-)}
-
-
-${question(
-"2. Conocimiento",
-r.attention_rating
-)}
-
-
-${question(
-"3. Venta adicional",
-r.information_rating
-)}
-
-
-${question(
-"4. Caja",
-r.solution_rating
-)}
-
-
-${question(
-"5. Experiencia general",
-r.recommendation_rating
-)}
-
-
-${r.comment?
-
-`
-
-<div class="comment">
-
-<strong>
-Comentario adicional
-</strong>
-
-${esc(r.comment)}
-
-</div>
-
-`
-
-:""}
-
-
-${r.admin_response?
-
-`
-
-<div class="response">
-
-<strong>
-Samsung Store Ámbar
-</strong>
-
-${esc(r.admin_response)}
-
-
-<div class="date">
-
-Respondida:
-
-${fecha(r.responded_at)}
-
-·
-
-${hora(r.responded_at)}
-
-</div>
-
-</div>
-
-`
-
-:""}
-
-
-${contactInfo(r)}
-
-
-<div class="actions">
-
-<button
-class="btn delete"
-onclick="deleteOne('${r.id}')"
->
-
-🗑️ Eliminar encuesta
-
-</button>
-
-</div>
-
-`;
-
-
-$("list").appendChild(el);
-
-});
-
-}
-
+/* =========================
+   ELIMINAR
+========================= */
 
 function updateDeleteInfo(){
 
-const box=$("deleteInfo");
+  const box=$("deleteInfo");
 
 
-if(filtered.length){
+  if(filtered.length){
 
-box.textContent=
-`Hay ${filtered.length} encuesta(s) seleccionada(s) por los filtros. El botón "Eliminar filtradas" eliminará únicamente esas encuestas.`;
+    box.textContent=
+      `Hay ${filtered.length} encuesta(s) seleccionada(s) por los filtros. El botón "Eliminar filtradas" eliminará únicamente esas encuestas.`;
 
+    box.classList.remove("hidden");
 
-box.classList.remove("hidden");
+  }else{
 
+    box.classList.add("hidden");
 
-}else{
-
-box.classList.add("hidden");
-
-}
+  }
 
 }
 
 
 async function deleteOne(id){
 
-
-if(
-!confirm(
-"¿Seguro que quieres eliminar esta encuesta?\n\nEsta acción no se puede deshacer."
-)
-)return;
-
-
-try{
+  if(
+    !confirm(
+      "¿Seguro que quieres eliminar esta encuesta?\n\nEsta acción no se puede deshacer."
+    )
+  )
+    return;
 
 
-const result=await db
-.from("reviews")
-.delete()
-.eq("id",id);
+  try{
+
+    const result=
+      await db
+        .from("reviews")
+        .delete()
+        .eq("id",id);
 
 
-if(result.error)throw result.error;
+    if(result.error)
+      throw result.error;
 
 
-reviews=reviews.filter(r=>
-String(r.id)!==String(id)
-);
+    reviews=reviews.filter(
+      r=>String(r.id)!==String(id)
+    );
 
 
-filter();
+    filter();
 
 
-alert(
-"Encuesta eliminada correctamente."
-);
+    alert(
+      "Encuesta eliminada correctamente."
+    );
 
 
-}catch(e){
+  }catch(e){
 
-alert(
-"No se pudo eliminar la encuesta:\n\n"+
-e.message
-);
+    alert(
+      "No se pudo eliminar la encuesta:\n\n"+
+      e.message
+    );
 
-}
+  }
 
 }
 
 
 $("deleteFiltered").onclick=async()=>{
 
-
-if(!filtered.length){
-
-return alert(
-"No hay encuestas seleccionadas para eliminar."
-);
-
-}
+  if(!filtered.length)
+    return alert(
+      "No hay encuestas seleccionadas para eliminar."
+    );
 
 
-if(
-!confirm(
-
-`Vas a eliminar ${filtered.length} encuesta(s).
-
-Esta acción NO se puede deshacer.
-
-¿Quieres continuar?`
-
-)
-)return;
+  if(
+    !confirm(
+      `Vas a eliminar ${filtered.length} encuesta(s).\n\nEsta acción NO se puede deshacer.\n\n¿Quieres continuar?`
+    )
+  )
+    return;
 
 
-const ids=filtered.map(r=>r.id);
+  const ids=filtered.map(
+    r=>r.id
+  );
 
 
-try{
+  try{
+
+    const result=
+      await db
+        .from("reviews")
+        .delete()
+        .in("id",ids);
 
 
-const result=await db
-.from("reviews")
-.delete()
-.in("id",ids);
+    if(result.error)
+      throw result.error;
 
 
-if(result.error)throw result.error;
+    reviews=reviews.filter(
+      r=>!ids.includes(r.id)
+    );
 
 
-reviews=reviews.filter(r=>
-!ids.includes(r.id)
-);
+    filter();
 
 
-filter();
+    alert(
+      `${ids.length} encuesta(s) eliminada(s) correctamente.`
+    );
 
 
-alert(
-`${ids.length} encuesta(s) eliminada(s) correctamente.`
-);
+  }catch(e){
 
+    alert(
+      "No se pudieron eliminar las encuestas:\n\n"+
+      e.message
+    );
 
-}catch(e){
-
-alert(
-"No se pudieron eliminar las encuestas:\n\n"+
-e.message
-);
-
-}
+  }
 
 };
 
 
-$("apply").onclick=filter;
+/* =========================
+   BOTONES
+========================= */
+
+$("apply").onclick=()=>{
+
+  rankingExpanded=false;
+
+  surveysExpanded=false;
+
+  filter();
+
+};
 
 
 $("clear").onclick=()=>{
 
-$("from").value="";
+  $("from").value="";
 
-$("to").value="";
-
-
-if(isAdmin){
-
-$("storeFilter").value="";
-
-}
+  $("to").value="";
 
 
-filter();
+  if(isAdmin)
+    $("storeFilter").value="";
+
+
+  $("advisorFilter").value="";
+
+
+  rankingExpanded=false;
+
+  surveysExpanded=false;
+
+
+  filter();
 
 };
 
@@ -1775,243 +2694,281 @@ filter();
 $("refresh").onclick=load;
 
 
+/* =========================
+   EXCEL
+========================= */
+
 $("excel").onclick=()=>{
 
-
-if(!filtered.length){
-
-return alert(
-"No hay encuestas para descargar."
-);
-
-}
+  if(!filtered.length)
+    return alert(
+      "No hay encuestas para descargar."
+    );
 
 
-if(typeof XLSX==="undefined"){
-
-return alert(
-"No se pudo cargar Excel."
-);
-
-}
+  if(typeof XLSX==="undefined")
+    return alert(
+      "No se pudo cargar Excel."
+    );
 
 
-const rows=filtered.map(r=>{
+  const rows=filtered.map(r=>{
+
+    const store=stores.find(
+      s=>
+        String(s.id)===
+        String(r.store_id)
+    );
 
 
-const store=stores.find(s=>
-String(s.id)===
-String(r.store_id)
-);
+    return{
+
+      "Cliente":
+        r.client_name||
+        r.customer_name||
+        "",
+
+      "Celular":
+        r.client_phone||
+        "",
+
+      "Asesor":
+        r.seller_id?
+        getAdvisorName(r.seller_id):
+        "",
+
+      "Tienda":
+        store?.name||
+        "",
+
+      "Fecha":
+        fecha(r.created_at),
+
+      "Hora":
+        hora(r.created_at),
+
+      "Atención":
+        r.service_rating||
+        "",
+
+      "Conocimiento Producto":
+        r.attention_rating||
+        "",
+
+      "Adición":
+        r.information_rating||
+        "",
+
+      "Caja":
+        r.solution_rating||
+        "",
+
+      "Experiencia":
+        r.recommendation_rating||
+        "",
+
+      "Promedio general":
+        generalAverage([r]),
+
+      "Comentario":
+        r.comment||
+        "",
+
+      "Respuesta Samsung Store Ámbar":
+        r.admin_response||
+        "",
+
+      "Fecha respuesta":
+        r.responded_at?
+        fecha(r.responded_at):
+        "",
+
+      "Hora respuesta":
+        r.responded_at?
+        hora(r.responded_at):
+        ""
+
+    };
+
+  });
 
 
-return{
+  const ws=
+    XLSX.utils.json_to_sheet(rows);
 
 
-"Cliente":r.customer_name||"",
+  const wb=
+    XLSX.utils.book_new();
 
-"Tienda":store?.name||"",
 
-"Fecha":fecha(r.created_at),
+  XLSX.utils.book_append_sheet(
+    wb,
+    ws,
+    "Encuestas"
+  );
 
-"Hora":hora(r.created_at),
 
-"Rapidez":r.service_rating||"",
-
-"Conocimiento":r.attention_rating||"",
-
-"Venta adicional":r.information_rating||"",
-
-"Caja":r.solution_rating||"",
-
-"Experiencia general":
-r.recommendation_rating||"",
-
-"Comentario":
-r.comment||"",
-
-"Nombre de contacto":
-r.client_name||"",
-
-"Celular de contacto":
-r.client_phone||"",
-
-"Respuesta Samsung Store Ámbar":
-r.admin_response||"",
-
-"Fecha respuesta":
-r.responded_at?
-fecha(r.responded_at):
-"",
-
-"Hora respuesta":
-r.responded_at?
-hora(r.responded_at):
-""
+  XLSX.writeFile(
+    wb,
+    "encuestas-samsung.xlsx"
+  );
 
 };
 
-});
 
-
-const ws=
-XLSX.utils.json_to_sheet(rows);
-
-
-const wb=
-XLSX.utils.book_new();
-
-
-XLSX.utils.book_append_sheet(
-wb,
-ws,
-"Encuestas"
-);
-
-
-XLSX.writeFile(
-wb,
-"encuestas-samsung.xlsx"
-);
-
-};
-
+/* =========================
+   LOGOUT ORIGINAL
+========================= */
 
 $("logout").onclick=async()=>{
 
-
-if(db){
-
-await db.auth.signOut();
-
-}
+  if(db)
+    await db.auth.signOut();
 
 
-currentUser=null;
+  currentUser=null;
 
-currentRole="";
+  currentRole="";
 
-currentStoreId=null;
+  currentStoreId=null;
 
-isAdmin=false;
+  isAdmin=false;
 
-reviews=[];
+  reviews=[];
 
-stores=[];
+  stores=[];
 
-filtered=[];
+  advisors=[];
 
-
-panel.classList.add("hidden");
-
-header.classList.add("hidden");
-
-login.classList.remove("hidden");
+  filtered=[];
 
 
-$("password").value="";
+  panel.classList.add("hidden");
+
+  header.classList.add("hidden");
+
+  login.classList.remove("hidden");
+
+  $("password").value="";
 
 };
 
 
+/* =========================
+   FECHA / HORA
+========================= */
+
 function fecha(x){
 
-if(!x)return"";
+  if(!x)
+    return"";
 
 
-return new Date(x)
-.toLocaleDateString(
-"es-MX",
-{
-day:"numeric",
-month:"long",
-year:"numeric"
-}
-);
+  return new Date(x)
+    .toLocaleDateString(
+      "es-MX",
+      {
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+      }
+    );
 
 }
 
 
 function hora(x){
 
-if(!x)return"";
+  if(!x)
+    return"";
 
 
-return new Date(x)
-.toLocaleTimeString(
-"es-MX",
-{
-hour:"2-digit",
-minute:"2-digit",
-second:"2-digit"
+  return new Date(x)
+    .toLocaleTimeString(
+      "es-MX",
+      {
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit"
+      }
+    );
+
 }
-);
 
-}
 
+/* =========================
+   ESCAPE HTML
+========================= */
 
 function esc(x){
 
-const d=document.createElement("div");
+  const d=
+    document.createElement("div");
 
-d.textContent=String(x??"");
 
-return d.innerHTML;
+  d.textContent=
+    String(x??"");
+
+
+  return d.innerHTML;
 
 }
 
+
+/* =========================
+   SESION ORIGINAL
+========================= */
 
 async function checkSession(){
 
-
-if(!startSupabase())return;
-
-
-try{
+  if(!startSupabase())
+    return;
 
 
-const result=
-await db.auth.getSession();
+  try{
+
+    const result=
+      await db.auth.getSession();
 
 
-const session=
-result.data.session;
+    const session=
+      result.data.session;
 
 
-if(!session)return;
+    if(!session)
+      return;
 
 
-currentUser=session.user;
+    currentUser=
+      session.user;
 
 
-await setupUser();
+    await setupUser();
 
 
-login.classList.add("hidden");
+    login.classList.add("hidden");
 
-header.classList.remove("hidden");
+    header.classList.remove("hidden");
 
-panel.classList.remove("hidden");
-
-
-await load();
+    panel.classList.remove("hidden");
 
 
-}catch(e){
-
-console.error(
-"SESSION:",
-e
-);
+    await load();
 
 
-try{
+  }catch(e){
 
-await db.auth.signOut();
+    console.error(
+      "SESSION:",
+      e
+    );
 
-}catch(_){}
 
-}
+    try{
+      await db.auth.signOut()
+    }catch(_){}
+
+  }
 
 }
 
