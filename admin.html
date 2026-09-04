@@ -901,10 +901,24 @@ map[key].reviews.push(r);
 
 const rows=Object.values(map).filter(item=>item.reviews.length>0);
 
-rows.sort((a,b)=>
-Number(generalAverage(b.reviews))-
-Number(generalAverage(a.reviews))
-);
+rows.sort((a,b)=>{
+
+const averageA=Number(generalAverage(a.reviews));
+const averageB=Number(generalAverage(b.reviews));
+
+// 1. Mayor promedio general primero.
+if(averageB!==averageA){
+return averageB-averageA;
+}
+
+// 2. Si empatan en promedio, mayor número de encuestas primero.
+if(b.reviews.length!==a.reviews.length){
+return b.reviews.length-a.reviews.length;
+}
+
+// 3. Si también empatan, mantener un orden estable por nombre.
+return String(a.name).localeCompare(String(b.name),"es",{sensitivity:"base"});
+});
 
 if(!rows.length){
 
