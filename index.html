@@ -2,898 +2,440 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Samsung Experience Store - Encuesta</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1428A0">
+<title>Samsung Experience Store · Encuesta</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+:root{
+--blue:#1428A0;--blue-d:#0d1b78;--ink:#101322;--mut:#5d6479;--line:#dfe3ef;
+--paper:#fff;--soft:#f3f5fb;--star:#ffb400;--bad:#a8261b;--badbg:#fdecea
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+background:var(--blue);color:var(--ink);min-height:100vh;
+display:flex;flex-direction:column;
+}
+.head{
+color:#fff;padding:calc(22px + env(safe-area-inset-top)) 22px 26px;
+max-width:620px;width:100%;margin:0 auto;
+}
+.head b{display:block;font-size:19px;font-weight:800}
+.head span{display:block;font-size:14px;opacity:.78;margin-top:3px}
+.head h1{font-size:clamp(28px,8vw,38px);line-height:1.1;margin-top:20px;font-weight:800;letter-spacing:-.02em}
 
-body{background:#f5f7fa;color:#111827}
+.sheet{
+background:var(--paper);flex:1;width:100%;max-width:620px;margin:0 auto;
+border-radius:28px 28px 0 0;padding:22px 22px calc(26px + env(safe-area-inset-bottom));
+display:flex;flex-direction:column;
+}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.back{
+border:0;background:var(--soft);color:var(--ink);width:40px;height:40px;
+border-radius:50%;font-size:20px;cursor:pointer;flex:none;visibility:hidden
+}
+.back.on{visibility:visible}
+.segs{display:flex;gap:5px;flex:1}
+.segs i{flex:1;height:5px;border-radius:5px;background:var(--line);transition:background .25s}
+.segs i.done{background:var(--blue)}
 
-header{
-background:#000;color:#fff;padding:18px 22px;
-display:flex;justify-content:space-between;align-items:center
+#content{flex:1}
+#content.in{animation:in .28s ease}
+@keyframes in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+
+h2{font-size:clamp(22px,6vw,27px);line-height:1.25;font-weight:800;letter-spacing:-.01em}
+.sub{color:var(--mut);font-size:16px;line-height:1.45;margin-top:8px}
+.tag{display:inline-block;background:var(--soft);color:var(--blue);font-weight:700;font-size:14px;padding:6px 12px;border-radius:99px;margin-bottom:14px}
+
+.opts{display:grid;gap:10px;margin-top:22px}
+.opt{
+display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+background:var(--paper);border:2px solid var(--line);border-radius:16px;
+padding:14px 16px;font:inherit;font-size:17px;font-weight:600;color:var(--ink);cursor:pointer
+}
+.opt:active{background:var(--soft)}
+.opt.sel{border-color:var(--blue)}
+.av{
+width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;
+display:grid;place-items:center;font-size:15px;font-weight:700;flex:none
 }
 
-.logo{font-size:20px;font-weight:bold}
-
-.admin{
-background:#fff;color:#000;border:0;padding:10px 17px;
-border-radius:20px;font-weight:bold;cursor:pointer
+.stars{display:flex;justify-content:space-between;gap:4px;margin:34px 0 14px}
+.st{
+flex:1;max-width:76px;aspect-ratio:1;border:0;background:none;
+font-size:clamp(46px,14vw,64px);line-height:1;color:#d3d8e6;cursor:pointer;
+transition:transform .15s,color .15s
 }
+.st.on{color:var(--star)}
+.st:active{transform:scale(.88)}
+.word{text-align:center;font-size:22px;font-weight:800;color:var(--blue);min-height:30px}
+.scale{text-align:center;color:var(--mut);font-size:14px;margin-top:8px}
 
-.hero{
-background:linear-gradient(135deg,#000,#202020);
-color:#fff;text-align:center;padding:50px 20px
+.f{margin-top:18px}
+.f label{display:block;font-weight:700;font-size:15px;margin-bottom:7px}
+.f label small{font-weight:400;color:var(--mut)}
+.f input,.f textarea{
+width:100%;border:2px solid var(--line);border-radius:14px;padding:14px;
+font:inherit;font-size:17px;background:var(--paper);color:var(--ink)
 }
+.f textarea{min-height:110px;resize:vertical}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.note{color:var(--mut);font-size:13px;line-height:1.45;margin-top:14px}
 
-.hero h1{font-size:32px;margin-bottom:12px}
-.hero p{color:#d1d5db;font-size:16px}
-
-.container{max-width:850px;margin:30px auto;padding:0 18px}
-
-.card{
-background:#fff;border-radius:18px;padding:25px;
-box-shadow:0 5px 25px #0001;margin-bottom:25px
+.btn{
+display:block;width:100%;margin-top:22px;border:0;border-radius:16px;background:var(--blue);
+color:#fff;font:inherit;font-size:18px;font-weight:700;padding:17px;cursor:pointer;
+text-align:center;text-decoration:none
 }
+.btn:disabled{opacity:.55;cursor:default}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.err{display:none;margin-top:16px;background:var(--badbg);color:var(--bad);padding:13px 15px;border-radius:12px;font-size:15px;line-height:1.4}
+.err.show{display:block}
 
-.store-name{font-size:24px;font-weight:bold}
-.store-location{color:#6b7280;margin-top:6px}
+.thanks{text-align:center;padding:34px 4px 10px}
+.ok{width:76px;height:76px;margin:0 auto 22px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:40px}
 
-label{
-display:block;font-weight:bold;margin:18px 0 8px
+footer{text-align:center;color:#ffffffb3;font-size:13px;padding:16px;background:var(--blue)}
+footer a{color:#fff;opacity:.8}
+
+:focus-visible{outline:3px solid #7aa2ff;outline-offset:2px}
+@media(min-width:700px){
+body{padding-bottom:20px}
+.sheet{border-radius:28px;flex:none;min-height:480px}
 }
-
-input,select,textarea{
-width:100%;padding:14px;border:1px solid #d1d5db;
-border-radius:10px;font-size:16px;background:#fff
-}
-
-select{cursor:pointer}
-
-textarea{min-height:120px;resize:vertical}
-
-.question{
-border-top:1px solid #e5e7eb;
-padding-top:22px;margin-top:22px
-}
-
-.question:first-of-type{border-top:0;margin-top:0}
-
-.question-title{
-font-size:18px;font-weight:bold;line-height:1.4
-}
-
-.stars{
-display:flex;gap:8px;margin-top:13px
-}
-
-.star{
-font-size:38px;color:#d1d5db;cursor:pointer;
-user-select:none
-}
-
-.star.active{color:#f59e0b}
-
-.rating-text{
-margin-top:7px;color:#6b7280;font-size:15px
-}
-
-.submit{
-width:100%;margin-top:25px;padding:16px;border:0;
-border-radius:12px;background:#000;color:#fff;
-font-size:17px;font-weight:bold;cursor:pointer
-}
-
-.submit:disabled{opacity:.5}
-
-.message{
-margin-top:18px;padding:15px;border-radius:10px;
-display:none
-}
-
-.error{background:#fee2e2;color:#991b1b}
-
-.thanks{
-position:fixed;inset:0;background:#f5f7fa;
-display:none;align-items:center;justify-content:center;
-text-align:center;padding:25px;z-index:9999
-}
-
-.thanks-box{
-background:#fff;border-radius:22px;padding:45px 25px;
-max-width:700px;width:100%;
-box-shadow:0 8px 35px #0001
-}
-
-.check{
-font-size:60px;margin-bottom:18px
-}
-
-.thanks h2{
-font-size:30px;margin-bottom:15px
-}
-
-.thanks p{
-font-size:17px;color:#6b7280;line-height:1.5
-}
-
-footer{
-text-align:center;padding:35px 15px;
-color:#6b7280;font-size:13px
-}
-
-.loading{
-color:#6b7280;font-size:14px;margin-top:7px
-}
-
-@media(max-width:600px){
-.hero h1{font-size:27px}
-.store-name{font-size:21px}
-.question-title{font-size:17px}
-.star{font-size:34px}
-}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
-
 <body>
 
-<header>
-<div class="logo">Samsung Experience Store</div>
-
-<button class="admin" onclick="location.href='admin.html'">
-Acceso
-</button>
-</header>
-
-<section class="hero">
+<div class="head">
+<b id="storeName">Samsung Experience Store</b>
+<span id="storeLocation"></span>
 <h1>¿Cómo fue tu experiencia?</h1>
-<p>Tu opinión nos ayuda a mejorar nuestro servicio.</p>
-</section>
-
-<main class="container" id="surveyContainer">
-
-<section class="card">
-
-<div class="store-name" id="storeName">
-Samsung Store Ámbar
 </div>
 
-<div class="store-location" id="storeLocation">
-Tuxtla Gutiérrez, Chiapas
+<div class="sheet" id="sheet">
+<div class="top">
+<button class="back" id="back" type="button" aria-label="Volver a la pregunta anterior">←</button>
+<div class="segs" id="segs"></div>
+</div>
+<div id="content"></div>
 </div>
 
-</section>
+<footer>Tu opinión nos ayuda a mejorar · <a href="admin.html">Acceso administración</a></footer>
 
-<section class="card">
-
-<h2>Encuesta de servicio</h2>
-
-<p style="color:#6b7280;margin-top:7px">
-Queremos conocer tu experiencia. Tu opinión es muy importante para nosotros.
-</p>
-
-
-<label for="advisor">
-¿Quién te atendió?
-</label>
-
-<select id="advisor">
-<option value="">Selecciona quién te atendió</option>
-</select>
-
-<div id="advisorLoading" class="loading" style="display:none">
-Cargando asesores...
-</div>
-
-
-<!-- PREGUNTA 1 -->
-
-<div class="question">
-
-<div class="question-title">
-1. ¿Qué tan rápida fue la atención que recibiste al llegar a la tienda?
-</div>
-
-<div class="stars" data-question="service_rating">
-
-<span class="star" data-value="1">★</span>
-<span class="star" data-value="2">★</span>
-<span class="star" data-value="3">★</span>
-<span class="star" data-value="4">★</span>
-<span class="star" data-value="5">★</span>
-
-</div>
-
-<div class="rating-text" id="text-service_rating">
-Selecciona una calificación
-</div>
-
-</div>
-
-
-<!-- PREGUNTA 2 -->
-
-<div class="question">
-
-<div class="question-title">
-2. ¿Qué tan satisfecho estás con el conocimiento que mostró el asesor sobre los productos que te interesaban?
-</div>
-
-<div class="stars" data-question="attention_rating">
-
-<span class="star" data-value="1">★</span>
-<span class="star" data-value="2">★</span>
-<span class="star" data-value="3">★</span>
-<span class="star" data-value="4">★</span>
-<span class="star" data-value="5">★</span>
-
-</div>
-
-<div class="rating-text" id="text-attention_rating">
-Selecciona una calificación
-</div>
-
-</div>
-
-
-<!-- PREGUNTA 3 -->
-
-<div class="question">
-
-<div class="question-title">
-3. ¿El asesor identificó y te explicó productos o accesorios adicionales que pudieran complementar tu compra?
-</div>
-
-<div class="stars" data-question="information_rating">
-
-<span class="star" data-value="1">★</span>
-<span class="star" data-value="2">★</span>
-<span class="star" data-value="3">★</span>
-<span class="star" data-value="4">★</span>
-<span class="star" data-value="5">★</span>
-
-</div>
-
-<div class="rating-text" id="text-information_rating">
-Selecciona una calificación
-</div>
-
-</div>
-
-
-<!-- PREGUNTA 4 -->
-
-<div class="question">
-
-<div class="question-title">
-4. ¿Cómo calificarías la atención que recibiste de nuestro equipo de caja?
-</div>
-
-<div class="stars" data-question="solution_rating">
-
-<span class="star" data-value="1">★</span>
-<span class="star" data-value="2">★</span>
-<span class="star" data-value="3">★</span>
-<span class="star" data-value="4">★</span>
-<span class="star" data-value="5">★</span>
-
-</div>
-
-<div class="rating-text" id="text-solution_rating">
-Selecciona una calificación
-</div>
-
-</div>
-
-
-<!-- PREGUNTA 5 -->
-
-<div class="question">
-
-<div class="question-title">
-5. ¿Cómo calificarías tu experiencia general en Samsung Store?
-</div>
-
-<div class="stars" data-question="recommendation_rating">
-
-<span class="star" data-value="1">★</span>
-<span class="star" data-value="2">★</span>
-<span class="star" data-value="3">★</span>
-<span class="star" data-value="4">★</span>
-<span class="star" data-value="5">★</span>
-
-</div>
-
-<div class="rating-text" id="text-recommendation_rating">
-Selecciona una calificación
-</div>
-
-</div>
-
-
-<!-- DATOS DEL CLIENTE -->
-
-<label for="clientName">
-Tu nombre
-</label>
-
-<input
-id="clientName"
-type="text"
-placeholder="Escribe tu nombre"
-maxlength="150"
->
-
-
-<label for="clientPhone">
-Número de celular
-</label>
-
-<input
-id="clientPhone"
-type="tel"
-placeholder="Escribe tu número de celular"
-maxlength="20"
-inputmode="tel"
->
-
-
-<label for="comment">
-Cuéntanos más sobre tu experiencia
-<span style="font-weight:normal;color:#6b7280">(opcional)</span>
-</label>
-
-<textarea
-id="comment"
-maxlength="1000"
-placeholder="Escribe aquí algún comentario sobre tu experiencia..."
-></textarea>
-
-
-<button class="submit" id="submitButton">
-Enviar encuesta
-</button>
-
-<div class="message error" id="errorMessage"></div>
-
-</section>
-
-</main>
-
-
-<footer>
-Samsung Experience Store<br>
-Tu opinión nos ayuda a mejorar.
-</footer>
-
-
-<!-- PANTALLA FINAL -->
-
-<section class="thanks" id="thanks">
-
-<div class="thanks-box">
-
-<div class="check">✅</div>
-
-<h2>
-¡Gracias por compartir tu experiencia!
-</h2>
-
-<p>
-Tu opinión es muy importante para nosotros y nos ayuda a mejorar nuestro servicio.
-</p>
-
-</div>
-
-</section>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
+const SUPABASE_URL="https://lxmjfsdmbwgqxtovtxyn.supabase.co";
+const SUPABASE_KEY="sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
 
-const SUPABASE_URL=
-"https://lxmjfsdmbwgqxtovtxyn.supabase.co";
+/* Pega aquí el enlace de reseñas de Google de la tienda (opcional).
+   Si lo dejas vacío, el botón no aparece. */
+const GOOGLE_REVIEW_URL="";
 
-const SUPABASE_KEY=
-"sb_publishable_5Ohm6MN0IU3dr4qcP96x5g_9WKc095V";
+const QUESTIONS=[
+{key:"service_rating",tag:"Atención",title:"¿Qué tan rápida fue la atención que recibiste al llegar a la tienda?"},
+{key:"attention_rating",tag:"Conocimiento del producto",title:"¿Qué tan satisfecho estás con el conocimiento que mostró el asesor sobre los productos que te interesaban?"},
+{key:"information_rating",tag:"Productos adicionales",title:"¿El asesor identificó y te explicó productos o accesorios adicionales que pudieran complementar tu compra?"},
+{key:"solution_rating",tag:"Caja",title:"¿Cómo calificarías la atención que recibiste de nuestro equipo de caja?"},
+{key:"recommendation_rating",tag:"Experiencia general",title:"¿Cómo calificarías tu experiencia general en Samsung Store?"}
+];
+const WORDS=["","Muy mala","Mala","Regular","Buena","Excelente"];
+const TOTAL=QUESTIONS.length+2;
 
-const db=
-supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+const db=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
+const $=s=>document.querySelector(s);
 
-let storeId=null;
-let advisorsLoaded=false;
-
-
-const ratings={
-service_rating:0,
-attention_rating:0,
-information_rating:0,
-solution_rating:0,
-recommendation_rating:0
+const state={
+storeId:null,advisors:[],advisor:"",ready:false,loadError:"",
+step:0,r:{},f:{name:"",phone:"",comment:""},t:null,sending:false
 };
 
+function el(tag,props={},...kids){
+const e=document.createElement(tag);
+for(const k in props){
+if(k==="class")e.className=props[k];
+else if(k.startsWith("on"))e.addEventListener(k.slice(2),props[k]);
+else e.setAttribute(k,props[k]);
+}
+kids.flat().filter(c=>c!==null&&c!==undefined).forEach(c=>e.append(c));
+return e;
+}
 
-/* ESTRELLAS */
+function initials(name){
+return name.trim().split(/\s+/).slice(0,2).map(p=>p[0]||"").join("").toUpperCase();
+}
 
-document.querySelectorAll(".stars").forEach(group=>{
+/* ---------- navegación ---------- */
 
-const question=
-group.dataset.question;
+function go(n){
+clearTimeout(state.t);
+state.step=Math.max(0,Math.min(TOTAL-1,n));
+render();
+}
 
-group.querySelectorAll(".star").forEach(star=>{
+$("#back").addEventListener("click",()=>go(state.step-1));
 
-star.addEventListener("click",()=>{
+function render(){
+const s=state.step;
 
-const value=
-Number(star.dataset.value);
+$("#segs").replaceChildren(
+...Array.from({length:TOTAL},(_,i)=>el("i",{class:i<=s?"done":""}))
+);
+$("#back").classList.toggle("on",s>0);
 
-ratings[question]=value;
+const box=$("#content");
+box.replaceChildren();
+box.classList.remove("in");
+void box.offsetWidth;
+box.classList.add("in");
 
-group.querySelectorAll(".star").forEach(s=>{
+if(s===0)box.append(viewAdvisor());
+else if(s<=QUESTIONS.length)box.append(viewQuestion(s-1));
+else box.append(viewForm());
+}
 
-const v=
-Number(s.dataset.value);
+/* ---------- vistas ---------- */
 
-s.classList.toggle(
-"active",
-v<=value
+function viewAdvisor(){
+const w=el("div");
+w.append(
+el("h2",{},"¿Quién te atendió?"),
+el("p",{class:"sub"},"Elige a tu asesor para empezar.")
 );
 
+if(state.loadError){
+w.append(
+el("div",{class:"err show",role:"alert"},state.loadError),
+el("button",{class:"btn ghost",type:"button",onclick:init},"Reintentar")
+);
+return w;
+}
+
+if(!state.ready){
+w.append(el("p",{class:"sub"},"Cargando asesores…"));
+return w;
+}
+
+const list=el("div",{class:"opts"});
+state.advisors.forEach(name=>{
+list.append(
+el("button",{
+class:"opt"+(name===state.advisor?" sel":""),
+type:"button",
+onclick:()=>{state.advisor=name;go(1);}
+},
+el("span",{class:"av"},initials(name)),
+el("span",{},name)
+)
+);
 });
-
-document.getElementById(
-"text-"+question
-).textContent=
-value+" de 5 - "+
-label(question);
-
-});
-
-});
-
-});
-
-
-/* TEXTOS DE LAS ESTRELLAS */
-
-function label(question){
-
-const labels={
-
-service_rating:"Atención",
-
-attention_rating:"Conocimiento Producto",
-
-information_rating:"Adición",
-
-solution_rating:"Caja",
-
-recommendation_rating:"Experiencia"
-
-};
-
-return labels[question]||"";
-
+w.append(list);
+return w;
 }
 
+function viewQuestion(i){
+const q=QUESTIONS[i];
+const cur=state.r[q.key]||0;
 
-/* CARGAR TIENDA */
+const word=el("div",{class:"word","aria-live":"polite"},WORDS[cur]);
+const stars=el("div",{class:"stars",role:"group","aria-label":q.tag});
 
-async function loadStore(){
-
-try{
-
-const params=
-new URLSearchParams(
-window.location.search
+for(let n=1;n<=5;n++){
+stars.append(
+el("button",{
+type:"button",
+class:"st"+(n<=cur?" on":""),
+"aria-label":`${n} de 5: ${WORDS[n]}`,
+onclick:()=>{
+state.r[q.key]=n;
+[...stars.children].forEach((b,j)=>b.classList.toggle("on",j<n));
+word.textContent=WORDS[n];
+clearTimeout(state.t);
+state.t=setTimeout(()=>go(state.step+1),400);
+}
+},"★")
 );
-
-const slug=
-params.get("store")||
-"samsung-store-ambar";
-
-const result=
-await db
-.from("stores")
-.select("*")
-.eq("slug",slug)
-.eq("active",true)
-.single();
-
-if(result.error)
-throw result.error;
-
-if(!result.data)
-throw new Error("No se encontró la tienda.");
-
-storeId=
-result.data.id;
-
-document.getElementById(
-"storeName"
-).textContent=
-result.data.name;
-
-document.getElementById(
-"storeLocation"
-).textContent=
-`${result.data.city||""}, ${result.data.state||""}`;
-
-await loadAdvisors();
-
-}catch(e){
-
-console.error("TIENDA:",e);
-
-showError(
-"No se pudo cargar la tienda."
-);
-
 }
 
+return el("div",{},
+el("span",{class:"tag"},q.tag),
+el("h2",{},q.title),
+stars,
+word,
+el("p",{class:"scale"},"1 es muy mala y 5 es excelente")
+);
 }
 
-
-/* CARGAR ASESORES DE LA TIENDA */
-
-async function loadAdvisors(){
-
-const select=
-document.getElementById("advisor");
-
-const loading=
-document.getElementById("advisorLoading");
-
-loading.style.display="block";
-
-select.disabled=true;
-
-try{
-
-const result=
-await db
-.from("store_advisors")
-.select("id,name")
-.eq("store_id",storeId)
-.eq("active",true)
-.order("name");
-
-if(result.error)
-throw result.error;
-
-const advisors=
-result.data||[];
-
-select.innerHTML=
-'<option value="">Selecciona quién te atendió</option>';
-
-if(!advisors.length)
-throw new Error(
-"No hay asesores registrados para esta tienda."
-);
-
-advisors.forEach(advisor=>{
-
-const option=
-document.createElement("option");
-
-option.value=
-advisor.name;
-
-option.textContent=
-advisor.name;
-
-select.appendChild(option);
-
-});
-
-advisorsLoaded=true;
-
-}catch(e){
-
-console.error("ASESORES:",e);
-
-select.innerHTML=
-'<option value="">No se pudieron cargar los asesores</option>';
-
-showError(
-"No se pudieron cargar los asesores de esta tienda."
-);
-
-}finally{
-
-loading.style.display="none";
-
-select.disabled=false;
-
+function field(label,id,key,attrs,multi){
+const input=el(multi?"textarea":"input",{id,...attrs});
+input.value=state.f[key];
+input.addEventListener("input",()=>{state.f[key]=input.value;});
+return el("div",{class:"f"},el("label",{for:id},label),input);
 }
 
+function viewForm(){
+const err=el("div",{class:"err",id:"err",role:"alert"});
+
+const send=el("button",{class:"btn",id:"send",type:"button",onclick:submit},"Enviar mi opinión");
+
+return el("div",{},
+el("h2",{},"Último paso"),
+el("p",{class:"sub"},"Déjanos tus datos para dar seguimiento a tu experiencia."),
+field("Tu nombre","clientName","name",{type:"text",maxlength:"150",autocomplete:"name",placeholder:"Escribe tu nombre"}),
+field("Número de celular","clientPhone","phone",{type:"tel",inputmode:"tel",maxlength:"20",autocomplete:"tel",placeholder:"10 dígitos"}),
+el("div",{class:"f"},
+el("label",{for:"comment"},"Cuéntanos más ",el("small",{},"(opcional)")),
+(()=>{
+const t=el("textarea",{id:"comment",maxlength:"1000",placeholder:"¿Qué hicimos bien? ¿Qué podemos mejorar?"});
+t.value=state.f.comment;
+t.addEventListener("input",()=>{state.f.comment=t.value;});
+return t;
+})()
+),
+el("input",{class:"hp",id:"website",name:"website",tabindex:"-1",autocomplete:"off","aria-hidden":"true"}),
+el("p",{class:"note"},"Usaremos tus datos solo para dar seguimiento a tu experiencia en la tienda."),
+err,
+send
+);
 }
 
+/* ---------- envío ---------- */
 
-/* ENVIAR */
-
-document.getElementById(
-"submitButton"
-).addEventListener(
-"click",
-async()=>{
-
-const advisor=
-document.getElementById(
-"advisor"
-).value;
-
-
-const clientName=
-document.getElementById(
-"clientName"
-).value.trim();
-
-
-const clientPhone=
-document.getElementById(
-"clientPhone"
-).value.trim();
-
-
-const comment=
-document.getElementById(
-"comment"
-).value.trim();
-
-
-const button=
-document.getElementById(
-"submitButton"
-);
-
-
-/* VALIDAR ASESOR */
-
-if(!advisor){
-
-showError(
-"Por favor selecciona quién te atendió."
-);
-
-return;
-
-}
-
-
-/* VALIDAR NOMBRE DEL CLIENTE */
-
-if(!clientName){
-
-showError(
-"Por favor escribe tu nombre."
-);
-
-return;
-
-}
-
-
-/* VALIDAR CELULAR */
-
-if(!clientPhone){
-
-showError(
-"Por favor escribe tu número de celular."
-);
-
-return;
-
-}
-
-
-/* VALIDAR PREGUNTAS */
-
-for(const key in ratings){
-
-if(!ratings[key]){
-
-showError(
-"Por favor responde las 5 preguntas antes de enviar la encuesta."
-);
-
-return;
-
-}
-
-}
-
-
-/* VALIDAR TIENDA */
-
-if(!storeId){
-
-showError(
-"No se pudo identificar la tienda."
-);
-
-return;
-
-}
-
-
-/* VALIDAR ASESORES */
-
-if(!advisorsLoaded){
-
-showError(
-"Todavía no se ha cargado la lista de asesores."
-);
-
-return;
-
-}
-
-
-button.disabled=true;
-button.textContent="Enviando...";
-
-
-try{
-
-
-/* CALCULAR PROMEDIO */
-
-const average=
-(
-ratings.service_rating+
-ratings.attention_rating+
-ratings.information_rating+
-ratings.solution_rating+
-ratings.recommendation_rating
-)/5;
-
-
-const overallRating=
-Math.round(average);
-
-
-/*
-El asesor seleccionado se guarda
-en customer_name para mantener
-compatible el sistema actual.
-*/
-
-
-const result=
-await db
-.from("reviews")
-.insert({
-
-store_id:
-storeId,
-
-
-/* ASESOR */
-
-customer_name:
-advisor,
-
-
-/* DATOS DEL CLIENTE */
-
-client_name:
-clientName,
-
-client_phone:
-clientPhone,
-
-
-/* CALIFICACIONES */
-
-rating:
-overallRating,
-
-service_rating:
-ratings.service_rating,
-
-attention_rating:
-ratings.attention_rating,
-
-information_rating:
-ratings.information_rating,
-
-solution_rating:
-ratings.solution_rating,
-
-recommendation_rating:
-ratings.recommendation_rating,
-
-
-/* COMENTARIO */
-
-comment:
-comment||null,
-
-
-is_published:
-true
-
-});
-
-
-if(result.error)
-throw result.error;
-
-
-/* PANTALLA FINAL */
-
-document.getElementById(
-"surveyContainer"
-).style.display="none";
-
-
-document.querySelector(
-"footer"
-).style.display="none";
-
-
-document.getElementById(
-"thanks"
-).style.display="flex";
-
-
-window.scrollTo(0,0);
-
-
-}catch(e){
-
-console.error(
-"ENCUESTA:",
-e
-);
-
-showError(
-"No se pudo enviar la encuesta: "+
-(e.message||"Error desconocido")
-);
-
-button.disabled=false;
-
-button.textContent="Enviar encuesta";
-
-}
-
-});
-
-
-/* ERROR */
-
-function showError(text){
-
-const box=
-document.getElementById(
-"errorMessage"
-);
-
+function fail(text){
+const box=$("#err");
 box.textContent=text;
-
-box.style.display="block";
-
-window.scrollTo({
-top:document.body.scrollHeight,
-behavior:"smooth"
-});
-
+box.classList.add("show");
+box.scrollIntoView({block:"nearest",behavior:"smooth"});
 }
 
+async function submit(){
+if(state.sending)return;
+$("#err").classList.remove("show");
 
-/* INICIAR */
+const name=state.f.name.trim();
+const digits=state.f.phone.replace(/\D/g,"");
+const comment=state.f.comment.trim();
 
-loadStore();
+if(!state.advisor)return fail("Vuelve al inicio y elige quién te atendió.");
+if(QUESTIONS.some(q=>!state.r[q.key]))return fail("Faltan preguntas por responder. Usa la flecha para volver.");
+if(!name)return fail("Escribe tu nombre.");
+if(digits.length<10||digits.length>15)return fail("Escribe un número de celular válido de 10 dígitos.");
+if(!state.storeId)return fail("No se pudo identificar la tienda. Recarga la página.");
 
+const values=QUESTIONS.map(q=>state.r[q.key]);
+const average=values.reduce((a,b)=>a+b,0)/values.length;
+
+/* Campo trampa: los bots lo llenan, las personas no lo ven */
+if($("#website").value){return done(average);}
+
+state.sending=true;
+const btn=$("#send");
+btn.disabled=true;
+btn.textContent="Enviando…";
+
+try{
+const result=await db.from("reviews").insert({
+store_id:state.storeId,
+
+/* El asesor sigue guardándose en customer_name para que el panel actual funcione igual */
+customer_name:state.advisor,
+
+client_name:name,
+client_phone:digits,
+
+rating:Math.round(average),
+service_rating:state.r.service_rating,
+attention_rating:state.r.attention_rating,
+information_rating:state.r.information_rating,
+solution_rating:state.r.solution_rating,
+recommendation_rating:state.r.recommendation_rating,
+
+comment:comment||null,
+is_published:true
+});
+
+if(result.error)throw result.error;
+done(average);
+
+}catch(e){
+console.error("ENCUESTA:",e);
+state.sending=false;
+btn.disabled=false;
+btn.textContent="Enviar mi opinión";
+fail("No se pudo enviar tu opinión. Revisa tu conexión e inténtalo de nuevo.");
+}
+}
+
+function done(average){
+$("#back").classList.remove("on");
+$("#segs").replaceChildren();
+
+const good=average>=4;
+
+$("#content").replaceChildren(
+el("div",{class:"thanks"},
+el("div",{class:"ok"},"✓"),
+el("h2",{},"¡Gracias por compartir tu experiencia!"),
+el("p",{class:"sub"},good
+?"Nos alegra que tu visita haya sido buena."
+:"Lamentamos que tu experiencia no fuera la mejor. Revisaremos tus comentarios para mejorar."),
+good&&GOOGLE_REVIEW_URL
+?el("a",{class:"btn",href:GOOGLE_REVIEW_URL,target:"_blank",rel:"noopener"},"Dejar reseña en Google")
+:null
+)
+);
+window.scrollTo(0,0);
+}
+
+/* ---------- carga de tienda y asesores ---------- */
+
+async function init(){
+state.ready=false;
+state.loadError="";
+render();
+
+try{
+if(!db)throw new Error("No se pudo cargar la conexión.");
+
+const params=new URLSearchParams(location.search);
+const slug=params.get("store")||"samsung-store-ambar";
+const wanted=(params.get("advisor")||"").trim().toLowerCase();
+
+const st=await db.from("stores").select("*").eq("slug",slug).eq("active",true).single();
+if(st.error)throw st.error;
+if(!st.data)throw new Error("No se encontró la tienda.");
+
+state.storeId=st.data.id;
+$("#storeName").textContent=st.data.name;
+$("#storeLocation").textContent=
+[st.data.city,st.data.state].filter(Boolean).join(", ");
+
+const ad=await db.from("store_advisors").select("id,name")
+.eq("store_id",state.storeId).eq("active",true).order("name");
+if(ad.error)throw ad.error;
+
+state.advisors=(ad.data||[]).map(a=>a.name);
+if(!state.advisors.length)throw new Error("Esta tienda no tiene asesores registrados.");
+
+state.ready=true;
+
+/* Enlace/QR por asesor: ?advisor=Nombre salta directo a la primera pregunta */
+const match=state.advisors.find(n=>n.toLowerCase()===wanted);
+if(match){state.advisor=match;go(1);return;}
+
+}catch(e){
+console.error("CARGA:",e);
+state.loadError="No pudimos cargar la encuesta. Revisa tu conexión e inténtalo de nuevo.";
+$("#storeName").textContent="Samsung Experience Store";
+$("#storeLocation").textContent="";
+}
+
+render();
+}
+
+init();
 </script>
-
 </body>
 </html>
