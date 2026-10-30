@@ -282,7 +282,9 @@ const send=el("button",{class:"btn",id:"send",type:"button",onclick:submit},"Env
 
 return el("div",{},
 el("h2",{},"Último paso"),
-el("p",{class:"sub"},"Déjanos tus datos para dar seguimiento a tu experiencia."),
+el("p",{class:"sub"},state.f.name&&state.f.phone
+?"Revisa que tus datos estén correctos y envía tu opinión."
+:"Déjanos tus datos para dar seguimiento a tu experiencia."),
 field("Tu nombre","clientName","name",{type:"text",maxlength:"150",autocomplete:"name",placeholder:"Escribe tu nombre"}),
 field("Número de celular","clientPhone","phone",{type:"tel",inputmode:"tel",maxlength:"20",autocomplete:"tel",placeholder:"10 dígitos"}),
 el("div",{class:"f"},
@@ -402,6 +404,10 @@ if(!db)throw new Error("No se pudo cargar la conexión.");
 const params=new URLSearchParams(location.search);
 const slug=params.get("store")||"samsung-store-ambar";
 const wanted=(params.get("advisor")||"").trim().toLowerCase();
+
+/* Si el enlace viene de WhatsApp, nombre y celular llegan ya escritos (el cliente puede corregirlos) */
+state.f.name=(params.get("name")||"").trim().slice(0,150);
+state.f.phone=(params.get("phone")||"").replace(/[^\d+\s()-]/g,"").slice(0,20);
 
 const st=await db.from("stores").select("*").eq("slug",slug).eq("active",true).single();
 if(st.error)throw st.error;
