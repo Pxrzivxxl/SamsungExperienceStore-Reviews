@@ -92,6 +92,9 @@ const base=SURVEY_URL||new URL("./",location.href).href;
 const u=new URL(base);
 u.searchParams.set("store",slug);
 if($("advisor").value)u.searchParams.set("advisor",$("advisor").value);
+const n=$("cname").value.trim(),p=$("phone").value.replace(/\D/g,"");
+if(n)u.searchParams.set("name",n);
+if(p)u.searchParams.set("phone",p);
 return u.toString();
 }
 
@@ -119,7 +122,7 @@ return "";
 }
 
 $("msg").addEventListener("input",()=>{edited=true});
-["advisor","cname","ok"].forEach(id=>$(id).addEventListener("input",()=>{
+["advisor","cname","phone","ok"].forEach(id=>$(id).addEventListener("input",()=>{
 if(id==="advisor"){try{localStorage.setItem("adv_"+slug,$("advisor").value)}catch(_){}}
 refresh();
 }));
