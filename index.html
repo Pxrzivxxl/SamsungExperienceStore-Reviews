@@ -80,6 +80,7 @@ width:100%;border:2px solid var(--line);border-radius:14px;padding:14px;
 font:inherit;font-size:17px;background:var(--paper);color:var(--ink)
 }
 .f textarea{min-height:110px;resize:vertical}
+.f input[readonly]{background:var(--soft);color:var(--mut);border-style:dashed}
 .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
 .note{color:var(--mut);font-size:13px;line-height:1.45;margin-top:14px}
 
@@ -149,7 +150,7 @@ const $=s=>document.querySelector(s);
 
 const state={
 storeId:null,advisors:[],advisor:"",ready:false,loadError:"",
-step:0,r:{},f:{name:"",phone:"",comment:""},t:null,sending:false
+step:0,r:{},f:{name:"",phone:"",comment:""},lock:{name:false,phone:false},t:null,sending:false
 };
 
 function el(tag,props={},...kids){
@@ -282,11 +283,11 @@ const send=el("button",{class:"btn",id:"send",type:"button",onclick:submit},"Env
 
 return el("div",{},
 el("h2",{},"Último paso"),
-el("p",{class:"sub"},state.f.name&&state.f.phone
-?"Revisa que tus datos estén correctos y envía tu opinión."
+el("p",{class:"sub"},state.lock.phone
+?"Tus datos ya quedaron registrados. Solo falta enviar tu opinión."
 :"Déjanos tus datos para dar seguimiento a tu experiencia."),
-field("Tu nombre","clientName","name",{type:"text",maxlength:"150",autocomplete:"name",placeholder:"Escribe tu nombre"}),
-field("Número de celular","clientPhone","phone",{type:"tel",inputmode:"tel",maxlength:"20",autocomplete:"tel",placeholder:"10 dígitos"}),
+field("Tu nombre","clientName","name",{type:"text",maxlength:"150",autocomplete:"name",placeholder:"Escribe tu nombre",...(state.lock.name?{readonly:"readonly"}:{})}),
+field("Número de celular","clientPhone","phone",{type:"tel",inputmode:"tel",maxlength:"20",autocomplete:"tel",placeholder:"10 dígitos",...(state.lock.phone?{readonly:"readonly"}:{})}),
 el("div",{class:"f"},
 el("label",{for:"comment"},"Cuéntanos más ",el("small",{},"(opcional)")),
 (()=>{
@@ -408,6 +409,11 @@ const wanted=(params.get("advisor")||"").trim().toLowerCase();
 /* Si el enlace viene de WhatsApp, nombre y celular llegan ya escritos (el cliente puede corregirlos) */
 state.f.name=(params.get("name")||"").trim().slice(0,150);
 state.f.phone=(params.get("phone")||"").replace(/[^\d+\s()-]/g,"").slice(0,20);
+
+/* Si llegó por WhatsApp con celular válido, esos datos quedan bloqueados (solo lectura).
+   Por el QR de la tienda no hay datos en el enlace, así que el cliente los escribe. */
+state.lock.phone=state.f.phone.replace(/\D/g,"").length>=10;
+state.lock.name=state.lock.phone&&!!state.f.name;
 
 const st=await db.from("stores").select("*").eq("slug",slug).eq("active",true).single();
 if(st.error)throw st.error;
