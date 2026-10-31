@@ -381,9 +381,9 @@ const good=!dup&&average>=4;
 $("#content").replaceChildren(
 el("div",{class:"thanks"},
 el("div",{class:"ok"},"✓"),
-el("h2",{},dup?"Ya recibimos tu opinión":"¡Gracias por compartir tu experiencia!"),
+el("h2",{},dup?"Ya recibimos tu encuesta":"¡Gracias por compartir tu experiencia!"),
 el("p",{class:"sub"},dup
-?"Solo registramos una encuesta por cliente cada mes en cada tienda. ¡Gracias por tu tiempo!"
+?"Ya hemos recibido tu encuesta anteriormente. Solo registramos una por cliente cada mes en cada tienda. ¡Gracias por tu tiempo!"
 :good
 ?"Nos alegra que tu visita haya sido buena."
 :"Lamentamos que tu experiencia no fuera la mejor. Revisaremos tus comentarios para mejorar."),
@@ -435,6 +435,14 @@ state.advisors=(ad.data||[]).map(a=>a.name);
 if(!state.advisors.length)throw new Error("Esta tienda no tiene asesores registrados.");
 
 state.ready=true;
+
+/* Enlace de WhatsApp: si ese celular ya respondió esta tienda este mes, se avisa de inmediato */
+if(state.lock.phone){
+try{
+const dup=await db.rpc("encuesta_ya_respondida",{p_slug:slug,p_phone:state.f.phone.replace(/\D/g,"")});
+if(!dup.error&&dup.data===true){done(0,true);return;}
+}catch(_){}
+}
 
 /* Enlace/QR por asesor: ?advisor=Nombre salta directo a la primera pregunta */
 const match=state.advisors.find(n=>n.toLowerCase()===wanted);
