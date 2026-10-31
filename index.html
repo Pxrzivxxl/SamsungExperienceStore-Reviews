@@ -365,23 +365,26 @@ done(average);
 }catch(e){
 console.error("ENCUESTA:",e);
 state.sending=false;
+if(e&&e.code==="23505")return done(0,true);
 btn.disabled=false;
 btn.textContent="Enviar mi opinión";
 fail("No se pudo enviar tu opinión. Revisa tu conexión e inténtalo de nuevo.");
 }
 }
 
-function done(average){
+function done(average,dup){
 $("#back").classList.remove("on");
 $("#segs").replaceChildren();
 
-const good=average>=4;
+const good=!dup&&average>=4;
 
 $("#content").replaceChildren(
 el("div",{class:"thanks"},
 el("div",{class:"ok"},"✓"),
-el("h2",{},"¡Gracias por compartir tu experiencia!"),
-el("p",{class:"sub"},good
+el("h2",{},dup?"Ya recibimos tu opinión":"¡Gracias por compartir tu experiencia!"),
+el("p",{class:"sub"},dup
+?"Solo registramos una encuesta por cliente cada mes en cada tienda. ¡Gracias por tu tiempo!"
+:good
 ?"Nos alegra que tu visita haya sido buena."
 :"Lamentamos que tu experiencia no fuera la mejor. Revisaremos tus comentarios para mejorar."),
 good&&GOOGLE_REVIEW_URL
