@@ -85,7 +85,7 @@ const SURVEY_URL="";
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 const slug=params.get("store")||"samsung-store-ambar";
-let storeName="Samsung Store",edited=false;
+let storeName="Samsung Store",edited=false,db=null,blocked=false,ct;
 
 function surveyLink(){
 const base=SURVEY_URL||new URL("./",location.href).href;
@@ -107,7 +107,7 @@ return `Hola${n?" "+n:""}, gracias por tu compra en ${storeName}.`+
 
 function refresh(){
 if(!edited)$("msg").value=buildMsg();
-$("send").disabled=!($("ok").checked&&$("advisor").value);
+$("send").disabled=!($("ok").checked&&$("advisor").value)||blocked;
 }
 
 function fail(t){const e=$("err");e.textContent=t;e.classList.add("show");e.scrollIntoView({block:"nearest",behavior:"smooth"})}
@@ -121,6 +121,24 @@ if(d.length>=11&&d.length<=15)return d;
 return "";
 }
 
+/* Al escribir el celular, se revisa si ya respondió la encuesta de esta tienda este mes */
+async function checkDup(){
+const mine=$("phone").value,num=normalize(mine);
+blocked=false;$("err").classList.remove("show");
+if(num&&db){
+try{
+const r=await db.rpc("encuesta_ya_respondida",{p_slug:slug,p_phone:num});
+if($("phone").value!==mine)return;
+if(!r.error&&r.data===true){
+blocked=true;
+fail("Este cliente ya respondió la encuesta de esta tienda este mes. No se puede enviar otra.");
+}
+}catch(_){}
+}
+refresh();
+}
+$("phone").addEventListener("input",()=>{clearTimeout(ct);ct=setTimeout(checkDup,500)});
+
 $("msg").addEventListener("input",()=>{edited=true});
 ["advisor","cname","phone","ok"].forEach(id=>$(id).addEventListener("input",()=>{
 if(id==="advisor"){try{localStorage.setItem("adv_"+slug,$("advisor").value)}catch(_){}}
@@ -133,17 +151,18 @@ const num=normalize($("phone").value);
 if(!$("advisor").value)return fail("Elige quién atendió al cliente.");
 if(!num)return fail("Escribe un número de celular válido de 10 dígitos.");
 if(!$("ok").checked)return fail("Confirma que el cliente aceptó recibir la encuesta.");
+if(blocked)return fail("Este cliente ya respondió la encuesta de esta tienda este mes. No se puede enviar otra.");
 const a=document.createElement("a");
 a.href="https://wa.me/"+num+"?text="+encodeURIComponent($("msg").value);
 a.target="_blank";a.rel="noopener";
 document.body.appendChild(a);a.click();a.remove();
 /* Se limpia para el siguiente cliente; el asesor se queda seleccionado */
-$("phone").value="";$("cname").value="";$("ok").checked=false;edited=false;refresh();
+$("phone").value="";$("cname").value="";$("ok").checked=false;edited=false;blocked=false;refresh();
 toast("Listo. Presiona enviar en WhatsApp.");
 });
 
 async function init(){
-const db=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
+db=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
 try{
 if(!db)throw new Error("Sin conexión");
 const st=await db.from("stores").select("*").eq("slug",slug).eq("active",true).single();
