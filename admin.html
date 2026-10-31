@@ -120,10 +120,8 @@ th,td{padding:10px;border-bottom:1px solid var(--ln);text-align:left;font-size:1
 <section class="card"><h2>Encuestas de clientes</h2>
 <div class="sb adm">
 <span id="selCount">Ninguna seleccionada</span>
-<button class="btn" id="selVis">Seleccionar visibles</button>
 <button class="btn" id="selNone">Quitar selección</button>
 <button class="btn rd" id="delSel" disabled>Eliminar seleccionadas</button>
-<button class="btn rd" id="delAll">Eliminar todas las filtradas</button>
 </div>
 <div id="list"></div></section>
 </main>
@@ -361,12 +359,10 @@ selBar();
 /* ---------- borrado (solo administradores) ---------- */
 function selBar(){
 $("selCount").textContent=selected.size?selected.size+" seleccionada(s)":"Ninguna seleccionada";
-$("delSel").disabled=!selected.size;$("delAll").disabled=!filtered.length;
+$("delSel").disabled=!selected.size;
 }
-$("selVis").onclick=()=>{document.querySelectorAll(".pk").forEach(c=>{c.checked=true;selected.add(c.dataset.pick)});selBar()};
 $("selNone").onclick=()=>{selected.clear();document.querySelectorAll(".pk").forEach(c=>c.checked=false);selBar()};
 $("delSel").onclick=()=>delIds([...selected]);
-$("delAll").onclick=()=>delIds(filtered.map(r=>String(r.id)));
 async function delIds(ids,txt){
 if(!isAdmin)return alert("No tienes permisos para eliminar encuestas.");
 if(!ids.length)return;
