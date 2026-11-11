@@ -27,6 +27,7 @@ input,select{width:100%;padding:11px 12px;border:1.5px solid var(--ln);border-ra
 .btn{border:0;border-radius:12px;padding:11px 15px;font-weight:700;cursor:pointer;background:var(--ln);color:var(--ink);text-decoration:none;display:inline-block;text-align:center}
 .btn.p{background:var(--b);color:#fff}.btn.ok,.btn.wa{background:#dcf5ea;color:#0b5a3f}.btn.rd{background:#fde8e6;color:#9d2016}.btn:disabled{opacity:.45;cursor:default}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.k3{grid-template-columns:repeat(3,1fr)!important;margin-bottom:12px}
 .kp{background:#fff;border-radius:18px;padding:16px;box-shadow:0 2px 14px #0b102010}
 .kp b{display:block;font-size:32px;line-height:1.1;letter-spacing:-.02em}.kp span{color:var(--mut);font-size:13px}
 .c{color:var(--c)}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -109,6 +110,15 @@ th,td{padding:10px;border-bottom:1px solid var(--ln);text-align:left;font-size:1
 <section class="card"><h2>Tendencia</h2><div id="trend"></div></section>
 </div>
 
+<section class="card"><h2>📲 Envíos por WhatsApp</h2>
+<p class="sub">Clientes a los que se les mandó la encuesta (uno por tienda y mes) y cuántos respondieron.</p>
+<div class="kpis k3">
+<div class="kp"><b id="sEnv">0</b><span>Enviadas</span></div>
+<div class="kp"><b id="sResp">0</b><span>Respondidas</span></div>
+<div class="kp"><b id="sRate">0%</b><span>Tasa de respuesta</span></div>
+</div>
+<div id="sendTbl"></div></section>
+
 <section class="card"><h2>🏆 Ranking de asesores</h2>
 <p class="sub">Ordenado por promedio general. Solo aparecen asesores con encuestas.</p>
 <div id="rank"></div></section>
@@ -139,7 +149,7 @@ const ADMIN_EMAILS=["ethelredbcp@gmail.com","distrital.se@gmail.com"];
 const F=["service_rating","attention_rating","information_rating","solution_rating","recommendation_rating"];
 const MN={general:"Promedio general",service_rating:"Atención",attention_rating:"Conocimiento Producto",information_rating:"Adición",solution_rating:"Caja",recommendation_rating:"Experiencia"};
 const LOW=3;
-let db,reviews=[],stores=[],advisors=[],filtered=[],base=[],user=null,isAdmin=false,storeId=null,shown=10,rankAll=false,metric="",whoTxt="",qt;
+let db,reviews=[],stores=[],advisors=[],filtered=[],base=[],user=null,isAdmin=false,storeId=null,shown=10,rankAll=false,metric="",whoTxt="",qt,sends=[],sendsOk=true;
 const selected=new Set();
 const $=id=>document.getElementById(id);
 const esc=x=>{const d=document.createElement("div");d.textContent=String(x??"");return d.innerHTML};
@@ -206,7 +216,7 @@ $("app").classList.add("hidden");$("login").classList.remove("hidden");$("passwo
 /* ---------- carga ---------- */
 async function load(){
 $("list").innerHTML='<div class="empty">Cargando encuestas…</div>';
-try{await loadStores();await loadAdvisors();await loadReviews()}
+try{await loadStores();await loadAdvisors();await loadSends();await loadReviews()}
 catch(e){console.error(e);$("list").innerHTML='<div class="err">No se pudieron cargar las encuestas:<br>'+esc(e.message)+"</div>"}
 }
 async function loadStores(){
@@ -249,7 +259,7 @@ shown=10;selected.clear();
 const st=isAdmin?$("storeFilter").value:storeId,ad=$("advisorFilter").value,q=$("q").value.trim().toLowerCase(),low=$("lowOnly").checked;
 base=dated(reviews.filter(r=>(!st||String(r.store_id)===String(st))&&(!ad||(r.customer_name||"")===ad)));
 filtered=base.filter(r=>(!q||[r.comment,r.client_name,r.client_phone,r.customer_name].join(" ").toLowerCase().includes(q))&&(!low||gen([r])<LOW));
-kpis();trend();ranking();storesSum();list();selBar();
+kpis();trend();ranking();storesSum();sendsCard();list();selBar();
 }
 ["storeFilter","advisorFilter","from","to","lowOnly"].forEach(id=>$(id).addEventListener("change",()=>{
 if(id==="storeFilter"){advFilter();$("advisorFilter").value=""}
@@ -313,6 +323,53 @@ e.innerHTML=tbl(["Pos.","Asesor","Tienda","Encuestas","Atención","Conocimiento"
 (rows.length>5?`<div style="text-align:center;margin-top:12px"><button class="btn" data-a="rk">${rankAll?"Ocultar asesores ▲":"Ver todos los asesores ▼"}</button></div>`:"");
 }
 $("rank").addEventListener("click",e=>{if(e.target.dataset.a==="rk"){rankAll=!rankAll;ranking()}});
+
+/* ---------- envíos por WhatsApp ---------- */
+async function loadSends(){
+try{
+let all=[],from=0;
+for(;;){
+let q=db.from("survey_sends").select("*").order("created_at",{ascending:false}).range(from,from+999);
+if(!isAdmin)q=q.eq("store_id",storeId);
+const r=await q;if(r.error)throw r.error;
+const d=r.data||[];all=all.concat(d);
+if(d.length<1000)break;from+=1000;
+}
+sends=all;sendsOk=true;
+}catch(e){console.warn("ENVÍOS:",e.message);sends=[];sendsOk=false}
+}
+function sendsCard(){
+const box=$("sendTbl"),ids=["sEnv","sResp","sRate"];
+if(!sendsOk){ids.forEach(i=>$(i).textContent="–");box.innerHTML='<div class="empty">El registro de envíos aún no está activado.</div>';return}
+const st=isAdmin?$("storeFilter").value:storeId,ad=$("advisorFilter").value;
+const p10=s=>String(s||"").replace(/\D/g,"").slice(-10),p=n=>String(n).padStart(2,"0");
+const mk=d=>{const t=new Date(d);return t.getFullYear()+"-"+p(t.getMonth()+1)};
+/* Encuestas respondidas, por tienda y celular */
+const rev={};
+reviews.forEach(r=>{const ph=p10(r.client_phone);if(ph.length===10)(rev[r.store_id+"|"+ph]=rev[r.store_id+"|"+ph]||[]).push(+new Date(r.created_at))});
+/* Un cliente = una tienda + un celular + un mes (aunque se le haya enviado dos veces) */
+const list=dated(sends.filter(s=>(!st||String(s.store_id)===String(st))&&(!ad||s.advisor_name===ad)))
+.sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+const groups={};
+list.forEach(s=>{
+const ph=p10(s.client_phone),k=s.store_id+"|"+ph+"|"+mk(s.created_at);
+if(!groups[k])groups[k]={store:s.store_id,adv:s.advisor_name,t:+new Date(s.created_at),rk:s.store_id+"|"+ph};
+});
+const rows={};let sent=0,resp=0;
+Object.values(groups).forEach(g=>{
+const ok=(rev[g.rk]||[]).some(t=>t>=g.t),k=g.store+"|"+g.adv;
+const o=rows[k]=rows[k]||{adv:g.adv,store:stores.find(s=>String(s.id)===String(g.store))?.name||"Tienda",n:0,r:0};
+o.n++;sent++;if(ok){o.r++;resp++}
+});
+$("sEnv").textContent=sent;$("sResp").textContent=resp;
+$("sRate").textContent=sent?Math.round(resp/sent*100)+"%":"0%";
+const arr=Object.values(rows).sort((a,b)=>b.r/b.n-a.r/a.n||b.n-a.n);
+if(!arr.length){box.innerHTML='<div class="empty">Todavía no hay envíos registrados en este periodo.</div>';return}
+box.innerHTML=tbl(["Asesor","Tienda","Enviadas","Respondidas","Tasa"],arr.map(o=>{
+const v=o.r/o.n*100;
+return `<tr><td><b>${esc(o.adv)}</b></td><td>${esc(o.store)}</td><td>${o.n}</td><td>${o.r}</td><td class="tc ${v>=60?"g":v>=30?"m":"r"}">${Math.round(v)}%</td></tr>`;
+}).join(""))+'<p class="sub" style="margin-top:10px">Tasa: verde 60% o más, ámbar de 30% a 60%, rojo menos de 30%.</p>';
+}
 
 function storesSum(){
 if(!isAdmin)return;
