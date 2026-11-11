@@ -22,6 +22,7 @@ input,select,textarea{width:100%;border:2px solid var(--line);border-radius:14px
 textarea{min-height:150px;resize:vertical;font-size:15px;line-height:1.45}
 .ck{display:flex;gap:12px;align-items:flex-start;background:var(--soft);border-radius:14px;padding:14px;font-size:15px;line-height:1.4;cursor:pointer;font-weight:500;margin-bottom:0}
 .ck input{width:24px;height:24px;padding:0;flex:none;margin-top:1px}
+.ck a{color:var(--blue);font-weight:700}
 .btn{display:block;width:100%;margin-top:20px;border:0;border-radius:16px;background:var(--wa);color:#fff;font:inherit;font-size:18px;font-weight:700;padding:17px;cursor:pointer}
 .btn:disabled{opacity:.45;cursor:default}
 .err{display:none;margin-bottom:16px;background:var(--badbg);color:var(--bad);padding:13px 15px;border-radius:12px;font-size:15px;line-height:1.4}
@@ -64,7 +65,7 @@ textarea{min-height:150px;resize:vertical;font-size:15px;line-height:1.45}
 <textarea id="msg"></textarea>
 </div>
 
-<label class="ck"><input type="checkbox" id="ok"> El cliente aceptó recibir la encuesta por WhatsApp.</label>
+<label class="ck"><input type="checkbox" id="ok"><span>El cliente aceptó recibir la encuesta por WhatsApp y que usemos su nombre y celular para dar seguimiento a su experiencia, y se le informó del <a href="https://www.workplay.mx/aviso-privacidad-clientes/" target="_blank" rel="noopener">Aviso de privacidad</a>.</span></label>
 
 <button class="btn" id="send" disabled>Abrir WhatsApp</button>
 <p class="note">Se abrirá WhatsApp con el mensaje listo. Solo falta que presiones enviar.</p>
@@ -85,7 +86,7 @@ const SURVEY_URL="";
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 const slug=params.get("store")||"samsung-store-ambar";
-let storeName="Samsung Store",edited=false,db=null,blocked=false,ct;
+let storeName="Samsung Store",edited=false,db=null,blocked=false,ct,storeId=null;
 
 function surveyLink(){
 const base=SURVEY_URL||new URL("./",location.href).href;
@@ -102,7 +103,7 @@ function buildMsg(){
 const n=$("cname").value.trim(),a=$("advisor").value;
 return `Hola${n?" "+n:""}, gracias por tu compra en ${storeName}.`+
 (a?` Te atendió ${a}.`:"")+
-`\n\n¿Nos ayudas con una breve encuesta sobre tu experiencia? Toma menos de un minuto:\n${surveyLink()}\n\n¡Gracias por tu opinión!`;
+`\n\n¿Nos ayudas con una breve encuesta sobre tu experiencia? Toma menos de un minuto:\n${surveyLink()}\n\nUsaremos tu nombre y celular para dar seguimiento a tu experiencia. Aviso de privacidad: https://www.workplay.mx/aviso-privacidad-clientes/\n\n¡Gracias por tu opinión!`;
 }
 
 function refresh(){
@@ -156,6 +157,12 @@ const a=document.createElement("a");
 a.href="https://wa.me/"+num+"?text="+encodeURIComponent($("msg").value);
 a.target="_blank";a.rel="noopener";
 document.body.appendChild(a);a.click();a.remove();
+
+/* Registro del envío (no frena ni bloquea WhatsApp si falla) */
+if(db&&storeId){
+db.from("survey_sends").insert({store_id:storeId,advisor_name:$("advisor").value,client_phone:num})
+.then(r=>{if(r.error)console.error("REGISTRO:",r.error)});
+}
 /* Se limpia para el siguiente cliente; el asesor se queda seleccionado */
 $("phone").value="";$("cname").value="";$("ok").checked=false;edited=false;blocked=false;refresh();
 toast("Listo. Presiona enviar en WhatsApp.");
@@ -168,6 +175,7 @@ if(!db)throw new Error("Sin conexión");
 const st=await db.from("stores").select("*").eq("slug",slug).eq("active",true).single();
 if(st.error)throw st.error;
 storeName=st.data.name;
+storeId=st.data.id;
 $("storeName").textContent=st.data.name;
 $("storeLocation").textContent=[st.data.city,st.data.state].filter(Boolean).join(", ");
 const ad=await db.from("store_advisors").select("name").eq("store_id",st.data.id).eq("active",true).order("name");
