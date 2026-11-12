@@ -65,7 +65,7 @@ textarea{min-height:150px;resize:vertical;font-size:15px;line-height:1.45}
 <textarea id="msg"></textarea>
 </div>
 
-<label class="ck"><input type="checkbox" id="ok"><span>El cliente aceptó recibir la encuesta por WhatsApp y que usemos su nombre y celular para dar seguimiento a su experiencia, y se le informó del <a href="https://www.workplay.mx/aviso-privacidad-clientes/" target="_blank" rel="noopener">Aviso de privacidad</a>.</span></label>
+<label class="ck"><input type="checkbox" id="ok"><span>El cliente aceptó recibir la encuesta por WhatsApp.</span></label>
 
 <button class="btn" id="send" disabled>Abrir WhatsApp</button>
 <p class="note">Se abrirá WhatsApp con el mensaje listo. Solo falta que presiones enviar.</p>
@@ -103,7 +103,7 @@ function buildMsg(){
 const n=$("cname").value.trim(),a=$("advisor").value;
 return `Hola${n?" "+n:""}, gracias por tu compra en ${storeName}.`+
 (a?` Te atendió ${a}.`:"")+
-`\n\n¿Nos ayudas con una breve encuesta sobre tu experiencia? Toma menos de un minuto:\n${surveyLink()}\n\nUsaremos tu nombre y celular para dar seguimiento a tu experiencia. Aviso de privacidad: https://www.workplay.mx/aviso-privacidad-clientes/\n\n¡Gracias por tu opinión!`;
+`\n\n¿Nos ayudas con una breve encuesta sobre tu experiencia? Toma menos de un minuto:\n${surveyLink()}\n\n¡Gracias por tu opinión!`;
 }
 
 function refresh(){
