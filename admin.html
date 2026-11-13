@@ -28,6 +28,17 @@ input,select{width:100%;padding:11px 12px;border:1.5px solid var(--ln);border-ra
 .btn.p{background:var(--b);color:#fff}.btn.ok,.btn.wa{background:#dcf5ea;color:#0b5a3f}.btn.rd{background:#fde8e6;color:#9d2016}.btn:disabled{opacity:.45;cursor:default}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .k3{grid-template-columns:repeat(3,1fr)!important;margin-bottom:12px}
+details[open]>summary::after{content:"▴"}
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tabs button{flex:1;border:0;border-radius:14px;padding:13px 8px;font-weight:700;background:#fff;color:var(--ink);cursor:pointer;box-shadow:0 2px 14px #0b102010}
+.tabs button.on{background:var(--b);color:#fff}
+body.vE .op{display:none!important}
+.sr{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--ln);border-radius:14px;padding:12px 14px;margin-top:10px}
+.sr small{display:block;color:var(--mut);font-size:13px;margin-top:2px}
+.chip{font-weight:700;font-size:13px;padding:6px 10px;border-radius:99px;background:var(--bg);color:var(--c);white-space:nowrap}
+#sendTbl .tw{max-height:360px;overflow:auto}
+#sendTbl table{min-width:0}
+#sendTbl th,#sendTbl td{padding:8px 6px;font-size:13px}
 .kp{background:#fff;border-radius:18px;padding:16px;box-shadow:0 2px 14px #0b102010}
 .kp b{display:block;font-size:32px;line-height:1.1;letter-spacing:-.02em}.kp span{color:var(--mut);font-size:13px}
 .c{color:var(--c)}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -84,20 +95,25 @@ th,td{padding:10px;border-bottom:1px solid var(--ln);text-align:left;font-size:1
 </header>
 
 <main>
+<nav class="tabs">
+<button type="button" class="on" data-v="panel">📊 Encuestas</button>
+<button type="button" data-v="envios">📲 Enviadas por WhatsApp</button>
+</nav>
 <section class="card filters">
 <div><label for="storeFilter">Tienda</label><select id="storeFilter"></select></div>
 <div><label for="advisorFilter">Asesor</label><select id="advisorFilter"></select></div>
 <div><label for="from">Desde</label><input type="date" id="from"></div>
 <div><label for="to">Hasta</label><input type="date" id="to"></div>
-<div class="wide"><label for="q">Buscar</label><input id="q" type="search" placeholder="Cliente, celular, comentario o asesor"></div>
-<label class="chk"><input type="checkbox" id="lowOnly"> Solo calificaciones bajas (promedio menor a 3)</label>
+<div class="wide op"><label for="q">Buscar</label><input id="q" type="search" placeholder="Cliente, celular, comentario o asesor"></div>
+<label class="chk op"><input type="checkbox" id="lowOnly"> Solo calificaciones bajas (promedio menor a 3)</label>
 <div class="row">
 <button class="btn" id="clear">Limpiar filtros</button>
 <button class="btn" id="refresh">Actualizar</button>
-<button class="btn ok" id="excel">Descargar Excel</button>
+<button class="btn ok op" id="excel">Descargar Excel</button>
 </div>
 </section>
 
+<div id="vPanel">
 <section class="kpis">
 <div class="kp"><b id="kTotal">0</b><span>Encuestas</span></div>
 <div class="kp"><b id="kAvg">0.0</b><span>Promedio general</span></div>
@@ -110,14 +126,6 @@ th,td{padding:10px;border-bottom:1px solid var(--ln);text-align:left;font-size:1
 <section class="card"><h2>Tendencia</h2><div id="trend"></div></section>
 </div>
 
-<section class="card"><h2>📲 Envíos por WhatsApp</h2>
-<p class="sub">Clientes a los que se les mandó la encuesta (uno por tienda y mes) y cuántos respondieron.</p>
-<div class="kpis k3">
-<div class="kp"><b id="sEnv">0</b><span>Enviadas</span></div>
-<div class="kp"><b id="sResp">0</b><span>Respondidas</span></div>
-<div class="kp"><b id="sRate">0%</b><span>Tasa de respuesta</span></div>
-</div>
-<div id="sendTbl"></div></section>
 
 <section class="card"><h2>🏆 Ranking de asesores</h2>
 <p class="sub">Ordenado por promedio general. Solo aparecen asesores con encuestas.</p>
@@ -134,6 +142,23 @@ th,td{padding:10px;border-bottom:1px solid var(--ln);text-align:left;font-size:1
 <button class="btn rd" id="delSel" disabled>Eliminar seleccionadas</button>
 </div>
 <div id="list"></div></section>
+</div>
+
+<div id="vEnvios" class="hidden">
+<section class="card"><h2>📲 Encuestas enviadas por WhatsApp</h2>
+<p class="sub">Clientes a los que se les mandó la encuesta (uno por tienda y mes) y cuántos respondieron. Usa los filtros de arriba para tienda, asesor y fechas.</p>
+<div class="kpis k3">
+<div class="kp"><b id="sEnv">0</b><span>Enviadas</span></div>
+<div class="kp"><b id="sResp">0</b><span>Respondidas</span></div>
+<div class="kp"><b id="sRate">0%</b><span>Tasa de respuesta</span></div>
+</div>
+<div id="sendTbl"></div></section>
+
+<section class="card"><h2>Detalle de envíos</h2>
+<label for="sendFilter" style="margin-top:10px">Mostrar</label>
+<select id="sendFilter"><option value="">Todos los envíos</option><option value="ok">Solo respondidos</option><option value="no">Solo sin responder</option></select>
+<div id="sendList"></div></section>
+</div>
 </main>
 </div>
 
@@ -167,7 +192,7 @@ function dated(d){const a=$("from").value,b=$("to").value;return d.filter(r=>{co
 /* ---------- acceso ---------- */
 function showErr(t){const e=$("loginError");e.textContent=t;e.classList.remove("hidden")}
 function start(){if(!window.supabase){showErr("No se pudo cargar Supabase.");return false}db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);return true}
-async function enter(){await setup();$("login").classList.add("hidden");$("app").classList.remove("hidden");await load()}
+async function enter(){await setup();$("login").classList.add("hidden");$("app").classList.remove("hidden");setView(location.hash==="#envios"?"envios":"panel");await load()}
 async function loginAdmin(){
 $("loginError").classList.add("hidden");
 const email=$("email").value.trim().toLowerCase(),pw=$("password").value;
@@ -338,9 +363,11 @@ if(d.length<1000)break;from+=1000;
 sends=all;sendsOk=true;
 }catch(e){console.warn("ENVÍOS:",e.message);sends=[];sendsOk=false}
 }
+let sendList=[],sendShown=20;
+const fmtPh=p=>p.length===10?p.slice(0,3)+" "+p.slice(3,6)+" "+p.slice(6):p;
 function sendsCard(){
 const box=$("sendTbl"),ids=["sEnv","sResp","sRate"];
-if(!sendsOk){ids.forEach(i=>$(i).textContent="–");box.innerHTML='<div class="empty">El registro de envíos aún no está activado.</div>';return}
+if(!sendsOk){ids.forEach(i=>$(i).textContent="–");box.innerHTML='<div class="empty">El registro de envíos aún no está activado.</div>';sendList=[];drawSends();return}
 const st=isAdmin?$("storeFilter").value:storeId,ad=$("advisorFilter").value;
 const p10=s=>String(s||"").replace(/\D/g,"").slice(-10),p=n=>String(n).padStart(2,"0");
 const mk=d=>{const t=new Date(d);return t.getFullYear()+"-"+p(t.getMonth()+1)};
@@ -353,23 +380,47 @@ const list=dated(sends.filter(s=>(!st||String(s.store_id)===String(st))&&(!ad||s
 const groups={};
 list.forEach(s=>{
 const ph=p10(s.client_phone),k=s.store_id+"|"+ph+"|"+mk(s.created_at);
-if(!groups[k])groups[k]={store:s.store_id,adv:s.advisor_name,t:+new Date(s.created_at),rk:s.store_id+"|"+ph};
+if(!groups[k])groups[k]={store:s.store_id,adv:s.advisor_name,t:+new Date(s.created_at),rk:s.store_id+"|"+ph,ph,n:0};
+groups[k].n++;
 });
-const rows={};let sent=0,resp=0;
+const rows={};let sent=0,resp=0;sendList=[];
 Object.values(groups).forEach(g=>{
 const ok=(rev[g.rk]||[]).some(t=>t>=g.t),k=g.store+"|"+g.adv;
+g.ok=ok;sendList.push(g);
 const o=rows[k]=rows[k]||{adv:g.adv,store:stores.find(s=>String(s.id)===String(g.store))?.name||"Tienda",n:0,r:0};
 o.n++;sent++;if(ok){o.r++;resp++}
 });
+sendList.sort((a,b)=>b.t-a.t);sendShown=20;
 $("sEnv").textContent=sent;$("sResp").textContent=resp;
 $("sRate").textContent=sent?Math.round(resp/sent*100)+"%":"0%";
 const arr=Object.values(rows).sort((a,b)=>b.r/b.n-a.r/a.n||b.n-a.n);
-if(!arr.length){box.innerHTML='<div class="empty">Todavía no hay envíos registrados en este periodo.</div>';return}
-box.innerHTML=tbl(["Asesor","Tienda","Enviadas","Respondidas","Tasa"],arr.map(o=>{
+if(!arr.length){box.innerHTML='<div class="empty">Todavía no hay envíos registrados en este periodo.</div>'}
+else box.innerHTML=tbl(["Asesor","Tienda","Enviadas","Respondidas","Tasa"],arr.map(o=>{
 const v=o.r/o.n*100;
 return `<tr><td><b>${esc(o.adv)}</b></td><td>${esc(o.store)}</td><td>${o.n}</td><td>${o.r}</td><td class="tc ${v>=60?"g":v>=30?"m":"r"}">${Math.round(v)}%</td></tr>`;
 }).join(""))+'<p class="sub" style="margin-top:10px">Tasa: verde 60% o más, ámbar de 30% a 60%, rojo menos de 30%.</p>';
+drawSends();
 }
+function drawSends(){
+const e=$("sendList"),f=$("sendFilter").value;
+const l=sendList.filter(g=>!f||(f==="ok"?g.ok:!g.ok));
+if(!l.length){e.innerHTML='<div class="empty">No hay envíos para mostrar.</div>';return}
+e.innerHTML=l.slice(0,sendShown).map(g=>`<div class="sr"><div><b>${esc(g.adv)}</b><small>${esc(stores.find(s=>String(s.id)===String(g.store))?.name||"Tienda")} · ${fecha(g.t)} · ${hora(g.t)}</small><small>📱 ${esc(fmtPh(g.ph))}${g.n>1?" · enviada "+g.n+" veces":""}</small></div><span class="chip ${g.ok?"g":"m"}">${g.ok?"Respondida":"Sin responder"}</span></div>`).join("")+
+(l.length>sendShown?`<div style="text-align:center;margin-top:14px"><button class="btn" id="sendMore">Ver más (${l.length-sendShown} restantes)</button></div>`:"");
+}
+$("sendFilter").addEventListener("change",()=>{sendShown=20;drawSends()});
+$("sendList").addEventListener("click",e=>{if(e.target.id==="sendMore"){sendShown+=20;drawSends()}});
+
+/* ---------- pestañas ---------- */
+function setView(v){
+document.body.classList.toggle("vE",v==="envios");
+$("vPanel").classList.toggle("hidden",v==="envios");
+$("vEnvios").classList.toggle("hidden",v!=="envios");
+document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));
+try{history.replaceState(null,"",location.pathname+location.search+(v==="envios"?"#envios":""))}catch(_){}
+window.scrollTo(0,0);
+}
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>setView(b.dataset.v)));
 
 function storesSum(){
 if(!isAdmin)return;
