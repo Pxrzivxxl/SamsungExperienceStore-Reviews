@@ -35,6 +35,9 @@ details[open]>summary::after{content:"▴"}
 body.vE .op{display:none!important}
 .sr{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--ln);border-radius:14px;padding:12px 14px;margin-top:10px}
 .sr small{display:block;color:var(--mut);font-size:13px;margin-top:2px}
+#sendList{scroll-margin-top:130px}
+.pg{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:16px}
+.pg span{font-weight:600;color:var(--mut);font-size:14px;text-align:center}
 .chip{font-weight:700;font-size:13px;padding:6px 10px;border-radius:99px;background:var(--bg);color:var(--c);white-space:nowrap}
 #sendTbl .tw{max-height:360px;overflow:auto}
 #sendTbl table{min-width:0}
@@ -363,7 +366,7 @@ if(d.length<1000)break;from+=1000;
 sends=all;sendsOk=true;
 }catch(e){console.warn("ENVÍOS:",e.message);sends=[];sendsOk=false}
 }
-let sendList=[],sendShown=20;
+let sendList=[],sendPage=1;const PER=10;
 const fmtPh=p=>p.length===10?p.slice(0,3)+" "+p.slice(3,6)+" "+p.slice(6):p;
 function sendsCard(){
 const box=$("sendTbl"),ids=["sEnv","sResp","sRate"];
@@ -373,24 +376,24 @@ const p10=s=>String(s||"").replace(/\D/g,"").slice(-10),p=n=>String(n).padStart(
 const mk=d=>{const t=new Date(d);return t.getFullYear()+"-"+p(t.getMonth()+1)};
 /* Encuestas respondidas, por tienda y celular */
 const rev={};
-reviews.forEach(r=>{const ph=p10(r.client_phone);if(ph.length===10)(rev[r.store_id+"|"+ph]=rev[r.store_id+"|"+ph]||[]).push(+new Date(r.created_at))});
+reviews.forEach(r=>{const ph=p10(r.client_phone);if(ph.length===10)(rev[r.store_id+"|"+ph]=rev[r.store_id+"|"+ph]||[]).push({t:+new Date(r.created_at),n:(r.client_name||"").trim()})});
 /* Un cliente = una tienda + un celular + un mes (aunque se le haya enviado dos veces) */
 const list=dated(sends.filter(s=>(!st||String(s.store_id)===String(st))&&(!ad||s.advisor_name===ad)))
 .sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
 const groups={};
 list.forEach(s=>{
 const ph=p10(s.client_phone),k=s.store_id+"|"+ph+"|"+mk(s.created_at);
-if(!groups[k])groups[k]={store:s.store_id,adv:s.advisor_name,t:+new Date(s.created_at),rk:s.store_id+"|"+ph,ph,n:0};
-groups[k].n++;
+if(!groups[k])groups[k]={store:s.store_id,adv:s.advisor_name,t:+new Date(s.created_at),rk:s.store_id+"|"+ph,ph,n:0,name:""};
+groups[k].n++;if(!groups[k].name&&s.client_name)groups[k].name=String(s.client_name).trim();
 });
 const rows={};let sent=0,resp=0;sendList=[];
 Object.values(groups).forEach(g=>{
-const ok=(rev[g.rk]||[]).some(t=>t>=g.t),k=g.store+"|"+g.adv;
-g.ok=ok;sendList.push(g);
+const m=(rev[g.rk]||[]).filter(x=>x.t>=g.t),ok=m.length>0,k=g.store+"|"+g.adv;
+g.ok=ok;if(!g.name)g.name=(m.find(x=>x.n)||{}).n||"";sendList.push(g);
 const o=rows[k]=rows[k]||{adv:g.adv,store:stores.find(s=>String(s.id)===String(g.store))?.name||"Tienda",n:0,r:0};
 o.n++;sent++;if(ok){o.r++;resp++}
 });
-sendList.sort((a,b)=>b.t-a.t);sendShown=20;
+sendList.sort((a,b)=>b.t-a.t);sendPage=1;
 $("sEnv").textContent=sent;$("sResp").textContent=resp;
 $("sRate").textContent=sent?Math.round(resp/sent*100)+"%":"0%";
 const arr=Object.values(rows).sort((a,b)=>b.r/b.n-a.r/a.n||b.n-a.n);
@@ -405,11 +408,15 @@ function drawSends(){
 const e=$("sendList"),f=$("sendFilter").value;
 const l=sendList.filter(g=>!f||(f==="ok"?g.ok:!g.ok));
 if(!l.length){e.innerHTML='<div class="empty">No hay envíos para mostrar.</div>';return}
-e.innerHTML=l.slice(0,sendShown).map(g=>`<div class="sr"><div><b>${esc(g.adv)}</b><small>${esc(stores.find(s=>String(s.id)===String(g.store))?.name||"Tienda")} · ${fecha(g.t)} · ${hora(g.t)}</small><small>📱 ${esc(fmtPh(g.ph))}${g.n>1?" · enviada "+g.n+" veces":""}</small></div><span class="chip ${g.ok?"g":"m"}">${g.ok?"Respondida":"Sin responder"}</span></div>`).join("")+
-(l.length>sendShown?`<div style="text-align:center;margin-top:14px"><button class="btn" id="sendMore">Ver más (${l.length-sendShown} restantes)</button></div>`:"");
+const pages=Math.ceil(l.length/PER);
+sendPage=Math.min(Math.max(1,sendPage),pages);
+const a=(sendPage-1)*PER;
+e.innerHTML=`<p class="sub" style="margin-top:12px">Mostrando ${a+1}–${Math.min(a+PER,l.length)} de ${l.length} envíos</p>`+
+l.slice(a,a+PER).map(g=>`<div class="sr"><div><b>${esc(g.name||"Cliente sin nombre")}</b><small>📱 ${esc(fmtPh(g.ph))}${g.n>1?" · enviada "+g.n+" veces":""}</small><small>Atendió: ${esc(g.adv)} · ${esc(stores.find(s=>String(s.id)===String(g.store))?.name||"Tienda")}</small><small>${fecha(g.t)} · ${hora(g.t)}</small></div><span class="chip ${g.ok?"g":"m"}">${g.ok?"Respondida":"Sin responder"}</span></div>`).join("")+
+(pages>1?`<div class="pg"><button class="btn" data-pg="-1"${sendPage<=1?" disabled":""}>‹ Anterior</button><span>Página ${sendPage} de ${pages}</span><button class="btn" data-pg="1"${sendPage>=pages?" disabled":""}>Siguiente ›</button></div>`:"");
 }
-$("sendFilter").addEventListener("change",()=>{sendShown=20;drawSends()});
-$("sendList").addEventListener("click",e=>{if(e.target.id==="sendMore"){sendShown+=20;drawSends()}});
+$("sendFilter").addEventListener("change",()=>{sendPage=1;drawSends()});
+$("sendList").addEventListener("click",e=>{const b=e.target.closest("[data-pg]");if(!b||b.disabled)return;sendPage+=Number(b.dataset.pg);drawSends();$("sendList").scrollIntoView({behavior:"smooth",block:"start"})});
 
 /* ---------- pestañas ---------- */
 function setView(v){
