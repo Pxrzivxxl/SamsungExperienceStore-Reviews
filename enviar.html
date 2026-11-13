@@ -160,8 +160,11 @@ document.body.appendChild(a);a.click();a.remove();
 
 /* Registro del envío (no frena ni bloquea WhatsApp si falla) */
 if(db&&storeId){
-db.from("survey_sends").insert({store_id:storeId,advisor_name:$("advisor").value,client_phone:num})
-.then(r=>{if(r.error)console.error("REGISTRO:",r.error)});
+const row={store_id:storeId,advisor_name:$("advisor").value,client_phone:num},nm=$("cname").value.trim();
+db.from("survey_sends").insert(nm?{...row,client_name:nm}:row).then(r=>{
+if(r.error&&nm){db.from("survey_sends").insert(row).then(()=>{})}  /* por si aún no existe la columna del nombre */
+else if(r.error)console.error("REGISTRO:",r.error);
+});
 }
 /* Se limpia para el siguiente cliente; el asesor se queda seleccionado */
 $("phone").value="";$("cname").value="";$("ok").checked=false;edited=false;blocked=false;refresh();
