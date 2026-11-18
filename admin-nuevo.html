@@ -192,6 +192,48 @@ tbody tr:hover{background:#f9faff}
 @media(max-width:480px){.fgrid{grid-template-columns:1fr}.fgrid .f-q,.fgrid .f-low{grid-column:auto}.ni span{font-size:10.5px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 @media(max-width:600px){.tsvg .ax{font-size:19px}}
+
+/* paginación de encuestas generales */
+#v-encuestas{scroll-margin-top:72px}
+.pgbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 14px;margin:12px 0}
+.pgi{font-size:13px;color:var(--mut)}.pgi b{color:var(--ink)}
+.pgs{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pgb{min-width:40px;height:40px;padding:0 10px;border-radius:11px;border:1.5px solid var(--ln);background:#fff;color:var(--ink);font:700 14px var(--f);cursor:pointer;transition:background .15s,border-color .15s}
+.pgb:hover:not(:disabled){border-color:#aab8ff;background:#f6f8ff}
+.pgb.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.pgb:disabled{opacity:.4;cursor:default}
+.pgd{color:var(--mut);padding:0 2px}
+.pgz{font-size:13px;color:var(--mut);display:flex;align-items:center;gap:8px}
+.pgz select{padding:8px 10px;border:1.5px solid var(--ln);border-radius:10px;background:#fff;font:600 14px var(--f);color:var(--ink)}
+/* depuración de WhatsApp */
+.btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
+.rcol{display:flex;align-items:center;gap:8px;flex:none}
+.trb{width:36px;height:36px;border-radius:10px;border:1.5px solid #f3c9c4;background:#fff;color:#a8261b;display:grid;place-items:center;cursor:pointer;transition:background .15s}
+.trb:hover{background:#fdecea}.trb .ic{width:17px;height:17px}
+.mdl{position:fixed;inset:0;z-index:90;background:#0b0f2480;backdrop-filter:blur(3px);display:grid;place-items:center;padding:16px;overflow:auto}
+body.mo{overflow:hidden}
+.mcard{width:100%;max-width:440px;background:#fff;border-radius:26px;padding:26px 24px 22px;box-shadow:0 30px 80px -20px #0b102080;animation:mIn .22s cubic-bezier(.2,.9,.3,1)}
+@keyframes mIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.mic{width:56px;height:56px;border-radius:18px;background:#fdecea;color:#c4271a;display:grid;place-items:center;margin:0 auto 14px}.mic .ic{width:26px;height:26px}
+.mcard h3{text-align:center;font-size:20px;letter-spacing:-.01em}
+.mbig{text-align:center;font-size:56px;font-weight:800;line-height:1.05;margin-top:12px;color:#c4271a}
+.mlab{text-align:center;color:var(--mut);font-size:14px;margin-bottom:14px}
+.msum{background:var(--bg);border-radius:16px;padding:6px 14px;margin-top:14px}
+.mbig+.mlab+.msum{margin-top:0}
+.msum>div{display:flex;justify-content:space-between;gap:14px;padding:9px 0;font-size:14px;border-bottom:1px solid var(--ln)}
+.msum>div:last-child{border-bottom:0}.msum span{color:var(--mut)}.msum b{text-align:right}
+.mscope{font-size:13px;color:var(--mut);margin-top:12px}
+.mage{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;font-size:13px;color:var(--mut);margin-top:12px;font-weight:500}
+.mage select{padding:8px 10px;border:1.5px solid var(--ln);border-radius:10px;background:#fff;font:600 14px var(--f);color:var(--ink)}
+.mwarn{background:#fff7ed;color:#9a3412;border-radius:12px;padding:11px 13px;font-size:13px;line-height:1.45;margin-top:14px}
+.mbtn{display:flex;gap:10px;margin-top:18px}
+.mb{flex:1;border:0;border-radius:14px;padding:14px 12px;font:700 15px var(--f);cursor:pointer;background:#eef0f7;color:var(--ink);transition:transform .15s,background .15s}
+.mb:hover:not(:disabled){background:#e3e6f2}
+.mb.del{background:linear-gradient(135deg,#d92d20,#b42318);color:#fff;box-shadow:0 12px 24px -12px #b42318}
+.mb.del:hover:not(:disabled){background:linear-gradient(135deg,#e5382b,#c4271a)}
+.mb:disabled{opacity:.55;cursor:default}
+#toast.bad{background:#a8261b}
+@media(max-width:560px){.pgbar{justify-content:center}.pgi{width:100%;text-align:center}.pgz{width:100%;justify-content:center}.pgs{flex-wrap:nowrap;gap:4px}.pgb{min-width:34px;height:42px;padding:0 4px}.pgd{padding:0;width:14px;text-align:center}.mbtn{flex-direction:column-reverse}.mb{padding:15px}.mbig{font-size:50px}.rcol{flex-direction:column;align-items:flex-end;gap:6px}}
 </style>
 </head>
 <body data-v="resumen">
@@ -280,7 +322,9 @@ tbody tr:hover{background:#f9faff}
 <section class="card">
 <div class="ch"><h2>Encuestas de clientes</h2></div>
 <div class="sb adm"><span id="selCount">Ninguna seleccionada</span><button class="btn" id="selNone">Quitar selección</button><button class="btn rd" id="delSel" data-ic="trash" disabled>Eliminar seleccionadas</button></div>
+<div class="pgbar" id="pgTop"></div>
 <div id="list"></div>
+<div class="pgbar" id="pgBot"></div>
 </section>
 </div>
 
@@ -288,7 +332,7 @@ tbody tr:hover{background:#f9faff}
 <div class="kpis k5" id="wk"></div>
 <section class="card"><h2>Resultados por asesor</h2><div id="sendTbl"></div>
 <p class="note">Registrado significa que el asesor abrió WhatsApp con el mensaje listo. No indica que se haya enviado, entregado ni leído: lo único que se comprueba es si el cliente respondió la encuesta.</p></section>
-<section class="card"><h2>Historial de envíos</h2>
+<section class="card"><div class="ch"><h2>Historial de envíos</h2><button type="button" class="btn rd sm adm" id="purgeBtn" data-ic="trash">Depurar encuestas sin responder</button></div>
 <label for="sendFilter" class="sub" style="display:block;margin-bottom:0">Mostrar</label>
 <select class="sel2" id="sendFilter"><option value="">Todos los envíos</option><option value="ok">Solo respondidos</option><option value="no">Solo sin responder</option></select>
 <div id="sendList"></div></section>
@@ -300,6 +344,7 @@ tbody tr:hover{background:#f9faff}
 <nav class="bot" id="botNav"></nav>
 </div>
 
+<div class="mdl hidden" id="mdl" role="dialog" aria-modal="true" aria-labelledby="mttl"><div class="mcard" id="mcard"></div></div>
 <div id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -314,7 +359,7 @@ const MN={general:"Promedio general",service_rating:"Atención",attention_rating
 const SH={service_rating:"Atención",attention_rating:"Conocimiento",information_rating:"Adición",solution_rating:"Caja",recommendation_rating:"Experiencia"};
 const TITLES={resumen:"Resumen",ranking:"Ranking",tiendas:"Tiendas",encuestas:"Encuestas",whatsapp:"WhatsApp"};
 const LOW=3,MINCMP=10,PER=10;
-let db,reviews=[],stores=[],advisors=[],filtered=[],base=[],prevSet=null,user=null,isAdmin=false,storeId=null,shown=10,rankAll=false,rkq="",metric="",gran="",whoTxt="",qt,sends=[],sendsOk=true,view="resumen",sendList=[],sendPage=1,tdata=null;
+let db,reviews=[],stores=[],advisors=[],filtered=[],base=[],prevSet=null,user=null,isAdmin=false,storeId=null,shown=10,epage=1,eper=10,purging=false,rankAll=false,rkq="",metric="",gran="",whoTxt="",qt,sends=[],sendsOk=true,view="resumen",sendList=[],sendPage=1,tdata=null;
 const selected=new Set();
 const $=id=>document.getElementById(id);
 const esc=x=>{const d=document.createElement("div");d.textContent=String(x??"");return d.innerHTML};
@@ -324,7 +369,7 @@ const hora=x=>x?new Date(x).toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2
 const cls=n=>n>=4?"g":n>=LOW?"m":"r";
 const r1=n=>Math.round(n*10)/10;
 const tbl=(h,b)=>`<div class="tw"><table><thead><tr>${h.map(x=>"<th>"+x+"</th>").join("")}</tr></thead><tbody>${b}</tbody></table></div>`;
-function toast(t){const e=$("toast");e.textContent=t;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2600)}
+function toast(t,bad){const e=$("toast");e.textContent=t;e.classList.toggle("bad",!!bad);e.classList.add("on");setTimeout(()=>e.classList.remove("on"),bad||t.length>60?5200:2600)}
 function avg(d,f){const v=d.map(r=>Number(r[f])).filter(n=>n>=1&&n<=5);return v.length?v.reduce((a,b)=>a+b,0)/v.length:0}
 function gen(d){let t=0,c=0;d.forEach(r=>F.forEach(f=>{const n=Number(r[f]);if(n>=1&&n<=5){t+=n;c++}}));return c?t/c:0}
 function dated(d){const a=$("from").value,b=$("to").value;return d.filter(r=>{const t=new Date(r.created_at);return(!a||t>=new Date(a+"T00:00:00"))&&(!b||t<=new Date(b+"T23:59:59"))})}
@@ -493,7 +538,7 @@ const s=new Date(a+"T00:00:00"),e=b?new Date(b+"T23:59:59"):new Date(),dur=e-s;
 return dur>0?[+s-dur-1,+s-1]:null;
 }
 function filter(){
-shown=10;selected.clear();
+shown=10;epage=1;selected.clear();
 base=dated(reviews.filter(pass));
 filtered=base.filter(txtOk);
 const pr=prevRange();
@@ -691,16 +736,42 @@ ${(cn||cp)?`<button class="ct" data-a="cli">${ic("user")}Datos del cliente<span>
 <div class="ac">${wa?`<a class="btn wa" href="${escA(wa)}" target="_blank" rel="noopener">${ic("send")}WhatsApp al cliente</a>`:""}${isAdmin?`<button class="btn rd" data-a="del" data-id="${escA(r.id)}">${ic("trash")}Eliminar</button>`:""}</div>
 </article>`;
 }
+function pageList(c,t){
+if(t<=7)return Array.from({length:t},(_,i)=>i+1);
+const s=new Set([1,t,c-1,c,c+1]);
+if(c<=3){s.add(2);s.add(3);s.add(4)}
+if(c>=t-2){s.add(t-1);s.add(t-2);s.add(t-3)}
+const a=[...s].filter(n=>n>=1&&n<=t).sort((x,y)=>x-y),o=[];
+a.forEach((n,i)=>{if(i&&n-a[i-1]>1)o.push("…");o.push(n)});
+return o;
+}
+function pgBar(total,pages){
+const a=total?(epage-1)*eper+1:0,b=Math.min(epage*eper,total);
+const nums=pageList(epage,pages).map(n=>n==="…"?'<span class="pgd">…</span>':`<button type="button" class="pgb${n===epage?" on":""}" data-p="${n}" aria-label="Página ${n}"${n===epage?' aria-current="page"':""}>${n}</button>`).join("");
+return `<div class="pgi">Mostrando <b>${a}-${b}</b> de <b>${total}</b> encuestas</div>
+<div class="pgs"><button type="button" class="pgb" data-p="prev"${epage<=1?" disabled":""} aria-label="Página anterior">‹</button>${nums}<button type="button" class="pgb" data-p="next"${epage>=pages?" disabled":""} aria-label="Página siguiente">›</button></div>
+<label class="pgz">Por página <select data-per aria-label="Encuestas por página">${[10,25,50,100].map(n=>`<option${n===eper?" selected":""}>${n}</option>`).join("")}</select></label>`;
+}
 function rEncuestas(){
 const L=$("list");
 selBar();
-if(!filtered.length){L.innerHTML='<div class="empty">No hay encuestas con los filtros seleccionados.</div>';return}
-L.innerHTML=filtered.slice(0,shown).map(card).join("")+(filtered.length>shown?`<div style="text-align:center;margin-top:14px"><button class="btn" data-a="more">Ver más (${filtered.length-shown} restantes)</button></div>`:"");
+const total=filtered.length,pages=Math.max(1,Math.ceil(total/eper));
+epage=Math.min(Math.max(1,epage),pages);
+if(!total){L.innerHTML='<div class="empty">No hay encuestas con los filtros seleccionados.</div>';$("pgTop").innerHTML=$("pgBot").innerHTML="";return}
+L.innerHTML=filtered.slice((epage-1)*eper,epage*eper).map(card).join("");
+$("pgTop").innerHTML=pgBar(total,pages);$("pgBot").innerHTML=pgBar(total,pages);
 }
+$("v-encuestas").addEventListener("click",e=>{
+const b=e.target.closest("[data-p]");if(!b||b.disabled)return;
+const pages=Math.max(1,Math.ceil(filtered.length/eper)),v=b.dataset.p;
+epage=Math.min(Math.max(1,v==="prev"?epage-1:v==="next"?epage+1:Number(v)),pages);
+rEncuestas();
+$("v-encuestas").scrollIntoView({behavior:"smooth",block:"start"});
+});
+$("v-encuestas").addEventListener("change",e=>{if(e.target.matches("[data-per]")){eper=Number(e.target.value)||10;epage=1;rEncuestas()}});
 $("list").addEventListener("click",e=>{
 const b=e.target.closest("[data-a]");if(!b)return;
 if(b.dataset.a==="del")delIds([b.dataset.id],"esta encuesta");
-else if(b.dataset.a==="more"){shown+=20;rEncuestas()}
 else if(b.dataset.a==="cli"){b.classList.toggle("open");b.nextElementSibling.classList.toggle("open")}
 });
 $("list").addEventListener("change",e=>{
@@ -733,7 +804,7 @@ const list=dated(sends.filter(s=>(!st||String(s.store_id)===String(st))&&(!ad||s
 const groups={};
 list.forEach(s=>{
 const ph=p10(s.client_phone),k=s.store_id+"|"+ph+"|"+mk(s.created_at);
-if(!groups[k])groups[k]={store:s.store_id,adv:s.advisor_name,t:+new Date(s.created_at),rk:s.store_id+"|"+ph,ph,n:0,name:""};
+if(!groups[k])groups[k]={store:s.store_id,adv:s.advisor_name,t:+new Date(s.created_at),rk:s.store_id+"|"+ph,ph,n:0,name:"",k};
 groups[k].n++;if(!groups[k].name&&s.client_name)groups[k].name=String(s.client_name).trim();
 });
 const rows={},durs=[];let sent=0,resp=0;sendList=[];
@@ -765,7 +836,7 @@ const pages=Math.ceil(l.length/PER);
 sendPage=Math.min(Math.max(1,sendPage),pages);
 const a=(sendPage-1)*PER;
 e.innerHTML=`<p class="sub" style="margin-top:12px">Mostrando ${a+1}–${Math.min(a+PER,l.length)} de ${l.length} envíos</p>`+
-l.slice(a,a+PER).map(g=>`<div class="sr"><div><b>${esc(g.name||"Cliente sin nombre")}</b><small>📱 ${esc(fmtPh(g.ph))}${g.n>1?" · registrado "+g.n+" veces":""}</small><small>Atendió: ${esc(g.adv)} · ${esc(stores.find(s=>String(s.id)===String(g.store))?.name||"Tienda")}</small><small>${fecha(g.t)} · ${hora(g.t)}</small></div><span class="chip ${g.ok?"g":"m"}">${g.ok?"Respondida":"Sin responder"}</span></div>`).join("")+
+l.slice(a,a+PER).map(g=>`<div class="sr"><div><b>${esc(g.name||"Cliente sin nombre")}</b><small>📱 ${esc(fmtPh(g.ph))}${g.n>1?" · registrado "+g.n+" veces":""}</small><small>Atendió: ${esc(g.adv)} · ${esc(stores.find(s=>String(s.id)===String(g.store))?.name||"Tienda")}</small><small>${fecha(g.t)} · ${hora(g.t)}</small></div><div class="rcol"><span class="chip ${g.ok?"g":"m"}">${g.ok?"Respondida":"Sin responder"}</span>${!g.ok&&isAdmin?`<button type="button" class="trb" data-wk="${escA(g.k)}" title="Eliminar este registro sin responder" aria-label="Eliminar registro sin responder">${ic("trash")}</button>`:""}</div></div>`).join("")+
 (pages>1?`<div class="pg"><button class="btn" data-pg="-1"${sendPage<=1?" disabled":""}>‹ Anterior</button><span>Página ${sendPage} de ${pages}</span><button class="btn" data-pg="1"${sendPage>=pages?" disabled":""}>Siguiente ›</button></div>`:"");
 }
 $("sendFilter").addEventListener("change",()=>{sendPage=1;drawSends()});
@@ -774,6 +845,7 @@ $("sendList").addEventListener("click",e=>{const b=e.target.closest("[data-pg]")
 async function delIds(ids,txt){
 if(!isAdmin)return alert("No tienes permisos para eliminar encuestas.");
 if(!ids.length)return;
+const keep=epage;
 if(ids.length>10){
 if(prompt(`Vas a eliminar ${ids.length} encuestas y no se puede deshacer.\n\nEscribe ELIMINAR para confirmar:`)!=="ELIMINAR")return;
 }else if(!confirm(`¿Eliminar ${txt||ids.length+" encuesta(s)"}?\n\nEsta acción no se puede deshacer.`))return;
@@ -787,7 +859,180 @@ if(n!==ids.length)throw new Error(`Solo se eliminaron ${n} de ${ids.length}. Rev
 toast(n+" encuesta(s) eliminada(s)");
 }catch(e){alert("No se pudo eliminar:\n\n"+e.message)}
 try{await loadReviews()}catch(e){console.error(e)}
+epage=keep;rEncuestas();
 }
+
+/* ---------- depuración de envíos sin responder (solo administradores) ---------- */
+const p10b=s=>String(s||"").replace(/\D/g,"").slice(-10);
+/* Misma regla que "Sin responder" del historial: un cliente = tienda + celular + mes; respondió si hay una encuesta posterior a su primer envío */
+function sendGroups(o){
+const pad=n=>String(n).padStart(2,"0"),mk=d=>{const t=new Date(d);return t.getFullYear()+"-"+pad(t.getMonth()+1)};
+const rev={};
+reviews.forEach(r=>{const ph=p10b(r.client_phone);if(ph.length===10)(rev[r.store_id+"|"+ph]=rev[r.store_id+"|"+ph]||[]).push(+new Date(r.created_at))});
+const list=sends.filter(s=>{
+if(o.st&&String(s.store_id)!==String(o.st))return false;
+if(o.ad&&s.advisor_name!==o.ad)return false;
+const t=new Date(s.created_at);
+return(!o.from||t>=o.from)&&(!o.to||t<=o.to);
+}).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+const groups={};
+list.forEach(s=>{
+const ph=p10b(s.client_phone),k=s.store_id+"|"+ph+"|"+mk(s.created_at),t=+new Date(s.created_at);
+const g=groups[k]=groups[k]||{k,store:s.store_id,adv:s.advisor_name,t,last:t,rk:s.store_id+"|"+ph,ph,name:"",ids:[]};
+g.ids.push(s.id);if(t>g.last)g.last=t;if(!g.name&&s.client_name)g.name=String(s.client_name).trim();
+});
+return Object.values(groups).map(g=>{g.ok=(rev[g.rk]||[]).some(t=>t>=g.t);return g});
+}
+const eligible=o=>sendGroups(o).filter(g=>!g.ok&&(!o.age||Date.now()-g.last>=o.age*864e5));
+function scopeOf(){
+const f=$("from").value,t=$("to").value;
+return{st:isAdmin?$("storeFilter").value:storeId,ad:$("advisorFilter").value,from:f?new Date(f+"T00:00:00"):null,to:t?new Date(t+"T23:59:59"):null,fv:f,tv:t,age:0};
+}
+function scopeTxt(o){
+const sn=o.st?(stores.find(s=>String(s.id)===String(o.st))||{}).name||"Tienda":"Todas las tiendas";
+const per=o.fv||o.tv?(o.fv?fecha(o.from):"el inicio")+" a "+(o.tv?fecha(o.to):"hoy"):"Todo el periodo";
+return sn+" · "+(o.ad||"Todos los asesores")+" · "+per;
+}
+/* Verifica en el servidor que la sesión sigue siendo de administrador (la base también lo exige al borrar) */
+async function adminOk(){
+const r=await db.from("user_store_access").select("role").eq("user_id",user.id).maybeSingle();
+return !r.error&&!!r.data&&String(r.data.role||"").toLowerCase()==="admin";
+}
+/* Vuelve a consultar envíos y encuestas sin repintar el panel */
+async function reloadQuiet(){
+await loadSends();
+if(!sendsOk)throw new Error("No se pudo consultar el registro de envíos.");
+let all=[],from=0;
+for(;;){
+let q=db.from("reviews").select("*").order("created_at",{ascending:false}).range(from,from+999);
+if(!isAdmin)q=q.eq("store_id",storeId);
+const r=await q;if(r.error)throw r.error;
+const d=r.data||[];all=all.concat(d);
+if(d.length<1000)break;from+=1000;
+}
+reviews=all;
+}
+async function delSends(ids){
+let n=0;
+for(let i=0;i<ids.length;i+=50){
+const r=await db.from("survey_sends").delete().in("id",ids.slice(i,i+50)).select("id");
+if(r.error)throw r.error;n+=r.data.length;
+}
+if(n!==ids.length)throw new Error(`Solo se eliminaron ${n} de ${ids.length} registros. Revisa los permisos.`);
+return n;
+}
+function afterPurge(){const pg=sendPage;rWhatsApp();sendPage=pg;drawSends()}
+
+/* ----- ventana de confirmación ----- */
+function openModal(html){$("mcard").innerHTML=html;$("mdl").classList.remove("hidden");document.body.classList.add("mo");const c=$("mCancel");if(c)c.focus()}
+function closeModal(){if(purging)return;$("mdl").classList.add("hidden");document.body.classList.remove("mo")}
+$("mdl").addEventListener("click",e=>{if(e.target.id==="mdl")closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("mdl").classList.contains("hidden"))closeModal()});
+function setBusy(b){const ok=$("mOk"),c=$("mCancel");if(!ok)return;ok.disabled=b;c.disabled=b;ok.textContent=b?"Eliminando…":ok.dataset.t}
+const btnTxt=n=>"Eliminar "+n+(n===1?" encuesta":" encuestas");
+
+/* ----- depuración masiva ----- */
+function massHtml(n,o){
+return `<div class="mic">${ic("trash")}</div>
+<h3 id="mttl">Depurar encuestas sin responder</h3>
+<div class="mbig" id="mBig">${n}</div><div class="mlab">registros pendientes de respuesta</div>
+<div class="msum">
+<div><span>Registros que se eliminarán</span><b id="mN">${n}</b></div>
+<div><span>Encuestas respondidas que se conservarán</span><b>Todas</b></div>
+<div><span>Encuestas del apartado general afectadas</span><b>Ninguna</b></div>
+</div>
+<p class="mscope"><b>Alcance:</b> ${esc(scopeTxt(o))}</p>
+<label class="mage">Solo envíos con antigüedad de al menos
+<select id="mAge"><option value="0">Cualquiera</option><option value="7">7 días</option><option value="15">15 días</option><option value="30">30 días</option></select></label>
+<p class="mwarn">Esta acción no se puede deshacer. Solo se eliminan registros de envío de clientes que todavía no han respondido; un cliente que responda mientras confirmas se conserva.</p>
+<div class="mbtn"><button type="button" class="mb" id="mCancel">Cancelar</button><button type="button" class="mb del" id="mOk" data-t="${btnTxt(n)}">${btnTxt(n)}</button></div>`;
+}
+function purgeMass(){
+if(!isAdmin||purging)return;
+const o=scopeOf(),n=eligible(o).length;
+if(!n)return toast("No hay encuestas sin responder para depurar.");
+openModal(massHtml(n,o));
+$("mCancel").onclick=closeModal;
+$("mAge").onchange=e=>{
+o.age=Number(e.target.value);const c=eligible(o).length;
+$("mBig").textContent=c;$("mN").textContent=c;
+const ok=$("mOk");ok.dataset.t=btnTxt(c);ok.textContent=btnTxt(c);ok.disabled=!c;
+};
+$("mOk").onclick=()=>runMass(o);
+}
+async function runMass(o){
+if(purging)return;
+purging=true;setBusy(true);
+let msg,bad=false,gone=null;
+try{
+if(!await adminOk())throw new Error("Tu sesión ya no tiene permisos de administrador.");
+await reloadQuiet();                       /* 2. vuelve a consultar */
+const el=eligible(o);                      /* 3-4. solo lo que sigue sin respuesta */
+const ids=el.flatMap(g=>g.ids);
+if(!ids.length)msg="No hay encuestas sin responder para depurar.";
+else{
+await delSends(ids);                       /* 5. elimina únicamente lo elegible */
+gone=new Set(ids.map(String));
+msg=`Depuración completada correctamente. Se eliminaron ${el.length} ${el.length===1?"encuesta sin responder":"encuestas sin responder"}.`;
+}
+}catch(e){
+bad=true;msg="No se pudo completar la depuración: "+e.message;
+try{await loadSends()}catch(_){}
+}
+if(gone)sends=sends.filter(s=>!gone.has(String(s.id)));
+purging=false;setBusy(false);closeModal();
+afterPurge();toast(msg,bad);
+}
+
+/* ----- depuración individual ----- */
+function oneHtml(g){
+const sn=(stores.find(s=>String(s.id)===String(g.store))||{}).name||"Tienda";
+return `<div class="mic">${ic("trash")}</div>
+<h3 id="mttl">Eliminar registro sin responder</h3>
+<div class="msum one">
+<div><span>Cliente</span><b>${esc(g.name||"Cliente sin nombre")}</b></div>
+<div><span>Celular</span><b>${esc(fmtPh(g.ph))}</b></div>
+<div><span>Tienda</span><b>${esc(sn)}</b></div>
+<div><span>Fecha de envío</span><b>${fecha(g.t)} · ${hora(g.t)}</b></div>
+<div><span>Atendió</span><b>${esc(g.adv)}</b></div>
+${g.ids.length>1?`<div><span>Envíos en el mes</span><b>${g.ids.length}</b></div>`:""}
+</div>
+<p class="mwarn">Se eliminará únicamente el registro de este cliente. No afecta otros envíos ni encuestas respondidas, y no se puede deshacer.</p>
+<div class="mbtn"><button type="button" class="mb" id="mCancel">Cancelar</button><button type="button" class="mb del" id="mOk" data-t="Eliminar encuesta">Eliminar encuesta</button></div>`;
+}
+function purgeOne(k){
+if(!isAdmin||purging)return;
+const g=sendGroups({}).find(x=>x.k===k);
+if(!g||g.ok)return toast("Este registro ya no está pendiente.",true);
+openModal(oneHtml(g));
+$("mCancel").onclick=closeModal;
+$("mOk").onclick=()=>runOne(k);
+}
+async function runOne(k){
+if(purging)return;
+purging=true;setBusy(true);
+let msg,bad=false,gone=null;
+try{
+if(!await adminOk())throw new Error("Tu sesión ya no tiene permisos de administrador.");
+await reloadQuiet();
+const g=sendGroups({}).find(x=>x.k===k);
+if(!g)msg="Este registro ya no existe.";
+else if(g.ok)msg="Este cliente ya respondió mientras confirmabas; el registro se conservó.";
+else{
+await delSends(g.ids);
+gone=new Set(g.ids.map(String));
+msg=`Registro de ${g.name||fmtPh(g.ph)} eliminado correctamente.`;
+}
+}catch(e){
+bad=true;msg="No se pudo eliminar el registro: "+e.message;
+try{await loadSends()}catch(_){}
+}
+if(gone)sends=sends.filter(s=>!gone.has(String(s.id)));
+purging=false;setBusy(false);closeModal();
+afterPurge();toast(msg,bad);
+}
+$("purgeBtn").addEventListener("click",purgeMass);
+$("sendList").addEventListener("click",e=>{const b=e.target.closest("[data-wk]");if(b)purgeOne(b.dataset.wk)});
 
 /* ---------- Excel ---------- */
 $("excel").onclick=()=>{
