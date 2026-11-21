@@ -200,12 +200,17 @@ tbody tr:hover{background:#f9faff}
 .pgs{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .pgb{min-width:40px;height:40px;padding:0 10px;border-radius:11px;border:1.5px solid var(--ln);background:#fff;color:var(--ink);font:700 14px var(--f);cursor:pointer;transition:background .15s,border-color .15s}
 .pgb:hover:not(:disabled){border-color:#aab8ff;background:#f6f8ff}
-.pgb.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.pgb.on,.pgb.on:hover{background:var(--ink);border-color:var(--ink);color:#fff}
 .pgb:disabled{opacity:.4;cursor:default}
 .pgd{color:var(--mut);padding:0 2px}
 .pgz{font-size:13px;color:var(--mut);display:flex;align-items:center;gap:8px}
 .pgz select{padding:8px 10px;border:1.5px solid var(--ln);border-radius:10px;background:#fff;font:600 14px var(--f);color:var(--ink)}
 /* depuración de WhatsApp */
+.drb{width:100%;font:inherit;color:inherit;text-align:left;cursor:pointer;background:#fff;border:1px solid var(--ln);border-radius:12px;padding:8px 10px;transition:background .15s,border-color .15s}
+.drb:hover:not(:disabled){background:#f6f8ff;border-color:#c9d3ff}.drb.on{background:#eef1ff;border-color:var(--b2)}.drb:disabled{cursor:default;opacity:.55}
+.qfc{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0;padding:12px 14px;border-radius:14px;background:#eef1ff;border:1px solid #d6ddff}
+.qfc b{display:flex;align-items:center;gap:6px;font-size:15px}.qfc b svg{width:16px;height:16px}.qfc span{display:block;color:var(--mut);font-size:13px;margin-top:3px}
+.qr.hl{background:#fff4d6;border-radius:10px;box-shadow:0 0 0 2px #f5a62366}
 .btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
 .rcol{display:flex;align-items:center;gap:8px;flex:none}
 .trb{width:36px;height:36px;border-radius:10px;border:1.5px solid #f3c9c4;background:#fff;color:#a8261b;display:grid;place-items:center;cursor:pointer;transition:background .15s}
@@ -322,6 +327,7 @@ body.mo{overflow:hidden}
 <section class="card">
 <div class="ch"><h2>Encuestas de clientes</h2></div>
 <div class="sb adm"><span id="selCount">Ninguna seleccionada</span><button class="btn" id="selNone">Quitar selección</button><button class="btn rd" id="delSel" data-ic="trash" disabled>Eliminar seleccionadas</button></div>
+<div id="qfBar"></div>
 <div class="pgbar" id="pgTop"></div>
 <div id="list"></div>
 <div class="pgbar" id="pgBot"></div>
@@ -361,6 +367,10 @@ const TITLES={resumen:"Resumen",ranking:"Ranking",tiendas:"Tiendas",encuestas:"E
 const LOW=3,MINCMP=10,PER=10;
 let db,reviews=[],stores=[],advisors=[],filtered=[],base=[],prevSet=null,user=null,isAdmin=false,storeId=null,shown=10,epage=1,eper=10,purging=false,rankAll=false,rkq="",metric="",gran="",whoTxt="",qt,sends=[],sendsOk=true,view="resumen",sendList=[],sendPage=1,tdata=null;
 const selected=new Set();
+/* Filtro por calificación (se activa tocando una fila de "Distribución"): { m: pregunta o "general", n: 1-5 } */
+let qf=null;
+const qfOk=r=>!qf||Math.round(qf.m==="general"?gen([r]):Number(r[qf.m]))===qf.n;
+const lst=()=>qf?filtered.filter(qfOk):filtered;
 const $=id=>document.getElementById(id);
 const esc=x=>{const d=document.createElement("div");d.textContent=String(x??"");return d.innerHTML};
 const escA=x=>String(x??"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
@@ -576,7 +586,7 @@ if(id==="storeFilter"){advFilter();$("advisorFilter").value=""}
 filter();
 }));
 $("q").addEventListener("input",()=>{clearTimeout(qt);qt=setTimeout(filter,250)});
-$("clear").onclick=()=>{
+$("clear").onclick=()=>{qf=null;
 $("from").value="";$("to").value="";$("q").value="";$("lowOnly").checked=false;metric="";gran="";
 if(isAdmin)$("storeFilter").value="";
 advFilter();$("advisorFilter").value="";filter();
@@ -663,13 +673,19 @@ $("cats").innerHTML=row("general",a,"")+rows.map(x=>row(x.f,x.v,bw&&x===best?'<e
 }
 $("cats").addEventListener("click",e=>{const b=e.target.closest("[data-m]");if(!b)return;metric=metric===b.dataset.m?"":b.dataset.m;rCats();rDist()});
 function answers(d){const c=[0,0,0,0,0,0];d.forEach(r=>F.forEach(f=>{const n=Number(r[f]);if(n>=1&&n<=5)c[n]++}));return c}
+$("dist").addEventListener("click",e=>{
+const b=e.target.closest("[data-dq]");if(!b||b.disabled)return;
+qf={m:metric||"general",n:Number(b.dataset.dq)};
+epage=1;selected.clear();
+setView("encuestas");
+});
 function rDist(){
 const m=metric||"general",c=[0,0,0,0,0,0];
 filtered.forEach(r=>{const n=Math.round(m==="general"?gen([r]):Number(r[m]));if(n>=1&&n<=5)c[n]++});
 const tot=c.reduce((a,b)=>a+b,0),mx=Math.max(1,...c);
 $("distT").textContent="Distribución · "+MN[m];
-$("distS").textContent=m==="general"?"Encuestas agrupadas por su promedio redondeado.":"Respuestas a esta pregunta.";
-$("dist").innerHTML=tot?[5,4,3,2,1].map(n=>`<div class="dr"><span>${n} ★</span><i><u class="${cls(n)}" style="width:${c[n]/mx*100}%"></u></i><b>${c[n]}</b><small>${Math.round(c[n]/tot*100)}%</small></div>`).join(""):'<div class="empty">Sin datos</div>';
+$("distS").textContent=m==="general"?"Encuestas agrupadas por su promedio redondeado. Toca una fila para ver esas encuestas.":"Respuestas a esta pregunta. Toca una fila para ver qué encuestas fueron.";
+$("dist").innerHTML=tot?[5,4,3,2,1].map(n=>`<button type="button" class="dr drb${qf&&qf.m===m&&qf.n===n?" on":""}" data-dq="${n}"${c[n]?"":" disabled"} aria-label="Ver las ${c[n]} encuestas con ${n} ${n===1?"estrella":"estrellas"}"><span>${n} ★</span><i><u class="${cls(n)}" style="width:${c[n]/mx*100}%"></u></i><b>${c[n]}</b><small>${Math.round(c[n]/tot*100)}%</small></button>`).join(""):'<div class="empty">Sin datos</div>';
 const an=answers(filtered),at=an.reduce((a,b)=>a+b,0);
 $("answ").innerHTML=at?`<div class="chip2 g"><b>${Math.round(an[5]/at*100)}%</b><span>de todas las respuestas son de 5 estrellas</span></div><div class="chip2 r"><b>${Math.round((an[1]+an[2])/at*100)}%</b><span>de todas las respuestas son de 1 o 2 estrellas</span></div>`:"";
 }
@@ -729,7 +745,7 @@ return `<article class="rv ${cls(g)}">
 <div class="rh">${isAdmin?`<input type="checkbox" class="pk" data-pick="${escA(r.id)}"${selected.has(String(r.id))?" checked":""} aria-label="Seleccionar encuesta">`:""}
 <div class="score">${g.toFixed(1)}</div>
 <div class="rt"><b>${esc(adv)}</b><small>${esc(s?.name||"Tienda no identificada")} · ${fecha(r.created_at)} · ${hora(r.created_at)}</small></div></div>
-<div class="qs">${F.map(f=>`<div class="qr">${SH[f]}<span class="st">${stars(r[f])}</span></div>`).join("")}</div>
+<div class="qs">${F.map(f=>`<div class="qr${qf&&qf.m===f?" hl":""}">${SH[f]}<span class="st">${stars(r[f])}</span></div>`).join("")}</div>
 ${r.comment?`<div class="cm ${tag[0]}"><div class="cmh"><b>Comentario adicional</b><span class="tg" title="Clasificado por la calificación de la encuesta, no por el texto del comentario">${tag[1]}</span></div>${esc(r.comment)}</div>`:""}
 ${r.admin_response?`<div class="cm rs"><b>Respuesta de administración</b>${esc(r.admin_response)}<small>Respondida: ${fecha(r.responded_at)} · ${hora(r.responded_at)}</small></div>`:""}
 ${(cn||cp)?`<button class="ct" data-a="cli">${ic("user")}Datos del cliente<span>▾</span></button><div class="cd">${cn?`<div><b>Cliente:</b> ${esc(cn)}</div>`:""}${cp?`<div><b>Celular:</b> ${esc(cp)}</div>`:""}</div>`:""}
@@ -752,18 +768,28 @@ return `<div class="pgi">Mostrando <b>${a}-${b}</b> de <b>${total}</b> encuestas
 <div class="pgs"><button type="button" class="pgb" data-p="prev"${epage<=1?" disabled":""} aria-label="Página anterior">‹</button>${nums}<button type="button" class="pgb" data-p="next"${epage>=pages?" disabled":""} aria-label="Página siguiente">›</button></div>
 <label class="pgz">Por página <select data-per aria-label="Encuestas por página">${[10,25,50,100].map(n=>`<option${n===eper?" selected":""}>${n}</option>`).join("")}</select></label>`;
 }
+function qfBar(){
+const e=$("qfBar");
+if(!qf){e.innerHTML="";return}
+const a=lst(),by={};
+a.forEach(r=>{const k=(r.customer_name||"").trim()||"Asesor no registrado";by[k]=(by[k]||0)+1});
+const top=Object.entries(by).sort((x,y)=>y[1]-x[1]).slice(0,5).map(([k,v])=>esc(k)+" ("+v+")").join(" · ");
+e.innerHTML=`<div class="qfc"><div><b>${ic("filter")}${esc(MN[qf.m])}: ${qf.n} ${qf.n===1?"estrella":"estrellas"}</b><span>${a.length} ${a.length===1?"encuesta":"encuestas"}${top?" · Asesores: "+top:""}</span></div><button type="button" class="btn sm" id="qfX">Quitar filtro ✕</button></div>`;
+$("qfX").onclick=()=>{qf=null;epage=1;selected.clear();rEncuestas()};
+}
 function rEncuestas(){
 const L=$("list");
 selBar();
-const total=filtered.length,pages=Math.max(1,Math.ceil(total/eper));
+qfBar();
+const arr=lst(),total=arr.length,pages=Math.max(1,Math.ceil(total/eper));
 epage=Math.min(Math.max(1,epage),pages);
 if(!total){L.innerHTML='<div class="empty">No hay encuestas con los filtros seleccionados.</div>';$("pgTop").innerHTML=$("pgBot").innerHTML="";return}
-L.innerHTML=filtered.slice((epage-1)*eper,epage*eper).map(card).join("");
+L.innerHTML=arr.slice((epage-1)*eper,epage*eper).map(card).join("");
 $("pgTop").innerHTML=pgBar(total,pages);$("pgBot").innerHTML=pgBar(total,pages);
 }
 $("v-encuestas").addEventListener("click",e=>{
 const b=e.target.closest("[data-p]");if(!b||b.disabled)return;
-const pages=Math.max(1,Math.ceil(filtered.length/eper)),v=b.dataset.p;
+const pages=Math.max(1,Math.ceil(lst().length/eper)),v=b.dataset.p;
 epage=Math.min(Math.max(1,v==="prev"?epage-1:v==="next"?epage+1:Number(v)),pages);
 rEncuestas();
 $("v-encuestas").scrollIntoView({behavior:"smooth",block:"start"});
@@ -1036,10 +1062,10 @@ $("sendList").addEventListener("click",e=>{const b=e.target.closest("[data-wk]")
 
 /* ---------- Excel ---------- */
 $("excel").onclick=()=>{
-if(!filtered.length)return alert("No hay encuestas para descargar.");
+if(!lst().length)return alert("No hay encuestas para descargar.");
 if(typeof XLSX==="undefined")return alert("No se pudo cargar Excel.");
 const sf=v=>/^[=+\-@\t\r]/.test(String(v))?"'"+v:v;
-const rows=filtered.map(r=>({
+const rows=lst().map(r=>({
 "Asesor":sf(r.customer_name||""),
 "Tienda":stores.find(s=>String(s.id)===String(r.store_id))?.name||"",
 "Fecha":fecha(r.created_at),"Hora":hora(r.created_at),
